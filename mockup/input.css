@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-regular.otf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-medium.otf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-semibold.otf");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-bold.otf");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-extrabold.otf");
+    font-weight: 800;
+}
