@@ -31,3 +31,18 @@
     src: url("./fonts/banana-grotesk/banana-grotesk-extrabold.otf");
     font-weight: 800;
 }
+
+@layer components{
+    .product-animation button {
+        bottom:15px;
+        opacity:0;
+        transform:translateY(20px);
+        transition: 0.17s ease-out;
+    }
+
+    .product-animation:hover button {
+        opacity:100;
+        transform:translateY(0);
+        transition:0.1s;
+    }
+}

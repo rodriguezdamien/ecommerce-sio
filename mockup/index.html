@@ -1,17 +1,18 @@
 <!DOCTYPE html>
+<!--à noter pour pouvoir actualiser le CSS en direct : 
+    npx tailwindcss -i .\mockup\input.css -o .\mockup\output.css --watch
+-->
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="output.css" />
         <link rel="stylesheet" href="./css/splide-core.min.css" />
-        <script src="./js/splide.min.js"></script>
-        <script src="./js/accueil.js"></script>
         <title>Document</title>
     </head>
     <body class="bg-[#f29dd3]">
-        <nav>
-            <div class="sticky top-0 z-40 bg-[white] w-full" id="navbar">
+        <nav class="sticky top-0 z-40 overflow-hidden">
+            <div class=" bg-[white] w-full" id="navbar">
                 <div class="py-3 mx-12">
                     <div class="flex justify-between gap-10 items-center">
                         <!--Logo, à minifier-->
@@ -48,7 +49,7 @@
                         <!-- Fouiller pour le :has(:focus-visible) tailwindcss-->
                         <div
                             id="search"
-                            class="group rounded-full border py-2 px-5 flex items-center"
+                            class="group rounded-full border py-2 px-5 items-center hidden lg:flex"
                         >
                             <input
                                 id="search-input"
@@ -74,15 +75,19 @@
                                 </svg>
                             </div>
                         </div>
-                        <div id="user" class="flex gap-6 items-center">
+                        <div id="user-pc" class="gap-6 items-center hidden lg:flex">
                             <div class="cursor-pointer">
-                                <p>Se connecter</p>
+                                <p class="whitespace-nowrap">Se connecter</p>
                             </div>
                             <button
                                 class="rounded-full bg-black text-white px-7 py-2"
                             >
                                 S'inscrire
                             </button>
+                        </div>
+
+                        <div id="user-mobile">
+                            
                         </div>
                     </div>
                 </div>
@@ -127,13 +132,218 @@
                     sûrement t'intéresser.
                 </h3>
             </div>
-            <div id="slider-currently" class="flex">
-                <div>
-                    <a>
-                        <img src="./img/ephmr.png" class="w-60" />
-                    </a>
+            <div
+                class="splide m-auto"
+                role="group"
+                aria-label="Splide Basic HTML Example"
+            >
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="product-animation">
+                                <div class="relative flex justify-center">
+                                    <img
+                                        src="./img/album_covers/Primary.webp"
+                                        alt="Artifacts Zero"
+                                    />
+                                    <button class="bg-white text-black absolute  px-6 py-1 rounded-md drop-shadow-xl text-sm">
+                                        Voir le produit
+                                    </button>
+                                </div>
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-sm">
+                                        <p>ARTIFACTS: ZERO</p>
+                                        <p class="font-light">Connexio</p>
+                                    </div>
+                                    <p class="align-middle text-md">
+                                        15.99€
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-animation">
+                                <div class="relative flex justify-center">
+                                    <img
+                                        src="./img/album_covers/Artifacts.webp"
+                                        alt="Artifacts Zero"
+                                        class="peer"
+                                    />
+                                    <button class="bg-white text-black absolute  px-6 py-1 rounded-md drop-shadow-xl text-sm">
+                                        Voir le produit
+                                    </button>
+                                </div>
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-sm">
+                                        <p>ARTIFACTS: ZERO</p>
+                                        <p class="font-light">Connexio</p>
+                                    </div>
+                                    <p class="align-middle text-md">
+                                        15.99€
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-animation">
+                                <div class="relative flex justify-center">
+                                    <img
+                                        src="./img/album_covers/CurrentVoltage.webp"
+                                        alt="Artifacts Zero"
+                                    />
+                                    <button class="bg-white text-black absolute  px-6 py-1 rounded-md drop-shadow-xl text-sm">
+                                        Voir le produit
+                                    </button>
+                                </div>
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-sm">
+                                        <p>ARTIFACTS: ZERO</p>
+                                        <p class="font-light">Connexio</p>
+                                    </div>
+                                    <p class="align-middle text-md">
+                                        15.99€
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-animation">
+                                <div class="relative flex justify-center">
+                                    <img
+                                        src="./img/album_covers/ephmr.webp"
+                                        alt="Artifacts Zero"
+                                    />
+                                    <button class="bg-white text-black absolute  px-6 py-1 rounded-md drop-shadow-xl text-sm">
+                                        Voir le produit
+                                    </button>
+                                </div>
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-sm">
+                                        <p>ARTIFACTS: ZERO</p>
+                                        <p class="font-light">Connexio</p>
+                                    </div>
+                                    <p class="align-middle text-md">
+                                        15.99€
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-animation">
+                                <div class="relative flex justify-center">
+                                    <img
+                                        src="./img/album_covers/fromScratch.webp"
+                                        alt="Artifacts Zero"
+                                    />
+                                    <button class="bg-white text-black absolute  px-6 py-1 rounded-md drop-shadow-xl text-sm">
+                                        Voir le produit
+                                    </button>
+                                </div>
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-sm">
+                                        <p>ARTIFACTS: ZERO</p>
+                                        <p class="font-light">Connexio</p>
+                                    </div>
+                                    <p class="align-middle text-md">
+                                        15.99€
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-animation">
+                                <div class="relative flex justify-center">
+                                    <img
+                                        src="./img/album_covers/GlitchedUniverse.webp"
+                                        alt="Artifacts Zero"
+                                    />
+                                    <button class="bg-white text-black absolute  px-6 py-1 rounded-md drop-shadow-xl text-sm">
+                                        Voir le produit
+                                    </button>
+                                </div>
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-sm">
+                                        <p>ARTIFACTS: ZERO</p>
+                                        <p class="font-light">Connexio</p>
+                                    </div>
+                                    <p class="align-middle text-md">
+                                        15.99€
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-animation">
+                                <div class="relative flex justify-center">
+                                    <img
+                                        src="./img/album_covers/NeverForgetVacatation6.webp"
+                                        alt="Artifacts Zero"
+                                    />
+                                    <button class="bg-white text-black absolute  px-6 py-1 rounded-md drop-shadow-xl text-sm">
+                                        Voir le produit
+                                    </button>
+                                </div>
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-sm">
+                                        <p>ARTIFACTS: ZERO</p>
+                                        <p class="font-light">Connexio</p>
+                                    </div>
+                                    <p class="align-middle text-md">
+                                        15.99€
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-animation">
+                                <div class="relative flex justify-center">
+                                    <img
+                                        src="./img/album_covers/NxEnchant02.webp"
+                                        alt="Artifacts Zero"
+                                    />
+                                    <button class="bg-white text-black absolute  px-6 py-1 rounded-md drop-shadow-xl text-sm">
+                                        Voir le produit
+                                    </button>
+                                </div>
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-sm">
+                                        <p>ARTIFACTS: ZERO</p>
+                                        <p class="font-light">Connexio</p>
+                                    </div>
+                                    <p class="align-middle text-md">
+                                        15.99€
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-animation">
+                                <div class="relative flex justify-center">
+                                    <img
+                                        src="./img/album_covers/Primary.webp"
+                                        alt="Artifacts Zero"
+                                    />
+                                    <button class="bg-white text-black absolute  px-6 py-1 rounded-md drop-shadow-xl text-sm">
+                                        Voir le produit
+                                    </button>
+                                </div>
+                                <div class="flex justify-between font-bold">
+                                    <div class="text-sm">
+                                        <p>ARTIFACTS: ZERO</p>
+                                        <p class="font-light">Connexio</p>
+                                    </div>
+                                    <p class="align-middle text-md">
+                                        15.99€
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
         </section>
+        <script src="./js/splide.min.js"></script>
+        <script src="./js/accueil.js"></script>
     </body>
 </html>
