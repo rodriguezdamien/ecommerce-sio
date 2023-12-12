@@ -570,6 +570,15 @@ video {
   background: linear-gradient(90deg, #00cec0 0%, magenta 100%);
 }
 
+#more {
+  background: rgb(83, 26, 73);
+  background: linear-gradient(
+            0deg,
+            rgba(83, 26, 73, 1) 0%,
+            rgba(187, 88, 149, 1) 100%
+        );
+}
+
 #comiket {
   background-image: url(img/category/bg/comiket-bg.png);
   background-size: cover;
@@ -583,6 +592,12 @@ video {
 #touhou {
   background-image: url(img/category/bg/touhou.jpg);
   background-size: cover;
+}
+
+#misc {
+  background-image: url(img/category/bg/misc.png);
+  background-size: cover;
+  background-position: center;
 }
 
 .absolute {
@@ -642,9 +657,9 @@ video {
   margin-right: 2.5rem;
 }
 
-.mx-20 {
-  margin-left: 5rem;
-  margin-right: 5rem;
+.mx-14 {
+  margin-left: 3.5rem;
+  margin-right: 3.5rem;
 }
 
 .mx-5 {
@@ -660,16 +675,6 @@ video {
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
-}
-
-.mx-16 {
-  margin-left: 4rem;
-  margin-right: 4rem;
-}
-
-.mx-14 {
-  margin-left: 3.5rem;
-  margin-right: 3.5rem;
 }
 
 .mb-5 {
@@ -827,19 +832,14 @@ video {
   border-width: 1px;
 }
 
-.border-white {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity));
-}
-
-.border-gray-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(107 114 128 / var(--tw-border-opacity));
-}
-
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.border-white {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
 .bg-\[\#222227\] {
@@ -1099,11 +1099,6 @@ video {
     margin-right: 6rem;
   }
 
-  .md\:mx-32 {
-    margin-left: 8rem;
-    margin-right: 8rem;
-  }
-
   .md\:flex {
     display: flex;
   }
@@ -1143,31 +1138,6 @@ video {
     margin-right: 11rem;
   }
 
-  .lg\:mx-72 {
-    margin-left: 18rem;
-    margin-right: 18rem;
-  }
-
-  .lg\:mx-64 {
-    margin-left: 16rem;
-    margin-right: 16rem;
-  }
-
-  .lg\:mx-80 {
-    margin-left: 20rem;
-    margin-right: 20rem;
-  }
-
-  .lg\:mx-60 {
-    margin-left: 15rem;
-    margin-right: 15rem;
-  }
-
-  .lg\:mx-56 {
-    margin-left: 14rem;
-    margin-right: 14rem;
-  }
-
   .lg\:mx-auto {
     margin-left: auto;
     margin-right: auto;
@@ -1179,10 +1149,6 @@ video {
 
   .lg\:max-w-5xl {
     max-width: 64rem;
-  }
-
-  .lg\:max-w-4xl {
-    max-width: 56rem;
   }
 
   .lg\:grid-cols-3 {

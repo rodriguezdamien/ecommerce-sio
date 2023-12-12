@@ -75,6 +75,15 @@
         background: linear-gradient(90deg, #00cec0 0%, magenta 100%);
     }
 
+    #more {
+        background: rgb(83, 26, 73);
+        background: linear-gradient(
+            0deg,
+            rgba(83, 26, 73, 1) 0%,
+            rgba(187, 88, 149, 1) 100%
+        );
+    }
+
     #comiket {
         background-image: url(img/category/bg/comiket-bg.png);
         background-size: cover;
@@ -88,5 +97,11 @@
     #touhou {
         background-image: url(img/category/bg/touhou.jpg);
         background-size: cover;
+    }
+
+    #misc {
+        background-image: url(img/category/bg/misc.png);
+        background-size: cover;
+        background-position: center;
     }
 }
