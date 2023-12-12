@@ -548,7 +548,7 @@ video {
 }
 
 .product button:hover {
-  filter: drop-shadow(0 3px #00000096);
+  filter: drop-shadow(0 3px 0px #00000050);
   transform: translateY(-2px);
 }
 
@@ -558,6 +558,11 @@ video {
 
 .accordion img {
   height: 65px;
+}
+
+.accordion i {
+  transform: rotate(0deg);
+  transition: transform 0.15s;
 }
 
 .accordion-content {
@@ -579,25 +584,60 @@ video {
         );
 }
 
-#comiket {
+#comiket div {
   background-image: url(img/category/bg/comiket-bg.png);
-  background-size: cover;
+  --cat-color: rgba(0, 255, 166, 0.5);
 }
 
-#m3 {
+#comiket span {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#comiket div:hover > span {
+  opacity: 50;
+}
+
+#m3 div {
   background-image: url(img/category/bg/m3.jpg);
-  background-size: cover;
+  --cat-color: rgba(255, 235, 124, 0.5);
 }
 
-#touhou {
+#touhou div {
   background-image: url(img/category/bg/touhou.jpg);
-  background-size: cover;
+  --cat-color: rgba(255, 81, 81, 0.5);
 }
 
-#misc {
+#misc div {
   background-image: url(img/category/bg/misc.png);
+  --cat-color: rgba(255, 81, 212, 0.5);
+}
+
+.categories div > div {
   background-size: cover;
   background-position: center;
+  transition: transform 0.2s;
+}
+
+.categories div:hover > span {
+  opacity: 100;
+  transition: opacity 0.2s;
+}
+
+.categories div > span {
+  bottom: 0;
+  opacity: 0;
+  background: linear-gradient(
+            0deg,
+            var(--cat-color) 0%,
+            rgba(0, 0, 0, 0) 100%
+        );
+  transition: opacity 0.2s;
+}
+
+.categories div > div:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s;
 }
 
 .absolute {
@@ -709,6 +749,10 @@ video {
   height: 2.5rem;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
 .h-32 {
   height: 8rem;
 }
@@ -731,6 +775,10 @@ video {
 
 .h-auto {
   height: auto;
+}
+
+.h-full {
+  height: 100%;
 }
 
 .w-10 {
@@ -832,14 +880,13 @@ video {
   border-width: 1px;
 }
 
-.border-gray-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity));
-}
-
 .border-white {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+
+.border-white\/30 {
+  border-color: rgb(255 255 255 / 0.3);
 }
 
 .bg-\[\#222227\] {
@@ -1077,6 +1124,11 @@ video {
   src: url("./fonts/banana-grotesk/banana-grotesk-extrabold.otf");
 
   font-weight: 800;
+}
+
+.activated i {
+  transform: rotate(180deg);
+  transition: transform 0.15s;
 }
 
 .focus-visible\:outline-transparent:focus-visible {
