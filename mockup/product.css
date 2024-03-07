@@ -1,0 +1,92 @@
+#hero {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+#hero::before {
+    content: "";
+    backdrop-filter: saturate(130%) blur(20px);
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#quantity-select {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-width: 1.5px;
+}
+
+#quantity {
+    border-left: solid white 1.5px;
+    border-right: solid white 1.5px;
+}
+
+#tracklist {
+    max-height: 480px;
+    overflow: scroll;
+}
+
+#tracklist li {
+    padding: 15px 0;
+    border-bottom: solid #ffffff99 1px;
+    cursor: pointer;
+}
+
+#tracklist li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.track-number::after {
+    content: "-";
+    margin: 0 1.5rem;
+    font-weight: 100;
+}
+
+.track-artist {
+    font-weight: 600;
+}
+
+.track-artist::after {
+    content: "/";
+    margin: 0 0.5rem;
+    font-weight: 100;
+}
+
+#tracklist li:nth-last-child(1) {
+    border-bottom: none;
+}
+
+#add-to-cart {
+    filter: none;
+    transform: translateY(0px);
+    transition: 0.1s;
+}
+
+#add-to-cart:hover {
+    filter: drop-shadow(0 5px 5px #00000065);
+    transform: translateY(-3px);
+}
+
+#details tr {
+    margin: 100px;
+}
+
+#details td {
+    width: 50px;
+    border-bottom: 1px solid black;
+    text-align: end;
+}
+
+#details td {
+    padding: 0 100px 0 10px;
+}
+
+#details td:nth-last-child(1) {
+    width: 500px;
+    text-align: start;
+}

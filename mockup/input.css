@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "./product.css";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @font-face {
     font-family: "banana-grotesk";
@@ -36,6 +37,10 @@
     font-family: "banana-grotesk";
     src: url("./fonts/banana-grotesk/banana-grotesk-extrabold.otf");
     font-weight: 800;
+}
+
+body {
+    font-weight: 100;
 }
 
 .activated i {
@@ -87,11 +92,7 @@
 
     #more {
         background: rgb(83, 26, 73);
-        background: linear-gradient(
-            0deg,
-            rgba(83, 26, 73, 1) 0%,
-            rgba(187, 88, 149, 1) 100%
-        );
+        background: linear-gradient(0deg, rgba(83, 26, 73, 1) 0%, rgba(187, 88, 149, 1) 100%);
     }
 
     #comiket div {
@@ -137,11 +138,7 @@
     .categories div > span {
         bottom: 0;
         opacity: 0;
-        background: linear-gradient(
-            0deg,
-            var(--cat-color) 0%,
-            rgba(0, 0, 0, 0) 100%
-        );
+        background: linear-gradient(0deg, var(--cat-color) 0%, rgba(0, 0, 0, 0) 100%);
         transition: opacity 0.2s;
     }
 
