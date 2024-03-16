@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var carouselTrending = new Splide("#trending", {
         perPage: 7,
         rewind: false,
-        width: "1300px",
-        gap: "10px",
+        width: "1800px",
+        gap: "6px",
         perMove: 1,
         breakpoints: {
             2000: {
@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var carouselPreorder = new Splide("#preorder", {
         perPage: 7,
         rewind: false,
-        width: "1300px",
-        gap: "10px",
+        width: "1800px",
+        gap: "6px",
         perMove: 1,
         breakpoints: {
             2000: {
