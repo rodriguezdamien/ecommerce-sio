@@ -58,15 +58,17 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 let acc = document.getElementsByClassName("accordion");
+var opened = null;
 
 for (let i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function () {
-        this.classList.toggle("activated");
-        var panel = this.nextElementSibling;
-        if (panel.style.maxHeight) {
-            panel.style.maxHeight = null;
+    acc[i].addEventListener("click", function (event) {
+        if (opened != event.target.nextElementSibling) {
+            if (opened) opened.style.maxHeight = null;
+            opened = event.target.nextElementSibling;
+            opened.style.maxHeight = opened.scrollHeight + "px";
         } else {
-            panel.style.maxHeight = panel.scrollHeight + "px";
+            opened.style.maxHeight = null;
+            opened = null;
         }
     });
 }
