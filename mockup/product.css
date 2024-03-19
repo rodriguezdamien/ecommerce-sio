@@ -27,8 +27,11 @@
 }
 
 #tracklist {
-    max-height: 480px;
-    overflow: scroll;
+    max-height: 420px;
+    overflow-y: scroll;
+    scrollbar-color: #ffffffe0 #ffffff00;
+    scrollbar-width: thin;
+    padding: 0 10px;
 }
 
 #tracklist li {
@@ -41,7 +44,12 @@
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-.track-number::after {
+.track-number {
+    width: 22px;
+    text-align: end;
+}
+
+.track-info::before {
     content: "-";
     margin: 0 1.5rem;
     font-weight: 100;
@@ -72,21 +80,11 @@
     transform: translateY(-3px);
 }
 
-#details tr {
-    margin: 100px;
+#details h3 {
+    width: 230px;
+    word-break: break-all;
 }
 
-#details td {
-    width: 50px;
-    border-bottom: 1px solid black;
-    text-align: end;
-}
-
-#details td {
-    padding: 0 100px 0 10px;
-}
-
-#details td:nth-last-child(1) {
-    width: 500px;
-    text-align: start;
+#details p {
+    text-align: justify;
 }
