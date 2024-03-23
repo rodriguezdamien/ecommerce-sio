@@ -1,8 +1,8 @@
 @import "tailwindcss/base";
-@import "./product.css";
+@import "./css/product.css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
+@import "./css/cart.css";
 @font-face {
     font-family: "banana-grotesk";
     src: url("./fonts/banana-grotesk/banana-grotesk-extralight.otf");
