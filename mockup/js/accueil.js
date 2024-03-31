@@ -59,16 +59,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 let acc = document.getElementsByClassName("accordion");
 var opened = null;
+var click = 0;
 
 for (let i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function (event) {
-        if (opened != event.target.nextElementSibling) {
-            if (opened) opened.style.maxHeight = null;
-            opened = event.target.nextElementSibling;
-            opened.style.maxHeight = opened.scrollHeight + "px";
-        } else {
-            opened.style.maxHeight = null;
-            opened = null;
-        }
-    });
+    acc[i].addEventListener("click", openAccordion);
+}
+
+function openAccordion(event) {
+    if (opened != event.currentTarget.children[1]) {
+        if (opened) opened.style.maxHeight = null;
+        opened = event.currentTarget.children[1];
+        opened.style.maxHeight = opened.scrollHeight + "px";
+    } else {
+        opened.style.maxHeight = null;
+        opened = null;
+    }
 }
