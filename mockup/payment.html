@@ -12,7 +12,7 @@
         <title>gaku!</title>
     </head>
     <body class="bg-black">
-        <nav class="sticky top-0 z-50 overflow-hidden">
+        <nav class="sticky top-0 z-50 overflow-hidden border-b border-b-slate-300">
             <div class="bg-[white] w-full" id="navbar">
                 <div class="py-3 mx-5">
                     <div class="flex justify-between gap-10 items-center">
@@ -50,12 +50,12 @@
                         <!-- Fouiller pour le :has(:focus-visible) tailwindcss-->
                         <div
                             id="search"
-                            class="group rounded-full border py-1 px-5 items-center hidden max-w-lg w-10/12 md:flex"
+                            class="group rounded-full border px-5 items-center hidden max-w-lg w-10/12 md:flex"
                         >
                             <input
                                 id="search-input"
                                 type="text"
-                                class="focus-visible:outline-transparent bg-transparent w-full py-1"
+                                class="focus-visible:outline-transparent bg-transparent w-full py-2"
                                 placeholder="Vous cherchez quelque chose ?"
                             />
                             <div>
@@ -82,71 +82,212 @@
                 </div>
             </div>
         </nav>
-        <section id="payment" class="bg-gradient-sunset grid grid-cols-2 h-[90vh]">
-            <div class="flex justify-center items-center">
-                <div class="bg-white rounded-md p-4 w-[450px]">
-                    <h2 class="font-bold text-xl">Récapitulatif de la commande</h2>
-                    <!--BEGIN PRODUCT EXAMPLE-->
-                    <div class="flex justify-between items-center mx-2 my-3">
-                        <div class="flex items-center gap-5">
-                            <div class="relative">
-                                <div
-                                    class="absolute font-bold flex items-center justify-center right-[-5px] top-[-5px] h-7 w-7 rounded-full text-center text-white bg-black opacity-90"
-                                >
-                                    5
+        <section id="payment" class="bg-gradient-sunset flex flex-col lg:grid lg:grid-cols-2">
+            <div class="flex flex-col items-center lg:items-end px-[5vw] gap-5 lg:max-h-[60rem] overflow-scroll py-10">
+                <div class="relative w-full lg:w-[500px]">
+                    <button class="bg-white py-3 px-5 rounded-full my-4 flex items-center gap-2">
+                        <i class="ri-arrow-left-line text-xl"></i>
+                        <p>Retourner au panier</p>
+                    </button>
+                    <div class="flex flex-col gap-3 bg-white rounded-md p-3">
+                        <h2 class="font-bold text-[21px]">Récapitulatif de la commande</h2>
+                        <div class="flex flex-col gap-3 py-2">
+                            <!--BEGIN PRODUCT EXAMPLE-->
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-5">
+                                    <div class="relative aspect-square">
+                                        <div
+                                            class="absolute font-bold flex items-center justify-center right-[-5px] top-[-5px] h-7 w-7 rounded-full text-center text-white bg-black opacity-90"
+                                        >
+                                            5
+                                        </div>
+                                        <img
+                                            src="img/album_covers/ephmr.webp"
+                                            alt=""
+                                            class="h-24 w-24 rounded-md aspect-square"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p>EPHMR Artifacts ZER0</p>
+                                        <p class="font-semibold">Camellia</p>
+                                    </div>
                                 </div>
-                                <img src="img/album_covers/ephmr.webp" alt="" class="h-24 rounded-md" />
+                                <p class="font-semibold text-xl">50.99€</p>
                             </div>
+                            <!--END PRODUCT EXAMPLE-->
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-5">
+                                    <div class="relative aspect-square">
+                                        <div
+                                            class="absolute font-bold flex items-center justify-center right-[-5px] top-[-5px] h-7 w-7 rounded-full text-center text-white bg-black opacity-90"
+                                        >
+                                            5
+                                        </div>
+                                        <img
+                                            src="img/album_covers/ephmr.webp"
+                                            alt=""
+                                            class="h-24 w-24 rounded-md aspect-square"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p>EPHMR Artifacts ZER0</p>
+                                        <p class="font-semibold">Camellia</p>
+                                    </div>
+                                </div>
+                                <p class="font-semibold text-xl">50.99€</p>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-5">
+                                    <div class="relative aspect-square">
+                                        <div
+                                            class="absolute font-bold flex items-center justify-center right-[-5px] top-[-5px] h-7 w-7 rounded-full text-center text-white bg-black opacity-90"
+                                        >
+                                            5
+                                        </div>
+                                        <img
+                                            src="img/album_covers/ephmr.webp"
+                                            alt=""
+                                            class="h-24 w-24 rounded-md aspect-square"
+                                        />
+                                    </div>
+                                    <div>
+                                        <p>EPHMR Artifacts ZER0</p>
+                                        <p class="font-semibold">Camellia</p>
+                                    </div>
+                                </div>
+                                <p class="font-semibold text-xl">50.99€</p>
+                            </div>
+
+                            <span id="recap-separator" class="h-[1px] bg-slate-300 w-full mt-2"></span>
                             <div>
-                                <p>EPHMR Artifacts ZER0</p>
-                                <p class="font-semibold">Camellia</p>
+                                <div class="flex justify-between items-center">
+                                    <p>Sous-total</p>
+                                    <p class="font-bold">150.99€</p>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>Livraison</p>
+                                    <p class="font-bold">Offerte</p>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-2xl">Total</p>
+                                    <p class="text-2xl font-bold">150.99€</p>
+                                </div>
                             </div>
                         </div>
-                        <p class="font-semibold text-xl">50.99€</p>
-                    </div>
-                    <!--END PRODUCT EXAMPLE-->
-                    <div class="flex justify-between items-center mx-2 my-3">
-                        <div class="flex items-center gap-5">
-                            <div class="relative">
-                                <div
-                                    class="absolute font-bold flex items-center justify-center right-[-5px] top-[-5px] h-7 w-7 rounded-full text-center text-white bg-black opacity-90"
-                                >
-                                    5
-                                </div>
-                                <img src="img/album_covers/ephmr.webp" alt="" class="h-24 rounded-md" />
-                            </div>
-                            <div>
-                                <p>EPHMR Artifacts ZER0</p>
-                                <p class="font-semibold">Camellia</p>
-                            </div>
-                        </div>
-                        <p class="font-semibold text-xl">50.99€</p>
-                    </div>
-                    <div class="flex justify-between items-center mx-2 my-3">
-                        <div class="flex items-center gap-5">
-                            <div class="relative">
-                                <div
-                                    class="absolute font-bold flex items-center justify-center right-[-5px] top-[-5px] h-7 w-7 rounded-full text-center text-white bg-black opacity-90"
-                                >
-                                    5
-                                </div>
-                                <img src="img/album_covers/ephmr.webp" alt="" class="h-24 rounded-md" />
-                            </div>
-                            <div>
-                                <p>EPHMR Artifacts ZER0</p>
-                                <p class="font-semibold">Camellia</p>
-                            </div>
-                        </div>
-                        <p class="font-semibold text-xl">50.99€</p>
                     </div>
                 </div>
             </div>
-            <div class="bg-white"></div>
-        </section>
+            <div class="bg-white border-l border-l-slate-300 flex xl:pl-10 pt-12 pb-16">
+                <form action="" class="flex flex-col gap-1 top-[100px] w-full xl:w-auto px-4">
+                    <h2 class="text-xl font-bold">Contact</h2>
+                    <div>
+                        <label for="mail"><p class="mb-1">Adresse e-mail</p></label>
+                        <input
+                            name="mail"
+                            id="mail"
+                            type="mail"
+                            placeholder="exemple@gaku.fr"
+                            class="border px-5 py-2 rounded-md w-full mb-3"
+                        />
+                    </div>
+                    <h2 class="text-xl font-bold">Adresse de livraison</h2>
+                    <div>
+                        <label for="adress"><p class="mb-1">Adresse</p></label>
+                        <input
+                            name="adress"
+                            id="adress"
+                            type="text"
+                            placeholder="10 Avenue Miku"
+                            class="border px-5 py-2 rounded-md w-full mb-3"
+                        />
+                    </div>
+                    <div>
+                        <label for="adress-2"><p class="mb-1">Complément d'adresse</p></label>
+                        <input
+                            name="adress-2"
+                            id="adress-2"
+                            type="address-2"
+                            placeholder="Appartement N°39"
+                            class="border px-5 py-2 rounded-md w-full mb-3"
+                        />
+                    </div>
+                    <div class="flex gap-3 w-full">
+                        <div class="w-full">
+                            <label for="postal"><p class="mb-1">Code postal</p></label>
+                            <input
+                                name="postal"
+                                id="postal"
+                                type="text"
+                                placeholder="75000"
+                                class="border px-5 py-2 rounded-md w-full mb-3"
+                            />
+                        </div>
+                        <div class="w-full">
+                            <label for="mail"><p class="mb-1">Ville</p></label>
+                            <input
+                                name="city"
+                                id="city"
+                                type="text"
+                                placeholder="Paris"
+                                class="border px-5 py-2 rounded-md w-full mb-3"
+                            />
+                        </div>
+                    </div>
+                    <h2 class="text-xl font-bold">Paiement</h2>
+                    <div>
+                        <label for="adress"><p class="mb-1">Numéro de carte</p></label>
+                        <input
+                            name="adress"
+                            id="adress"
+                            type="text"
+                            placeholder="0000 0000 0000 0000"
+                            class="border px-5 py-2 rounded-md w-full mb-3"
+                        />
+                    </div>
 
+                    <div class="flex gap-3">
+                        <div class="w-full">
+                            <label for="postal"><p class="mb-1">Date d'expiration</p></label>
+                            <input
+                                name="postal"
+                                id="postal"
+                                type="text"
+                                placeholder="75000"
+                                class="border px-5 py-2 rounded-md w-full mb-3"
+                            />
+                        </div>
+                        <div class="w-full">
+                            <label for="mail"><p class="mb-1">Code de sécurité</p></label>
+                            <input
+                                name="city"
+                                id="city"
+                                type="text"
+                                placeholder="Paris"
+                                class="border px-5 py-2 rounded-md w-full mb-3"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="adress-2"><p class="mb-1">Nom sur la carte</p></label>
+                        <input
+                            name="adress-2"
+                            id="adress-2"
+                            type="address-2"
+                            placeholder="Appartement N°39"
+                            class="border px-5 py-2 rounded-md w-full mb-3"
+                        />
+                    </div>
+                    <input
+                        type="submit"
+                        value="Passer la commande"
+                        class="cursor-pointer bg-black rounded-md text-white h-16"
+                    />
+                </form>
+            </div>
+        </section>
         <footer class="bg-black text-white">
             <!-- Footer d'une page e-commerce qui ne soit pas trop large et contenant les informations essentielles-->
-            <div class="mx-14 lg:max-w-6xl lg:mx-auto py-12">
+            <div class="mx-14 lg:max-w-6xl lg:mx-auto py-8">
                 <div class="grid grid-flow-row md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <div class="flex flex-row gap-2">
