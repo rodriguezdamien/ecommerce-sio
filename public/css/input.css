@@ -1,0 +1,149 @@
+@import "tailwindcss/base";
+@import "./product.css";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "./cart.css";
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-extralight.otf");
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-regular.otf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-medium.otf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-semibold.otf");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-bold.otf");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "banana-grotesk";
+    src: url("./fonts/banana-grotesk/banana-grotesk-extrabold.otf");
+    font-weight: 800;
+}
+
+body {
+    font-weight: 100;
+}
+
+.activated i {
+    transform: rotate(180deg);
+    transition: transform 0.15s;
+}
+
+@layer components {
+    .product button {
+        bottom: 15px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: 0.17s ease-out;
+    }
+
+    .product:hover button {
+        opacity: 100;
+        transform: translateY(0);
+        transition: 0.1s;
+    }
+
+    .product button:hover {
+        filter: drop-shadow(0 3px 0px #00000050);
+        transform: translateY(-2px);
+    }
+
+    #search-input:focus-visible {
+        outline: none;
+    }
+
+    .accordion img {
+        height: 65px;
+    }
+
+    .accordion i {
+        transform: rotate(0deg);
+        transition: transform 0.15s;
+    }
+
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.15s ease-out;
+    }
+
+    .bg-megarex {
+        background: linear-gradient(90deg, #00cec0 0%, magenta 100%);
+    }
+
+    #more {
+        background: rgb(83, 26, 73);
+        background: linear-gradient(0deg, rgba(83, 26, 73, 1) 0%, rgba(187, 88, 149, 1) 100%);
+    }
+
+    #comiket div {
+        background-image: url(../images/category/bg/comiket-bg.png);
+        --cat-color: rgba(0, 255, 166, 0.5);
+    }
+
+    #comiket span {
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    #comiket div:hover > span {
+        opacity: 50;
+    }
+
+    #m3 div {
+        background-image: url(/public/images/category/bg/m3.jpg);
+        --cat-color: rgba(255, 235, 124, 0.5);
+    }
+
+    #touhou div {
+        background-image: url(/public/images/category/bg/touhou.jpg);
+        --cat-color: rgba(255, 81, 81, 0.5);
+    }
+
+    #misc div {
+        background-image: url(/public/images/category/bg/misc.png);
+        --cat-color: rgba(255, 81, 212, 0.5);
+    }
+
+    .categories div > div {
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.2s;
+    }
+
+    .categories div:hover > span {
+        opacity: 100;
+        transition: opacity 0.2s;
+    }
+
+    .categories div > span {
+        bottom: 0;
+        opacity: 0;
+        background: linear-gradient(0deg, var(--cat-color) 0%, rgba(0, 0, 0, 0) 100%);
+        transition: opacity 0.2s;
+    }
+
+    .categories div > div:hover {
+        transform: scale(1.02);
+        transition: transform 0.2s;
+    }
+}

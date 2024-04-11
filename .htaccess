@@ -1,0 +1,4 @@
+RewriteEngine on
+
+RewriteRule ^login(/?)$ index.php?controller=Login&action=renderView [nc]
+RewriteRule ^register(/?)$ index.php?controller=Register&action=renderView [nc]
