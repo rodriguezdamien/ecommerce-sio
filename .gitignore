@@ -3,3 +3,4 @@ package.json
 package-lock.json
 fiveserver.config.js
 output.css
+/public/css/styles.css

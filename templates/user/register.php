@@ -1,8 +1,9 @@
-<section id="looking-for" class="bg-gradient-sunset">
-            <div class="h-[77vh] min-h-[620px] text-white flex justify-center">
-                <div class="m-auto bg-white text-black font-extralight px-10 py-4 rounded-lg">
+<section id="looking-for" class="bg-gradient-sunset ">
+            <div class=" text-white flex justify-center">
+                <div class="my-[10vh] m-auto bg-white text-black font-extralight px-10 py-4 rounded-lg">
                     <h2 class="text-3xl font-extrabold my-5 text-center">Créer un compte</h2>
-                    <form action="/register/" enctype="multipart/form-data" method="post" class="flex flex-col text-left gap-4">
+
+                    <form action="/register/send/" enctype="multipart/form-data" method="post" class="flex flex-col text-left gap-4" id="register">
                         <div>
                             <label for="prenom"><p class="mb-1">Prénom</p></label>
                             <input
@@ -11,7 +12,6 @@
                                 type="text"
                                 placeholder="Saisissez votre prénom"
                                 class="border px-5 py-2 w-80 sm:w-96 rounded-lg"
-                                required
                             />
                         </div>
                         <div>
@@ -22,7 +22,6 @@
                                 type="text"
                                 placeholder="Saisissez votre nom"
                                 class="border px-5 py-2 w-80 sm:w-96 rounded-lg"
-                                required
                             />
                         </div>
                         <div>
@@ -33,7 +32,6 @@
                                 type="text"
                                 placeholder="Saisissez votre adresse mail"
                                 class="border px-5 py-2 w-80 sm:w-96 rounded-lg"
-                                required
                             />
                         </div>
                         <div>
@@ -44,7 +42,6 @@
                                 type="password"
                                 placeholder="Saisissez votre mot de passe"
                                 class="border  px-5 py-2 w-80 sm:w-96 rounded-lg"
-                                required
                             />
                             <p class="text-sm" id="requirements"><span id="maj">1 majuscule,</span> <span id="min">1 minuscule,</span> <span id="digit">1 chiffre,</span> <span id="characters">8 caractères</span></p>
                         </div>

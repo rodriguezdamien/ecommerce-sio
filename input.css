@@ -1,41 +1,41 @@
 @import "tailwindcss/base";
-@import "./product.css";
+@import "/public/css/product.css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import "./cart.css";
+@import "/public/css/cart.css";
 @font-face {
     font-family: "banana-grotesk";
-    src: url("./fonts/banana-grotesk/banana-grotesk-extralight.otf");
+    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-extralight.otf");
     font-weight: 200;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("./fonts/banana-grotesk/banana-grotesk-regular.otf");
+    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-regular.otf");
     font-weight: 400;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("./fonts/banana-grotesk/banana-grotesk-medium.otf");
+    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-medium.otf");
     font-weight: 500;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("./fonts/banana-grotesk/banana-grotesk-semibold.otf");
+    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-semibold.otf");
     font-weight: 600;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("./fonts/banana-grotesk/banana-grotesk-bold.otf");
+    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-bold.otf");
     font-weight: 700;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("./fonts/banana-grotesk/banana-grotesk-extrabold.otf");
+    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-extrabold.otf");
     font-weight: 800;
 }
 
@@ -96,7 +96,7 @@ body {
     }
 
     #comiket div {
-        background-image: url(../images/category/bg/comiket-bg.png);
+        background-image: url(/public/images/category/bg/comiket-bg.png);
         --cat-color: rgba(0, 255, 166, 0.5);
     }
 
@@ -146,4 +146,12 @@ body {
         transform: scale(1.02);
         transition: transform 0.2s;
     }
+}
+
+.invalid{
+    @apply text-red-500;
+}
+
+.invalid-border{
+    @apply border-red-500;
 }

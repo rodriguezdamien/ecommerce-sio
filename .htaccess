@@ -1,4 +1,15 @@
 RewriteEngine on
 
+ErrorDocument 404 /404/
+Redirect 404 /test/test
+
+#Front Pages
+
+#User Pages
 RewriteRule ^login(/?)$ index.php?controller=Login&action=renderView [nc]
 RewriteRule ^register(/?)$ index.php?controller=Register&action=renderView [nc]
+RewriteCond %{REQUEST_METHOD} ^POST$
+RewriteRule ^register/send(/?)$ index.php?controller=Register&action=sendForm [nc]
+
+
+#Back Pages

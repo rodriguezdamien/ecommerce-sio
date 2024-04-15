@@ -4,26 +4,24 @@ use gakuDB;
 create user if not exists 'gaku_view' IDENTIFIED BY 'stopl0okingatp4sswd!';
 
 -- ne pas donner toutes ces perms, enfin pas à ce compte
--- penser à changer le mdp du script pour le déploiement !! cc github
 grant select,update,insert,delete on gakuDB.* to 'gaku_view';
 
--- Côté utilisateur
+-- Côté User
 create table if not exists `Role` (
         `id` int not null auto_increment,
         `nom` varchar(20) not null,
         PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
-create table if not exists `Utilisateur` (
+create table if not exists `User` (
         `id` int not null auto_increment,
         `prenom` varchar(15) null,
         `nom` varchar(15) null,
         `mail` varchar(50) not null,
-        `passwdHash` varchar(100) not null,
-        `adresseFacturation` varchar(60),
-        `CPFacturation` varchar(8),
-        `villeFacturation` varchar(20),
+        `passwdHash` varchar(255) not null,
         `idRole` int not null default 0,
+        `phone` varchar(10) null,
+        `dateNaissance` DateTime null,
         PRIMARY KEY (`id`),
         FOREIGN KEY (`idRole`) REFERENCES `Role` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
@@ -59,20 +57,20 @@ create table if not exists `Album` (
 
 create table if not exists `Noter` (
         `idAlbum` int not null,
-        `idUtilisateur` int not null,
+        `idUser` int not null,
         `note` tinyint not null,
-        primary key (`idAlbum`,`idUtilisateur`),
+        primary key (`idAlbum`,`idUser`),
         FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`),
-        FOREIGN KEY(`idUtilisateur`) REFERENCES `Utilisateur`(`id`)
+        FOREIGN KEY(`idUser`) REFERENCES `User`(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 create table if not exists `Aimer` (
         `idAlbum` int not null,
-        `idUtilisateur` int not null,
-        primary key (`idAlbum`,`idUtilisateur`),
+        `idUser` int not null,
+        primary key (`idAlbum`,`idUser`),
         FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`),
-        FOREIGN KEY(`idUtilisateur`) REFERENCES `Utilisateur`(`id`)
+        FOREIGN KEY(`idUser`) REFERENCES `User`(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 create table if not exists `Evenement` (
@@ -131,11 +129,11 @@ create table if not exists `Contenir`(
 create table if not exists `Panier` (
         `idAlbum` int not null,
         `idFormat` int not null,
-        `idUtilisateur` int not null,
+        `idUser` int not null,
         `qte` tinyint not null,
-        primary key (`idAlbum`,`idFormat`,`idUtilisateur`),
+        primary key (`idAlbum`,`idFormat`,`idUser`),
         FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`),
-        FOREIGN KEY(`idUtilisateur`) REFERENCES `Utilisateur`(`id`)
+        FOREIGN KEY(`idUser`) REFERENCES `User`(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 create table if not exists `Commande` (
@@ -147,10 +145,10 @@ create table if not exists `Commande` (
         `cpLivraison` varchar(6) not null,
         `villeLivraison` varchar(50) not null,
         `numeroTel` varchar(13) not null,
-        `idUtilisateur` int not null,
+        `idUser` int not null,
         `note` varchar(300) not null default 'Aucune',
         primary key(`id`),
-        foreign key(`idUtilisateur`) REFERENCES `Utilisateur`(`id`)
+        foreign key(`idUser`) REFERENCES `User`(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -202,13 +200,18 @@ BEGIN
         END IF;
 END//
 
-CREATE TRIGGER after_insert_avancer BEFORE INSERT
+CREATE TRIGGER after_insert_commande AFTER INSERT
+ON COMMANDE FOR EACH ROW
+BEGIN
+        INSERT into Avancer(idCommande,idStatut,dateStatut) values (NEW.id,0,NOW());
+END//
+CREATE TRIGGER before_insert_avancer BEFORE INSERT
 ON Avancer FOR EACH ROW
 BEGIN
         DECLARE DernierStatut int;
         SELECT IFNULL((SELECT MAX(idStatut) FROM Avancer WHERE idCommande = NEW.idCommande),0) + 1 INTO DernierStatut;
         IF (DernierStatut < 6) THEN
-                SET NEW.idStatut = DernierStatut; 
+                SET NEW.idStatut = (Select id from statut where id = DernierStatut); 
         ELSE
                 SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le dernier statut a déjà été attribué, il n''est pas possible d''en ajouter.';
                 END IF;
@@ -274,7 +277,7 @@ call addMusiqueInAlbum('The Lady In The Moon (From Kodaly)', 'Gabor Szabo','Drea
 call addMusiqueInAlbum('Ferris Wheel', 'Gabor Szabo','Dreams');
 INSERT INTO Evenement(id,nom) values ('C','Comic Market');
 INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('C',103,2023);
-call addAlbum('AD​:​PIANO VIVACE 2','Diverse System',0,'C',103,20,10,'ADPIANOVIVACE2.jpg');
+call addAlbum('AD:PIANO VIVACE 2','Diverse System',0,'C',103,20,10,'ADPIANOVIVACE2.jpg');
 call addMusiqueInAlbum('Reverie','Gardens feat. xia','AD:PIANO VIVACE 2');
 call addMusiqueInAlbum('ViViD Delusion','KARUT','AD:PIANO VIVACE 2');
 call addMusiqueInAlbum('Flying Emotion', 'Blacky','AD:PIANO VIVACE 2');
@@ -591,7 +594,7 @@ CALL addMusiqueInAlbum('Summery (Club Extended Mix)', 'KO3', 'SHIFT');
 
 INSERT INTO Role(nom) values ('admin'),('user');
 
-INSERT INTO Utilisateur(prenom,nom,mail,passwdHash,idRole) values ('Damien','R.','damien@damdam.fr','','1'),('Berre','Etang','Etang@berre.fr','','2'),('Eva','Cuhassion','cuhassion.eva@genmarre.com','','2');
+INSERT INTO User(prenom,nom,mail,passwdHash,idRole) values ('Damien','R.','damien@damdam.fr','','1'),('Berre','Etang','Etang@berre.fr','','2'),('Eva','Cuhassion','cuhassion.eva@genmarre.com','','2');
 
 -- Insertion de l'album RUNABOUT (https://diverse.jp/dvsp-0229/), vieille méthode avant écriture des fonctions
 INSERT INTO Artiste(nom) values('tanigon'),('void (Mournfinale)'),
@@ -640,17 +643,42 @@ INSERT INTO Contenir (idAlbum,idMusique,positionOrdreAlbum) values
 INSERT INTO PROVENIR(idAlbum,idEvent,numEdition) values ((select id from Album where nom = 'RUNABOUT'),'M3',44);
 
 -- Insertion des commandes + test trigger
-INSERT INTO Commande(prenomDestinataire,nomDestinataire,dateHeure,adresseLivraison,cpLivraison,villeLivraison,numeroTel,idUtilisateur) values
-('Damien','Rocher',NOW(),'30 Rue du Quelque','30000','Part','+06 51 23 45 67',(select id from Utilisateur where nom = 'R.')),
-('Damien','Rocher',ADDTIME(NOW(), "1000000"),'30 Rue du Quelque','30001','Part','+99 99 99 99 99',(select id from Utilisateur where nom = 'R.')),
-('Etang','Berre',ADDTIME(NOW(),"-1000000"),'10 Avenue de la loose','101010','Pas un winner','+01 10 20 32 12',(select id from Utilisateur where nom='Etang')),
-('Eva','Cuhassion',ADDTIME(NOW(),"200000000"),'999 UNKNOWN PLACE','99999','???','+33 06 33 40 33 23',(select id from Utilisateur where nom='Cuhassion'));
+
+INSERT INTO STATUT(id,libelle) values (1,'Non validée'),(2,'Préparation'),(3,'Pris en charge'),(4,'en cours d''acheminement'),(5,'Livré');
+
+INSERT INTO Commande(prenomDestinataire,nomDestinataire,dateHeure,adresseLivraison,cpLivraison,villeLivraison,numeroTel,idUser) values
+('Damien','Rocher',NOW(),'30 Rue du Quelque','30000','Part','+06 51 23 45 67',(select id from User where nom = 'R.')),
+('Damien','Rocher',ADDTIME(NOW(), "1000000"),'30 Rue du Quelque','30001','Part','+99 99 99 99 99',(select id from User where nom = 'R.')),
+('Etang','Berre',ADDTIME(NOW(),"-1000000"),'10 Avenue de la loose','101010','Pas un winner','+01 10 20 32 12',(select id from User where nom='Etang')),
+('Eva','Cuhassion',ADDTIME(NOW(),"200000000"),'999 UNKNOWN PLACE','99999','???','+33 06 33 40 33 23',(select id from User where nom='Cuhassion'));
 
 INSERT INTO Commander(idCommande,idAlbum,qte) values ((select id from Commande where cpLivraison="30000"),1,3),((select id from Commande where cpLivraison="30001"),1,3),((select id from Commande where cpLivraison="30001"),2,1),((select id from Commande where cpLivraison="30001"),3,1)
                                                       ,((select id from Commande where cpLivraison="101010"),10,1),((select id from Commande where cpLivraison="99999"),13,1),((select id from Commande where cpLivraison="99999"),14,1);
 
-INSERT INTO STATUT(id,libelle) values (1,'Non validée'),(2,'Préparation'),(3,'Pris en charge'),(4,'en cours d''acheminement'),(5,'Livré');
+update commande set note = 'Salut c''est gillou' where idUser = 3;
 
-INSERT INTO AVANCER(idCommande,idStatut,dateStatut) values (1,0,NOW()),(2,0,ADDTIME(NOW(),"-1000000")),(2,0,ADDTIME(NOW(),"-500000")),(3,0,NOW()),(3,0,ADDTIME(NOW(),100000)),(3,0,ADDTIME(NOW(),200000)),(4,0,NOW());
+ALTER TABLE Statut ADD COLUMN `idSuivant` int;
+ALTER TABLE STATUT ADD COLUMN `idPrecedent` int;
 
-update commande set note = 'Salut c''est gillou' where idUtilisateur = 3;
+Alter TABLE STATUT ADD FOREIGN KEY (`idPrecedent`) REFERENCES STATUT(`id`);
+ALTER TABLE STATUT ADD FOREIGN KEY (`idSuivant`) REFERENCES Statut(`id`);
+
+create table if not exists `Employe` (
+        `id` int not null auto_increment,
+        `nom` varchar(30) not null,
+        `prenom` varchar(30) not null,
+        PRIMARY KEY (`id`)
+        ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
+
+alter table Commande add column `idResponsable` int;
+alter table Commande add FOREIGN KEY (`idResponsable`) REFERENCES `Employe`(`id`);
+
+update Statut set idSuivant = 2 where id = 1;
+update Statut set idSuivant = 3, idPrecedent = 1 where id = 2;
+update Statut set idSuivant = 4, idPrecedent = 2 where id = 3;
+update Statut set idSuivant = 5, idPrecedent = 3 where id = 4;
+update Statut set idPrecedent = 4 where id = 5;
+
+update Commande set idResponsable = 1 where exists(select * from Avancer where idStatut = 3);
+
+insert into employe(nom,prenom) values ('Gerard','Menvussat'),('Eva','Cuhassion'),('John','Doe');

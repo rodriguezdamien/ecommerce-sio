@@ -7,6 +7,6 @@ class LoginController extends Controller
     {
         $params['view'] = 'login';
         $scripts = [];
-        self::render('templates/login.php', $params, $scripts);
+        self::render('templates/user/login.php', $params, $scripts);
     }
 }

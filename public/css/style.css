@@ -693,7 +693,7 @@ video {
 }
 
 #comiket div {
-  background-image: url(../images/category/bg/comiket-bg.png);
+  background-image: url(/public/images/category/bg/comiket-bg.png);
   --cat-color: rgba(0, 255, 166, 0.5);
 }
 
@@ -876,6 +876,16 @@ video {
   margin-bottom: 2rem;
 }
 
+.my-\[10vh\] {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
+
+.my-\[15vh\] {
+  margin-top: 15vh;
+  margin-bottom: 15vh;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -1026,14 +1036,6 @@ video {
 
 .min-h-\[75vh\] {
   min-height: 75vh;
-}
-
-.min-h-\[600px\] {
-  min-height: 600px;
-}
-
-.min-h-\[620px\] {
-  min-height: 620px;
 }
 
 .w-10 {
@@ -1263,11 +1265,6 @@ video {
   border-color: rgb(255 255 255 / 0.3);
 }
 
-.border-red-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(248 113 113 / var(--tw-border-opacity));
-}
-
 .border-b-slate-300 {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(203 213 225 / var(--tw-border-opacity));
@@ -1467,6 +1464,11 @@ video {
   padding-bottom: 2rem;
 }
 
+.py-\[10vh\] {
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+}
+
 .pb-16 {
   padding-bottom: 4rem;
 }
@@ -1578,16 +1580,6 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-red-400 {
-  --tw-text-opacity: 1;
-  color: rgb(248 113 113 / var(--tw-text-opacity));
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
-}
-
 .opacity-90 {
   opacity: 0.9;
 }
@@ -1621,7 +1613,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("./fonts/banana-grotesk/banana-grotesk-extralight.otf");
+  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-extralight.otf");
 
   font-weight: 200;
 }
@@ -1629,7 +1621,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("./fonts/banana-grotesk/banana-grotesk-regular.otf");
+  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-regular.otf");
 
   font-weight: 400;
 }
@@ -1637,7 +1629,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("./fonts/banana-grotesk/banana-grotesk-medium.otf");
+  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-medium.otf");
 
   font-weight: 500;
 }
@@ -1645,7 +1637,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("./fonts/banana-grotesk/banana-grotesk-semibold.otf");
+  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-semibold.otf");
 
   font-weight: 600;
 }
@@ -1653,7 +1645,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("./fonts/banana-grotesk/banana-grotesk-bold.otf");
+  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-bold.otf");
 
   font-weight: 700;
 }
@@ -1661,7 +1653,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("./fonts/banana-grotesk/banana-grotesk-extrabold.otf");
+  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-extrabold.otf");
 
   font-weight: 800;
 }
@@ -1673,6 +1665,16 @@ body {
 .activated i {
   transform: rotate(180deg);
   transition: transform 0.15s;
+}
+
+.invalid {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.invalid-border {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
 }
 
 .focus-visible\:outline-transparent:focus-visible {

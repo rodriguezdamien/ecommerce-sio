@@ -7,6 +7,6 @@ class HomeController extends Controller
     {
         $params['view'] = 'home';
         $scripts = ['splide.min.js', 'accueil.js'];
-        self::render('templates/home.php', $params, $scripts);
+        self::render('templates/front/home.php', $params, $scripts);
     }
 }
