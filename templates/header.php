@@ -61,7 +61,19 @@
                                 <i class="ri-search-line text-xl"></i>
                             </div>
                         </div>
+                        
                         <div id="user-pc" class="items-center hidden md:flex gap-6">
+                        <a href="/cart/">
+                            <div class="relative">
+                                <i class="ri-shopping-basket-line text-3xl"></i>
+                                <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
+                                    <div class="absolute font-bold flex items-center justify-center right-[-10px] top-[-3px] h-5 w-5 text-sm rounded-full text-center text-white bg-red-500">
+                                        <?= count($_SESSION['cart']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </a>
+                        <?php if (!isset($_SESSION['id'])): ?> 
                             <div class="cursor-pointer">
                                 <a href="/login/">
                                 <p class="whitespace-nowrap">Se connecter</p>
@@ -70,16 +82,39 @@
                             <a href="/register/">
                             <button class="rounded-full bg-black text-white px-7 py-2">S'inscrire</button>
                             </a>
+                        <?php else: ?>
+                            <p class="whitespace-nowrap">Bonjour, <span class="font-bold"><?= $_SESSION['prenom'] ?></span> ! </p>
+                            <a href="/account/">
+                            <i class="ri-user-3-line text-3xl"></i>
+                            </a>
+                        <?php endif; ?>
                         </div>
+                       
+
 
                         <div id="user-mobile" class="md:hidden flex items-center gap-6">
+                            
                             <div class="relative">
                                 <input class="h-10 rounded-full px-5 w-full pr-10 border" placeholder="Recherche ..." />
                                 <i class="ri-search-line absolute top-[7px] right-[14px] text-xl cursor-pointer"></i>
                             </div>
+                            <a href="/cart/">
+                            <div class="relative">
+                                <i class="ri-shopping-basket-line text-3xl"></i>
+                                <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
+                                    <div class="absolute font-bold flex items-center justify-center right-[-10px] top-[-3px] h-5 w-5 text-sm rounded-full text-center text-white bg-red-500">
+                                        <?= count($_SESSION['cart']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </a>
+                            <?php if (!isset($_SESSION['user'])): ?> 
+                            <a href="/login/">
                             <button>
                                 <i class="ri-user-3-line text-3xl"></i>
                             </button>
+                            </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

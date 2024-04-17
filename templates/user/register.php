@@ -2,8 +2,10 @@
             <div class=" text-white flex justify-center">
                 <div class="my-[10vh] m-auto bg-white text-black font-extralight px-10 py-4 rounded-lg">
                     <h2 class="text-3xl font-extrabold my-5 text-center">Créer un compte</h2>
-
-                    <form action="/register/send/" enctype="multipart/form-data" method="post" class="flex flex-col text-left gap-4" id="register">
+                    <?php if (isset($params['error']) && !empty($params['error'])): ?>
+                        <div class="mb-5 border-2 border-red-500 bg-red-200 text-red-700 rounded-lg p-3 w-80 sm:w-96"><p><?= $params['error'] ?></p></div>
+                    <?php endif; ?>
+                    <form action="/register/" enctype="multipart/form-data" method="post" class="flex flex-col text-left gap-4" id="register">
                         <div>
                             <label for="prenom"><p class="mb-1">Prénom</p></label>
                             <input

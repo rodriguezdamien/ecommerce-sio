@@ -1,12 +1,12 @@
 <?php
 const HOST = '127.0.0.1';
 const PORT = '3306';
-const DBNAME = 'db_etudiants';
+const DBNAME = 'gakudb';
 const CHARSET = 'utf8';
-const LOGIN = 'root';
-const PASSWORD = '';
+const LOGIN = 'gaku_admin';
+const PASSWORD = 'stopl0okingatp4sswd!';
 
-class DBManager
+class Manager
 {
     /**
      * Classe de gestion de la base de donnée (?)
@@ -30,19 +30,5 @@ class DBManager
             }
         }
         return self::$cnx;
-    }
-
-    /**
-     * Réinitialise la base de donnée à son état d'origine.
-     * Vraiment origine, retour dans le passé carrément.
-     * (Je crois que c'est ça AddFixtures() ?)
-     */
-    public static function reset()
-    {
-        if (self::$cnx == null) {
-            self::$cnx = self::connect();
-        }
-        $query = self::$cnx->prepare(file_get_contents(ROOT . '/script.sql'));
-        $query->execute();
     }
 }

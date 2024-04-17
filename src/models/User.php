@@ -1,14 +1,16 @@
 <?php
 class User
 {
+    private string $id;
     private string $prenom;
     private string $nom;
     private string $mail;
-    private string $phone;
-    private DateTime $dateNaissance;
+    private ?string $phone;
+    private ?DateTime $dateNaissance;
 
-    function __construct(string $prenom, string $nom, string $mail, DateTime $dateNaissance, string $phone)
+    function __construct(int $id, string $prenom, string $nom, string $mail, ?DateTime $dateNaissance, ?string $phone)
     {
+        $this->id = $id;
         $this->prenom = $prenom;
         $this->nom = $nom;
         $this->mail = $mail;
@@ -17,6 +19,11 @@ class User
     }
 
     // region Accesseurs
+    public function GetId(): string
+    {
+        return $this->id;
+    }
+
     public function GetPrenom(): string
     {
         return $this->prenom;
@@ -32,12 +39,12 @@ class User
         return $this->mail;
     }
 
-    public function GetPhone(): string
+    public function GetPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function GetDateNaissance(): DateTime
+    public function GetDateNaissance(): ?DateTime
     {
         return $this->dateNaissance;
     }

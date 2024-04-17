@@ -2,7 +2,10 @@
             <div class="flex justify-center items-center min-h-[500px] h-[77vh]">
                 <div class="sm:m-auto bg-white text-black font-extralight px-10 py-4 my-10 rounded-lg">
                     <h2 class="text-3xl font-extrabold mt-5 mb-7 text-center">Connexion</h2>
-                    <form action="" class="flex flex-col text-left gap-5 items-center">
+                    <?php if (isset($params['error']) && !empty($params['error'])): ?>
+                        <div class="mb-5 border-2 border-red-500 bg-red-200 text-red-700 rounded-lg p-3"><?= $params['error'] ?></div>
+                    <?php endif; ?>
+                    <form action="/login" method="post" class="flex flex-col text-left gap-5 items-center">
                         <div>
                             <label for="mail"><p class="mb-1">Adresse mail</p></label>
                             <input

@@ -2,7 +2,7 @@
             <div class="w-full bg-gradient-sunset py-10">
                 <div class="flex justify-center items-center gap-x-9 flex-col-reverse md:flex-row">
                     <div class="text-center text-white">
-                        <h2 class="font-extrabold text-4xl">Comiket 101</h2>
+                        <h2 class="font-extrabold text-4xl">Media Music Market 53</h2>
                         <p class="font-extralight text-1xl">Les albums de l'évènements sont arrivés.</p>
                         <button class="rounded-full bg-white text-black font-semibold py-2 px-8 m-4">
                             Découvrir >>
@@ -17,8 +17,8 @@
         <section id="introduction" class="text-center bg-white py-6">
             <h2 class="font-bold text-3xl">Bienvenue dans le Dōjin.</h2>
             <p class="mt-2 font-extralight">
-                Le Japon a en lui une communauté importante de Dōjin, des créateurs indépendants. Découvrez leurs
-                créations importés par nos soins
+                Le Japon a en lui une communauté importante de créateurs indépendants. Découvrez leurs
+                créations musicales importés du Japon par nos soins.
             </p>
         </section>
         <section id="section-trending   " class="bg-black w-full text-white py-5">
@@ -28,6 +28,7 @@
                     Si tout le monde se les arrachent, c'est qu'ils peuvent sûrement t'intéresser.
                 </p>
             </div>
+            <?php if (isset($params['trending_albums']) && !empty($params['trending_albums'])): ?>
             <div class="splide m-auto mt-5" role="group" aria-label="Splide Basic HTML Example" id="trending">
                 <div class="splide__arrows z-40 w-full">
                     <button
@@ -43,170 +44,43 @@
                 </div>
                 <div class="splide__track">
                     <ul class="splide__list">
-                        <li class="splide__slide">
-                            <div class="product">
-                                <a href="#">
+                    <?php foreach ($params['trending_albums'] as $album): ?>    
+                    <li class="splide__slide">
+                            <div class="product cursor-pointer">
+                                <a href="/product/<?= htmlspecialchars($album->getId()) ?>">
                                     <div class="relative flex justify-center">
-                                        <img src="./public/images/album_covers/Primary.webp" alt="Artifacts Zero" />
+                                        <img src="<?= CDN_URL . '/images/album/' . htmlspecialchars($album->GetUriImage()) ?>" alt="<?= $album->GetNom() ?>" />
                                         <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
                                             Voir le produit
                                         </button>
                                     </div>
                                     <div class="flex justify-between font-bold">
                                         <div class="text-sm">
-                                            <p>ARTIFACTS: ZERO</p>
-                                            <p class="font-light">Connexio</p>
+                                            <p><?= $album->GetNom() ?></p>
+                                            <p class="font-light"><?= !empty($album->GetArtiste()) ? $album->GetArtiste() : $album->GetLabel() ?></p>
                                         </div>
-                                        <p class="align-middle text-md">15.99€</p>
+                                        <p class="text-right text-xl whitespace-nowrap"><?= $album->GetPrix() ?> €</p>
                                     </div>
                                 </a>
                             </div>
                         </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/Artifacts.webp" alt="Artifacts Zero" class="peer" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/CurrentVoltage.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black px-6 py-1 rounded-md absolute text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/ephmr.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/fromScratch.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/GlitchedUniverse.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/NeverForgetVacatation6.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/NxEnchant02.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/Primary.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
+                        <?php endforeach; ?>
+                        
                     </ul>
                 </div>
             </div>
+            <?php else: ?>
+            <div class="flex justify-center items-center py-10">
+                <p class="text-xl">Une erreur est survenue lors du chargement des albums.</p>
+            </div>            
+            <?php endif; ?>
         </section>
         <section id="section-preorder" class="bg-[#ED2262] text-white py-5">
             <div class="lg:mx-44 md:mx-24 mx-10">
                 <h2 class="font-bold text-2xl">Précommandes</h2>
                 <p class="font-extralight">Ils débarquent très bientôt, réservez vos disques !</p>
             </div>
+            <?php if (isset($params['preorder_albums']) && !empty($params['preorder_albums'])): ?>
             <div class="splide m-auto mt-5" role="group" aria-label="Splide Basic HTML Example" id="preorder">
                 <div class="splide__arrows z-40 w-full">
                     <button
@@ -222,164 +96,35 @@
                 </div>
                 <div class="splide__track">
                     <ul class="splide__list">
+                    <?php foreach ($params['preorder_albums'] as $album): ?>        
                         <li class="splide__slide">
-                            <div class="product">
-                                <a href="#">
+                            <div class="product cursor-pointer">
+                                <a href="/product/<?= htmlspecialchars($album->getId()) ?>">
                                     <div class="relative flex justify-center">
-                                        <img src="./public/images/album_covers/Primary.webp" alt="Artifacts Zero" />
+                                        <img src="<?= CDN_URL . '/images/album/' . htmlspecialchars($album->GetUriImage()) ?>" alt="<?= $album->GetNom() ?>" />
                                         <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
                                             Voir le produit
                                         </button>
                                     </div>
                                     <div class="flex justify-between font-bold">
                                         <div class="text-sm">
-                                            <p>ARTIFACTS: ZERO</p>
-                                            <p class="font-light">Connexio</p>
+                                            <p><?= $album->GetNom() ?></p>
+                                            <p class="font-light"><?= !empty($album->GetArtiste()) ? $album->GetArtiste() : $album->GetLabel() ?></p>
                                         </div>
-                                        <p class="align-middle text-md">15.99€</p>
+                                        <p class="text-right text-xl whitespace-nowrap"><?= $album->GetPrix() ?> €</p>
                                     </div>
                                 </a>
                             </div>
                         </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/Artifacts.webp" alt="Artifacts Zero" class="peer" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/CurrentVoltage.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black px-6 py-1 rounded-md absolute text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/ephmr.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/fromScratch.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/GlitchedUniverse.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/NeverForgetVacatation6.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/NxEnchant02.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="product">
-                                <div class="relative flex justify-center">
-                                    <img src="./public/images/album_covers/Primary.webp" alt="Artifacts Zero" />
-                                    <button class="bg-white text-black absolute px-6 py-1 rounded-md text-sm">
-                                        Voir le produit
-                                    </button>
-                                </div>
-                                <div class="flex justify-between font-bold">
-                                    <div class="text-sm">
-                                        <p>ARTIFACTS: ZERO</p>
-                                        <p class="font-light">Connexio</p>
-                                    </div>
-                                    <p class="align-middle text-md">15.99€</p>
-                                </div>
-                            </div>
-                        </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
+            <?php else: ?>
+            <div class="flex justify-center items-center py-10">
+                <p class="text-xl">Une erreur est survenue lors du chargement des albums.</p>
+            </div>            
+            <?php endif; ?>
         </section>
         <section id="section-discover" class="bg-white text-black py-5">
             <div class="lg:mx-44 md:mx-24 mx-10 mb-5">
@@ -463,20 +208,20 @@
                 <div class="categories my-8 grid grid-flow-row md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto">
                     <div
                         id="comiket"
-                        class="border border-white/30 rounded-lg h-60 flex justify-center items-center overflow-hidden"
+                        class="border border-white/30 rounded-lg h-60 flex justify-center items-center overflow-hidden cursor-pointer"
                     >
                         <div class="w-full h-full flex justify-center items-center relative">
                             <img src="./public/images/category/icons/comiket.png" class="h-40 z-50" />
                             <span class="absolute w-full h-16"></span>
                         </div>
                     </div>
-                    <div id="m3" class="border border-white/30 rounded-lg h-60 relative overflow-hidden">
+                    <div id="m3" class="border border-white/30 rounded-lg h-60 relative overflow-hidden cursor-pointer">
                         <div class="w-full h-full flex justify-center items-center">
                             <img src="./public/images/category/icons/m3.png" class="h-32" />
                             <span class="absolute w-full h-16"></span>
                         </div>
                     </div>
-                    <div id="touhou" class="border border-white/30 rounded-lg h-60 relative overflow-hidden">
+                    <div id="touhou" class="border border-white/30 rounded-lg h-60 relative overflow-hidden cursor-pointer">
                         <div class="w-full h-full flex justify-center items-center">
                             <img src="./public/images/category/icons/touhou.png" class="h-40" />
                             <span class="absolute w-full h-16"></span>
@@ -484,7 +229,7 @@
                     </div>
                     <div
                         id="misc"
-                        class="border border-white/30 rounded-lg lg:col-span-3 h-60 lg:h-40 relative overflow-hidden"
+                        class="border border-white/30 rounded-lg lg:col-span-3 h-60 lg:h-40 relative overflow-hidden cursor-pointer"
                     >
                         <div class="w-full h-full flex justify-center items-center">
                             <h2 class="font-bold text-2xl">Divers</h2>

@@ -1,15 +1,26 @@
 RewriteEngine on
 
-ErrorDocument 404 /404/
-Redirect 404 /test/test
+ErrorDocument 404 /index.php?error=404
 
 #Front Pages
 
 #User Pages
-RewriteRule ^login(/?)$ index.php?controller=Login&action=renderView [nc]
-RewriteRule ^register(/?)$ index.php?controller=Register&action=renderView [nc]
-RewriteCond %{REQUEST_METHOD} ^POST$
-RewriteRule ^register/send(/?)$ index.php?controller=Register&action=sendForm [nc]
+RewriteCond %{REQUEST_METHOD} ^GET$
+RewriteRule ^login(/?)$ index.php?controller=Login&action=renderView [nc,qsa]
 
+RewriteCond %{REQUEST_METHOD} ^POST$
+RewriteRule ^login(/?)$ index.php?controller=Login&action=login [nc]
+
+#Conditions de réécriture : Si la requête est en POST, alors on part du principe que le formulaire a été rempli : on essaye de l'ajouter à la BDD.
+#Pour les autres types de requêtes, renvoie simplement sur le formulaire à remplir.
+RewriteCond %{REQUEST_METHOD} ^GET$
+RewriteRule ^register(/?)$ index.php?controller=Register&action=renderView [NC,L,qsa]
+
+RewriteCond %{REQUEST_METHOD} ^POST$
+RewriteRule ^register(/?)$ index.php?controller=Register&action=sendForm [NC,L]
+
+#Account Settings Page
+RewriteRule ^account(/?)$ index.php?controller=AccountSettings&action=renderView [NC,L]
+RewriteRule ^account/logout(/?)$ index.php?controller=AccountSettings&action=disconnect [NC,L]
 
 #Back Pages

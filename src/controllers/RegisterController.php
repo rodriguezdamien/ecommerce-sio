@@ -7,19 +7,32 @@ class RegisterController extends Controller
     public static function renderView($params)
     {
         $scripts = ['register-form.js'];
+        if (isset($params['err'])) {
+            switch ($params['err']) {
+                case 405:
+                    $params['error'] = 'Une erreur est survenue.';
+                    break;
+            }
+        }
         self::render('templates/user/register.php', $params, $scripts);
     }
 
     public static function sendForm($params)
     {
-        if ($_SERVER['HTTP_METHOD'] != 'POST') {
-            header('Location: /register?error=405');
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            header('Location: /register?err=405');
+            exit;
         } else {
             try {
-                UserManager::registerNew($params);
-                header('Location: /login?registered=true');
+                if (UserManager::registerNew()) {
+                    header('Location: /login');
+                } else {
+                    $params['error'] = 'Erreur lors de la création du compte. Veuillez réessayer.';
+                    self::renderView($params);
+                };
             } catch (Exception $ex) {
-                header('Location: /register?error=500');
+                $params['error'] = $ex->getMessage();
+                self::renderView($params);
             }
         }
     }

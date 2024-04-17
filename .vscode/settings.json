@@ -1,3 +1,18 @@
 {
-    "php.version": "8.3"
+    "php.version": "8.3",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 100,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "XAMP",
+            "username": "root",
+            "database": "gakudb",
+            "password": ""
+        }
+    ]
 }
