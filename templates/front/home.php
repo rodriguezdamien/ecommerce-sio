@@ -180,10 +180,9 @@
                         <img src="<?= CDN_URL ?>/images/LiliumRecords.png" />
                         <i class="ri-arrow-drop-down-line text-5xl hidden sm:block"></i>
                     </div>
-                    <div id="mottomusic-content" class="accordion-content">
+                    <div id="liliumrecords-content" class="accordion-content">
                         <p class="pb-5 px-10">
-                            NEXTLIGHT est un label japonais utilisant des voix synthétisées telles que les Vocaloids
-                            (Hatsune Miku, Kagamine Rin, GAMU...) pour produire des musiques électros formidables.
+                        Lilium Records est un label musical qui se spécialise dans les sons de club. Leur objectif est de fournir des pistes de haute qualité à un public international. Dirigé par Freezer, le label explore diverses orientations musicales, mettant l'accent sur la Bass Music et produisant également du Hardcore, entre autres. En plus de leurs productions commerciales, telles que des remixes de chansons du groupe idol "notall" ou des chansons de couverture d'anime interprétées par des idoles populaires, Lilium Records fournit également de nombreuses pistes pour des jeux d'arcade et des jeux mobiles.
                         </p>
                     </div>
                 </div>
@@ -192,10 +191,9 @@
                         <img src="<?= CDN_URL ?>/images/mottomusic.png" />
                         <i class="ri-arrow-drop-down-line text-5xl hidden sm:block"></i>
                     </div>
-                    <div id="nextlight-content" class="accordion-content">
+                    <div id="mottomusic-content" class="accordion-content">
                         <p class="pb-5 px-10">
-                            NEXTLIGHT est un label japonais utilisant des voix synthétisées telles que les Vocaloids
-                            (Hatsune Miku, Kagamine Rin, GAMU...) pour produire des musiques électros formidables.
+                        Motto Music est un projet musical centré sur la musique de danse d'artistes Internet. Leurs pistes sont régulièrement incluses dans des playlists officielles telles que "キラキラポップ:ジャパン" sur Spotify ou "デジタルネイティブ" sur Youtube. Avec plus de 50 000 auditeurs mensuels sur Spotify en avril 2023 et leur morceau "Spotlight" dépassant le million de lectures, Motto Music attire l'attention. 
                         </p>
                     </div>
                 </div>
