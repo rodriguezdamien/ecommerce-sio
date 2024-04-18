@@ -9,7 +9,7 @@
                         </button>
                     </div>
                     <div>
-                        <img src="./public/images/album 3d.png" class="w-auto h-96 object-contain" />
+                        <img src="<?= CDN_URL ?>/images/album 3d.png" class="w-auto h-96 object-contain" />
                     </div>
                 </div>
             </div>
@@ -137,7 +137,7 @@
             <div class="mx-auto w-5/6 md:w-3/4 xl:w-4/6 drop-shadow-xl mb-8">
                 <div class="bg-black text-white relative rounded-t-xl accordion">
                     <div class="flex justify-center sm:justify-between items-center py-5 px-10">
-                        <img src="./public/images/tanoc.svg" />
+                        <img src="<?= CDN_URL ?>/images/tanoc.svg" />
                         <i class="ri-arrow-drop-down-line text-5xl hidden sm:block"></i>
                     </div>
                     <div id="tanoc-content" class="accordion-content">
@@ -152,7 +152,7 @@
                 </div>
                 <div class="bg-megarex text-white relative accordion">
                     <div class="flex justify-center sm:justify-between items-center py-5 px-10">
-                        <img src="./public/images/megarex.png" />
+                        <img src="<?= CDN_URL ?>/images/megarex.png" />
                         <i class="ri-arrow-drop-down-line text-5xl hidden sm:block"></i>
                     </div>
                     <div id="megarex-content" class="accordion-content">
@@ -165,7 +165,7 @@
                 </div>
                 <div class="text-white bg-[#222227] relative accordion">
                     <div class="flex justify-center sm:justify-between items-center py-5 px-10">
-                        <img src="./public/images/nextlight.png" />
+                        <img src="<?= CDN_URL ?>/images/nextlight.png" />
                         <i class="ri-arrow-drop-down-line text-5xl hidden sm:block"></i>
                     </div>
                     <div id="nextlight-content" class="accordion-content">
@@ -177,7 +177,7 @@
                 </div>
                 <div class="text-black bg-white relative accordion">
                     <div class="flex justify-center sm:justify-between items-center py-5 px-10">
-                        <img src="./public/images/LiliumRecords.png" />
+                        <img src="<?= CDN_URL ?>/images/LiliumRecords.png" />
                         <i class="ri-arrow-drop-down-line text-5xl hidden sm:block"></i>
                     </div>
                     <div id="mottomusic-content" class="accordion-content">
@@ -189,7 +189,7 @@
                 </div>
                 <div class="text-white bg-[#F97A7A] relative rounded-b-lg accordion">
                     <div class="flex justify-center sm:justify-between items-center py-5 px-10">
-                        <img src="./public/images/mottomusic.png" />
+                        <img src="<?= CDN_URL ?>/images/mottomusic.png" />
                         <i class="ri-arrow-drop-down-line text-5xl hidden sm:block"></i>
                     </div>
                     <div id="nextlight-content" class="accordion-content">
@@ -206,36 +206,44 @@
                 <h3 class="text-2xl font-bold">Vous êtes curieux ?</h3>
                 <p class="font-extralight">Découvrez encore plus de la scène.</p>
                 <div class="categories my-8 grid grid-flow-row md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto">
+                    <a href="/results?event=C">
                     <div
                         id="comiket"
                         class="border border-white/30 rounded-lg h-60 flex justify-center items-center overflow-hidden cursor-pointer"
                     >
                         <div class="w-full h-full flex justify-center items-center relative">
-                            <img src="./public/images/category/icons/comiket.png" class="h-40 z-50" />
+                            <img src="<?= CDN_URL ?>/images/category/icons/comiket.png" class="h-40 z-50" />
                             <span class="absolute w-full h-16"></span>
                         </div>
                     </div>
+                </a>
+                    <a href="/results?event=M3">
                     <div id="m3" class="border border-white/30 rounded-lg h-60 relative overflow-hidden cursor-pointer">
                         <div class="w-full h-full flex justify-center items-center">
-                            <img src="./public/images/category/icons/m3.png" class="h-32" />
+                            <img src="<?= CDN_URL ?>/images/category/icons/m3.png" class="h-32" />
                             <span class="absolute w-full h-16"></span>
                         </div>
                     </div>
+                    </a>
+                    <a href="/results?event=REI">
                     <div id="touhou" class="border border-white/30 rounded-lg h-60 relative overflow-hidden cursor-pointer">
                         <div class="w-full h-full flex justify-center items-center">
-                            <img src="./public/images/category/icons/touhou.png" class="h-40" />
+                            <img src="<?= CDN_URL ?>/images/category/icons/touhou.png" class="h-40" />
                             <span class="absolute w-full h-16"></span>
                         </div>
                     </div>
+                    </a>
+                    <a class="rounded-lg lg:col-span-3" href="/results?event=MISC">
                     <div
                         id="misc"
-                        class="border border-white/30 rounded-lg lg:col-span-3 h-60 lg:h-40 relative overflow-hidden cursor-pointer"
+                        class="border border-white/30 h-60 lg:h-40 relative overflow-hidden cursor-pointer"
                     >
                         <div class="w-full h-full flex justify-center items-center">
                             <h2 class="font-bold text-2xl">Divers</h2>
                             <span class="absolute w-full h-16"></span>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
         </section>

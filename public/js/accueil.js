@@ -67,7 +67,7 @@ for (let i = 0; i < acc.length; i++) {
 
 function openAccordion(event) {
     if (opened != event.currentTarget.children[1]) {
-        if (opened){ 
+        if (opened) {
             opened.style.maxHeight = null;
             opened.parentNode.classList.remove("activated");
         }

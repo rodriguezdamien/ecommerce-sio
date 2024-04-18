@@ -4,8 +4,8 @@
                 <div class="grid grid-flow-row md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <div class="flex flex-row gap-2">
-                            <img src="/public/svg/kanji_white.svg" alt="" width="50px" />
-                            <img src="/public/svg/gaku_white.svg" width="90px" alt="" />
+                            <img src="<?= CDN_URL ?>/svg/kanji_white.svg" alt="" width="50px" />
+                            <img src="<?= CDN_URL ?>/svg/gaku_white.svg" width="90px" alt="" />
                         </div>
                         <p class="font-extralight">
                             gaku! est une plateforme de vente de disques d'artistes indépendants japonais. Nous
@@ -33,8 +33,9 @@
                 </div>
             </div>
         </footer>
+        <script src= <?= CDN_URL . '/js/script.js' ?>></script>
         <?php foreach ($scripts as $script): ?>
-        <script src=<?= '/public/js/' . $script ?>></script>
+        <script src= <?= CDN_URL . '/js/' . $script ?>></script>
         <?php endforeach; ?>
     </body>
 </html>

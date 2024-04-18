@@ -3,9 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/public/css/style.css" />
-        <link rel="stylesheet" href="/public/css/splide-core.min.css" />
-        <link rel="stylesheet" href="/public/css/remixicon.css" />
+        <link rel="stylesheet" href="<?= CDN_URL ?>/css/style.css" />
+        <link rel="stylesheet" href="<?= CDN_URL ?>/css/splide-core.min.css" />
+        <link rel="stylesheet" href="<?= CDN_URL ?>/css/remixicon.css" />
         <title>gaku!</title>
     </head>
     <body class="bg-black">
@@ -47,20 +47,19 @@
                             </div>
                         </div>
                         <!-- Fouiller pour le :has(:focus-visible) tailwindcss-->
-                        <div
-                            id="search"
-                            class="group rounded-full border py-1 px-5 items-center hidden max-w-lg w-10/12 md:flex"
-                        >
+                        <form action="/results" id="search"
+                            class="group rounded-full border py-1 px-5 items-center hidden max-w-lg w-10/12 md:flex">
                             <input
                                 id="search-input"
+                                name="query"
                                 type="text"
                                 class="focus-visible:outline-transparent bg-transparent w-full py-1"
                                 placeholder="Vous cherchez quelque chose ?"
                             />
                             <div>
-                                <i class="ri-search-line text-xl"></i>
+                               <i id="search-submit" class="cursor-pointer ri-search-line text-xl"></i>
                             </div>
-                        </div>
+                        </form>
                         
                         <div id="user-pc" class="items-center hidden md:flex gap-6">
                         <a href="/cart/">
@@ -94,10 +93,10 @@
 
                         <div id="user-mobile" class="md:hidden flex items-center gap-6">
                             
-                            <div class="relative">
-                                <input class="h-10 rounded-full px-5 w-full pr-10 border" placeholder="Recherche ..." />
-                                <i class="ri-search-line absolute top-[7px] right-[14px] text-xl cursor-pointer"></i>
-                            </div>
+                            <form action="/results" id="search-mobile" class="relative">
+                                <input class="h-10 rounded-full px-5 w-full pr-10 border" name="query" placeholder="Recherche ..." />
+                                <i id="search-submit-2" class="ri-search-line absolute top-[7px] right-[14px] text-xl cursor-pointer"></i>
+                            </form>
                             <a href="/cart/">
                             <div class="relative">
                                 <i class="ri-shopping-basket-line text-3xl"></i>

@@ -3,6 +3,7 @@ RewriteEngine on
 ErrorDocument 404 /index.php?error=404
 
 #Front Pages
+RewriteRule ^results(/?)$ index.php?controller=Results&action=renderView [nc,qsa]
 
 #User Pages
 RewriteCond %{REQUEST_METHOD} ^GET$

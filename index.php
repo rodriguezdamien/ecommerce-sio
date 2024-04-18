@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 // Connexion automatique de l'utilisateur si un token valide est présent dans les cookies
 // On commence en vérifiant si un id utilisateur est présent dans les informations de session
 if (!isset($_SESSION['id'])) {
@@ -23,7 +22,7 @@ foreach ($_GET as $key => $value) {
 if (isset($_GET) && !empty($_GET)) {
     extract($_GET);
     $controller .= 'Controller';
-    $filename = ROOT . '/src/controllers/' . $controller . '.php';
+    $filename    = ROOT . '/src/controllers/' . $controller . '.php';
     if (file_exists($filename)) {
         require_once ROOT . '/src/controllers/' . $controller . '.php';
         if (method_exists($controller, $action)) {

@@ -693,7 +693,7 @@ video {
 }
 
 #comiket div {
-  background-image: url(/public/images/category/bg/comiket-bg.png);
+  background-image: url(/images/category/bg/comiket-bg.png);
   --cat-color: rgba(0, 255, 166, 0.5);
 }
 
@@ -702,44 +702,44 @@ video {
   transition: opacity 0.2s;
 }
 
-#comiket div:hover > span {
+#comiket div:hover>span {
   opacity: 50;
 }
 
 #m3 div {
-  background-image: url(/public/images/category/bg/m3.jpg);
+  background-image: url(/images/category/bg/m3.jpg);
   --cat-color: rgba(255, 235, 124, 0.5);
 }
 
 #touhou div {
-  background-image: url(/public/images/category/bg/touhou.jpg);
+  background-image: url(/images/category/bg/touhou.jpg);
   --cat-color: rgba(255, 81, 81, 0.5);
 }
 
 #misc div {
-  background-image: url(/public/images/category/bg/misc.png);
+  background-image: url(/images/category/bg/misc.png);
   --cat-color: rgba(255, 81, 212, 0.5);
 }
 
-.categories div > div {
+.categories div>div {
   background-size: cover;
   background-position: center;
   transition: transform 0.2s;
 }
 
-.categories div:hover > span {
+.categories div:hover>span {
   opacity: 100;
   transition: opacity 0.2s;
 }
 
-.categories div > span {
+.categories div>span {
   bottom: 0;
   opacity: 0;
   background: linear-gradient(0deg, var(--cat-color) 0%, rgba(0, 0, 0, 0) 100%);
   transition: opacity 0.2s;
 }
 
-.categories div > div:hover {
+.categories div>div:hover {
   transform: scale(1.02);
   transition: transform 0.2s;
 }
@@ -810,6 +810,10 @@ video {
 
 .z-50 {
   z-index: 50;
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2;
 }
 
 .m-2 {
@@ -1019,6 +1023,10 @@ video {
 
 .h-\[1px\] {
   height: 1px;
+}
+
+.h-\[34px\] {
+  height: 34px;
 }
 
 .h-\[77vh\] {
@@ -1299,6 +1307,11 @@ video {
 .bg-\[\#BB5895\] {
   --tw-bg-opacity: 1;
   background-color: rgb(187 88 149 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#E5E7EB\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#ED2262\] {
@@ -1643,7 +1656,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-extralight.otf");
+  src: url("/css/fonts/banana-grotesk/banana-grotesk-extralight.otf");
 
   font-weight: 200;
 }
@@ -1651,7 +1664,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-regular.otf");
+  src: url("/css/fonts/banana-grotesk/banana-grotesk-regular.otf");
 
   font-weight: 400;
 }
@@ -1659,7 +1672,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-medium.otf");
+  src: url("/css/fonts/banana-grotesk/banana-grotesk-medium.otf");
 
   font-weight: 500;
 }
@@ -1667,7 +1680,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-semibold.otf");
+  src: url("/css/fonts/banana-grotesk/banana-grotesk-semibold.otf");
 
   font-weight: 600;
 }
@@ -1675,7 +1688,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-bold.otf");
+  src: url("/css/fonts/banana-grotesk/banana-grotesk-bold.otf");
 
   font-weight: 700;
 }
@@ -1683,7 +1696,7 @@ video {
 @font-face {
   font-family: "banana-grotesk";
 
-  src: url("/public/css/fonts/banana-grotesk/banana-grotesk-extrabold.otf");
+  src: url("/css/fonts/banana-grotesk/banana-grotesk-extrabold.otf");
 
   font-weight: 800;
 }
@@ -1790,6 +1803,10 @@ body {
 }
 
 @media (min-width: 768px) {
+  .md\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+
   .md\:mx-24 {
     margin-left: 6rem;
     margin-right: 6rem;
@@ -1875,6 +1892,10 @@ body {
 
   .lg\:col-span-3 {
     grid-column: span 3 / span 3;
+  }
+
+  .lg\:col-span-4 {
+    grid-column: span 4 / span 4;
   }
 
   .lg\:mx-44 {

@@ -1,10 +1,10 @@
 drop database if exists gakuDB;
 create database if not exists gakuDB;
 use gakuDB;
-create user if not exists 'gaku_view' IDENTIFIED BY 'stopl0okingatp4sswd!';
+create user if not exists 'gaku_admin' IDENTIFIED BY 'stopl0okingatp4sswd!';
 
 -- ne pas donner toutes ces perms, enfin pas à ce compte
-grant select,update,insert,delete on gakuDB.* to 'gaku_view';
+grant select,update,insert,delete on gakuDB.* to 'gaku_admin';
 
 -- Côté User
 create table if not exists `Role` (
@@ -83,7 +83,7 @@ create table if not exists `Aimer` (
         FOREIGN KEY(`idUser`) REFERENCES `User`(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
-create table if not exists `Evenement` (
+create table if not exists `Event` (
         `id` varchar(5) not null,
         `nom` varchar(40) not null,
         `description` varchar(500) not null default 'C''est vide...',
@@ -91,12 +91,12 @@ create table if not exists `Evenement` (
         PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
-create table if not exists `Edition_Evenement`(
+create table if not exists `Edition_Event`(
         `idEvent` varchar(5) not null,
         `numEdition` int not null,
         `annee` int not null,
         primary key(`idEvent`,`numEdition`),
-        FOREIGN KEY (`idEvent`) REFERENCES `Evenement`(`id`)
+        FOREIGN KEY (`idEvent`) REFERENCES `Event`(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -106,7 +106,7 @@ create table if not exists `Provenir`(
         `numEdition` int not null,
         primary key (`idAlbum`,`idEvent`,`numEdition`),
         FOREIGN KEY (`idAlbum`) REFERENCES `Album`(`id`),
-        FOREIGN KEY (`idEvent`,`numEdition`) REFERENCES `Edition_Evenement`(`idEvent`,`numEdition`)
+        FOREIGN KEY (`idEvent`,`numEdition`) REFERENCES `Edition_Event`(`idEvent`,`numEdition`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 create table if not exists `Musique` (
@@ -189,8 +189,8 @@ create table if not exists `Avancer` (
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-INSERT INTO Evenement(id,nom) values ('M3','Music Media-Mix Market'),('MISC','Divers');
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('M3',44,2019),('MISC',0,0);
+INSERT INTO Event(id,nom) values ('M3','Music Media-Mix Market'),('ZZISC','Divers');
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('M3',44,2019),('ZZISC',0,0);
 
 
 
@@ -277,7 +277,7 @@ END //
 
 DELIMITER ;
 
-call addAlbum('Dreams','Gabor Szabo',1,'MISC',0,50,15.99,'DREAMS.jpg','Dreams is an album by Hungarian guitarist Gábor Szabó featuring performances recorded in 1968 and released on the Skye label.','https://www.youtube.com/watch?v=gr0XWmEbiMQ','1968-01-01');
+call addAlbum('Dreams','Gabor Szabo',1,'ZZISC',0,50,15.99,'DREAMS.jpg','Dreams is an album by Hungarian guitarist Gábor Szabó featuring performances recorded in 1968 and released on the Skye label.','https://www.youtube.com/watch?v=gr0XWmEbiMQ','1968-01-01');
 call addMusiqueInAlbum('Galatea''s Guitar', 'Gabor Szabo','Dreams');
 call addMusiqueInAlbum('Half The Dayt Is Night','Gabor Szabo','Dreams');
 call addMusiqueInAlbum('Song Of The Injured Love','Gabor Szabo','Dreams');
@@ -285,8 +285,8 @@ call addMusiqueInAlbum('The Fortune Teller', 'Gabor Szabo','Dreams');
 call addMusiqueInAlbum('Fire Dance', 'Gabor Szabo','Dreams');
 call addMusiqueInAlbum('The Lady In The Moon (From Kodaly)', 'Gabor Szabo','Dreams');
 call addMusiqueInAlbum('Ferris Wheel', 'Gabor Szabo','Dreams');
-INSERT INTO Evenement(id,nom) values ('C','Comic Market');
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('C',103,2023);
+INSERT INTO Event(id,nom) values ('C','Comiket');
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('C',103,2023);
 call addAlbum('AD:PIANO VIVACE 2','Diverse System',0,'C',103,20,10,'ADPIANOVIVACE2.jpg','AD:PIANO VIVACE 2 is a piano album by Diverse System.','https://www.youtube.com/watch?v=oMQtmaBImBE','2023-12-30');
 call addMusiqueInAlbum('Reverie','Gardens feat. xia','AD:PIANO VIVACE 2');
 call addMusiqueInAlbum('ViViD Delusion','KARUT','AD:PIANO VIVACE 2');
@@ -309,7 +309,7 @@ call addMusiqueInAlbum('躍動','Error Signal','AD:PIANO VIVACE 2');
 call addMusiqueInAlbum('Beyond Your Words','Sad Keyboard Guy feat. vally.exe','AD:PIANO VIVACE 2');
 call addMusiqueInAlbum('Meow Meow','Sazukyo','AD:PIANO VIVACE 2');
 
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('M3',52,2023);
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('M3',52,2023);
 
 call addAlbum('20','HARDCORE TANO*C',0,'M3',52,30,15.99,'20.jpg','20 is a hardcore album by HARDCORE TANO*C.','https://www.youtube.com/watch?v=AsBGoWaWG5s','2023-10-11');
 call addMusiqueInAlbum('Our Memories (feat. 小岩井ことり)','REDALiCE & kors k','20');
@@ -335,8 +335,8 @@ call addMusiqueInAlbum('Schadenfreude','Vocals:はらもりよしな','XII - The
 call addMusiqueInAlbum('Afterglow','Vocals:AKA','XII - The Devourer of Gods -');
 
 
-INSERT INTO Evenement(id,nom) values ('REI','Reitaisai');
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('REI',8,2021);
+INSERT INTO Event(id,nom) values ('REI','Reitaisai');
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('REI',8,2021);
 call addAlbum('e^(x+i)<3u',".new label",0,'REI',8,50,8.99,'eLUVu.jpg','e^(x+i)<3u is an album by .new label.','https://www.youtube.com/watch?v=5-kHtw764OE','2021-10-16');
 call addMusiqueInAlbum('into the EXTRA / 魔法少女達の百年祭','as key_','e^(x+i)<3u');
 call addMusiqueInAlbum('bouchonne','as key_','e^(x+i)<3u');
@@ -354,7 +354,7 @@ call addMusiqueInAlbum('Free Myself (feat. mami)','lapix','パラフォビア');
 call addMusiqueInAlbum('メリーバッド乙女 (feat. PANXI)','lapix','パラフォビア');
 call addMusiqueInAlbum('ドラスティックジェネレイト (feat. mami)','lapix','パラフォビア');
 
-call addAlbum('SPD GAR 003','MEGAREX',0,'MISC',0,8839,10.99,'SPDGAR03.jpg','SPD GAR 003 is a compilation album by MEGAREX.','https://www.youtube.com/watch?v=iayaAxMdX40','2020-04-28');
+call addAlbum('SPD GAR 003','MEGAREX',0,'ZZISC',0,8839,10.99,'SPDGAR03.jpg','SPD GAR 003 is a compilation album by MEGAREX.','https://www.youtube.com/watch?v=iayaAxMdX40','2020-04-28');
 
 call addMusiqueInAlbum('Sunday Night (feat. Kanata.N)','Mameyudoufu','SPD GAR 003');
 call addMusiqueInAlbum('Broken Light (feat. mami)','poplavor','SPD GAR 003');
@@ -383,7 +383,7 @@ call addMusiqueInAlbum('Jeez Selecta','zensen','Jive Round 3');
 call addMusiqueInAlbum('Glitch Cocktail','zensen','Jive Round 3');
 call addMusiqueInAlbum('Dancing with Congress','zensen','Jive Round 3');
 
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('M3',50,2020);
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('M3',50,2020);
 call addAlbum('PARADØXY','BlackY feat. Risa Yuzuki',1,'M3',50,13,8.39,'PARADOXY.jpg','PARADØXY is an album by BlackY feat. Risa Yuzuki.','https://www.youtube.com/watch?v=B_B3DktCH-s','2022-10-30');
 -- Ajout des chansons de l'album "PARADØXY" avec l'artiste "BlackY feat. Risa Yuzuki"
 CALL addMusiqueInAlbum('PARADØXY', 'BlackY feat. Risa Yuzuki', 'PARADØXY');
@@ -399,7 +399,7 @@ CALL addMusiqueInAlbum('melty light - Instrumental', 'BlackY feat. Risa Yuzuki',
 CALL addMusiqueInAlbum('正しさに道連れ - Instrumental', 'BlackY feat. Risa Yuzuki', 'PARADØXY');
 CALL addMusiqueInAlbum('標本 - Instrumental', 'BlackY feat. Risa Yuzuki', 'PARADØXY');
 
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('C',102,2023);
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('C',102,2023);
 call addAlbum('Flying Method','lapix',1,'C',102,10,10.10,'FLYINGMETHOD.jpg','Flying Method is an album by lapix.','https://www.youtube.com/watch?v=F-310GWdIYs','2023-08-13');
 -- Ajout des chansons de l'album "Flying Method" avec l'artiste "lapix"
 CALL addMusiqueInAlbum('Our Love (Extended Mix)', 'lapix', 'Flying Method');
@@ -417,7 +417,7 @@ CALL addMusiqueInAlbum('Volcanos (Extended Mix)', 'lapix', 'Flying Method');
 CALL addMusiqueInAlbum('Crumble Soul (Extended Mix)', 'lapix', 'Flying Method');
 CALL addMusiqueInAlbum('Foolish Again (Extended Mix)', 'lapix', 'Flying Method');
 
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('M3','51',2023);
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('M3','51',2023);
 call addAlbum('Beyond CORE EVANGELIX 03','MEGAREX',0,'M3',51,30,10,'BEYONDCOREEVANGELIX03.jpg','Beyond CORE EVANGELIX 03 is a compilation album by MEGAREX.','https://www.youtube.com/watch?v=1aeiJNOkh-Y','2023-04-30');
 -- Ajout des chansons de l'album "Beyond CORE EVANGELIX 03"
 CALL addMusiqueInAlbum('Rapid', 'Mylta', 'Beyond CORE EVANGELIX 03');
@@ -446,7 +446,7 @@ CALL addMusiqueInAlbum('プリズムバード (feat.Risa Yuzuki)', 'CHOUX', 'Mom
 CALL addMusiqueInAlbum('オテンキグラビティ (feat.雨宮みやび)', 'Ray_Oh', 'Moment.');
 CALL addMusiqueInAlbum('Floating Summer (feat.夢乃ゆき)', 'yoswu', 'Moment.');
 
-call addAlbum('NX ENCHANT 02','NEXTLIGHT',0,'MISC',0,39,39.39,'NXENCHANT02.jpg','NX ENCHANT 02 is an album by NEXTLIGHT.','https://www.youtube.com/watch?v=9OAuMw38IHY','2023-10-29');
+call addAlbum('NX ENCHANT 02','NEXTLIGHT',0,'ZZISC',0,39,39.39,'NXENCHANT02.jpg','NX ENCHANT 02 is an album by NEXTLIGHT.','https://www.youtube.com/watch?v=9OAuMw38IHY','2023-10-29');
 -- Ajout des chansons de l'album "NX ENCHANT 02"
 CALL addMusiqueInAlbum('メジルシ', 'Nor', 'NX ENCHANT 02');
 CALL addMusiqueInAlbum('Storia', 'Reno', 'NX ENCHANT 02');
@@ -458,7 +458,7 @@ CALL addMusiqueInAlbum('Miraizu', '瀬名', 'NX ENCHANT 02');
 CALL addMusiqueInAlbum('月歩き', 'DoubleLift', 'NX ENCHANT 02');
 CALL addMusiqueInAlbum('Black Swan Theory', 'Reno, Hylen', 'NX ENCHANT 02');
 
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('M3','49',2022);
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('M3','49',2022);
 call addAlbum('NX ENCHANT','NEXTLIGHT',0,'M3',49,110,3.99,'NXENCHANT.jpg','NX ENCHANT is an album by NEXTLIGHT.','https://www.youtube.com/watch?v=yUcUZUdsbpE','2022-04-17');
 -- Ajout des chansons de l'album "NX ENCHANT"
 CALL addMusiqueInAlbum('Sweet Trick', 'picco', 'NX ENCHANT');
@@ -515,7 +515,7 @@ CALL addMusiqueInAlbum('&#0;', 'ADA', 'ARTIFACTS：ZERØ');
 CALL addMusiqueInAlbum('eclipsization', 'ぴれんどらー', 'ARTIFACTS：ZERØ');
 CALL addMusiqueInAlbum('Missing Planet', '黒魔', 'ARTIFACTS：ZERØ');
 
-call addAlbum('PSYcoLogy','Osanzi',1,'MISC',0,150,5.99,'PSYCOLOGY.jpg','PSYcoLogy is an album by Osanzi.','https://www.youtube.com/watch?v=GVfPXzxVi_U','2021-12-27');
+call addAlbum('PSYcoLogy','Osanzi',1,'ZZISC',0,150,5.99,'PSYCOLOGY.jpg','PSYcoLogy is an album by Osanzi.','https://www.youtube.com/watch?v=GVfPXzxVi_U','2021-12-27');
 -- Ajout des chansons de l'album "PSYcoLogy" par Osanzi
 CALL addMusiqueInAlbum('白日夢', 'Osanzi', 'PSYcoLogy');
 CALL addMusiqueInAlbum('マニピュレート', 'Osanzi', 'PSYcoLogy');
@@ -526,7 +526,7 @@ CALL addMusiqueInAlbum('True Color (re-edit)', 'Osanzi', 'PSYcoLogy');
 CALL addMusiqueInAlbum('Dance With Me (re-edit)', 'Osanzi', 'PSYcoLogy');
 CALL addMusiqueInAlbum('With U', 'Osanzi', 'PSYcoLogy');
 
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('C',97,2019);
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('C',97,2019);
 call addAlbum('リファクタリング・トラベル -Refactoring Travel-','t+pazolite',1,'C',97,3514,12.99,'REFACTORINGTRAVEL.jpg','リファクタリング・トラベル -Refactoring Travel- is an album by t+pazolite.','https://www.youtube.com/watch?v=NJG6XB_FVsU','2020-03-26');
 -- Ajout des chansons de l'album "リファクタリング・トラベル -Refactoring Travel-" par t+pazolite
 CALL addMusiqueInAlbum('Intro - I''ll be waiting for you', 't+pazolite', 'リファクタリング・トラベル -Refactoring Travel-');
@@ -542,7 +542,7 @@ CALL addMusiqueInAlbum('What a Hyped Beautiful World', 't+pazolite', 'リファ�
 CALL addMusiqueInAlbum('Good Night, Bad Luck (Uncut Edition) (c)TAITO / from Groove Coaster', 't+pazolite', 'リファクタリング・トラベル -Refactoring Travel-');
 CALL addMusiqueInAlbum('星屑ストラック (かねこちはる Remix)', 't+pazolite', 'リファクタリング・トラベル -Refactoring Travel-');
 
-call addAlbum('Meadowsweet','Sigillum Azoetia',0,'MISC',0,0,99,'MEADOWSWEET.jpg','Meadowsweet is an album by Sigillum Azoetia.','https://www.youtube.com/watch?v=F0uFQR036-0','2022-10-30');
+call addAlbum('Meadowsweet','Sigillum Azoetia',0,'ZZISC',0,0,99,'MEADOWSWEET.jpg','Meadowsweet is an album by Sigillum Azoetia.','https://www.youtube.com/watch?v=F0uFQR036-0','2022-10-30');
 -- Ajout des chansons de l'album "Meadowsweet" par GOETIΛ
 CALL addMusiqueInAlbum('Transient Epileptic Amnesia', 'GOETIΛ', 'Meadowsweet');
 CALL addMusiqueInAlbum('Blodeuwedd', 'GOETIΛ', 'Meadowsweet');
@@ -601,7 +601,7 @@ CALL addMusiqueInAlbum('Magnet (feat. Renko)', 'KO3', 'SHIFT');
 CALL addMusiqueInAlbum('I''ll be for you (feat. Kanae Asaba)', 'KO3', 'SHIFT');
 CALL addMusiqueInAlbum('I''ll be for you VIP', 'KO3', 'SHIFT');
 CALL addMusiqueInAlbum('Summery (Club Extended Mix)', 'KO3', 'SHIFT');
-INSERT INTO Edition_Evenement(idEvent,numEdition,annee) values ('M3',53,2024);
+INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('M3',53,2024);
 call addAlbum('DUMMY DISC','t+pazolite',1,'M3',53,50,19.99,'DUMMY_DISC.jpg','DUMMY DISC est un album par t+pazolite pour C.H.S','https://www.youtube.com/watch?v=Hz13QgklIMk','2024-09-30');
 -- Ajout des chansons de l'album "DUMMY DISC" par t+pazolite
 CALL addMusiqueInAlbum('It\'s a DUMMY', 't+pazolite', 'DUMMY DISC');

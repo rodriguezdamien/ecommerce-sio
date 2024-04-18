@@ -1,41 +1,42 @@
 @import "tailwindcss/base";
-@import "/public/css/product.css";
+@import "./product.css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import "/public/css/cart.css";
+@import "./cart.css";
+
 @font-face {
     font-family: "banana-grotesk";
-    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-extralight.otf");
+    src: url("/css/fonts/banana-grotesk/banana-grotesk-extralight.otf");
     font-weight: 200;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-regular.otf");
+    src: url("/css/fonts/banana-grotesk/banana-grotesk-regular.otf");
     font-weight: 400;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-medium.otf");
+    src: url("/css/fonts/banana-grotesk/banana-grotesk-medium.otf");
     font-weight: 500;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-semibold.otf");
+    src: url("/css/fonts/banana-grotesk/banana-grotesk-semibold.otf");
     font-weight: 600;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-bold.otf");
+    src: url("/css/fonts/banana-grotesk/banana-grotesk-bold.otf");
     font-weight: 700;
 }
 
 @font-face {
     font-family: "banana-grotesk";
-    src: url("/public/css/fonts/banana-grotesk/banana-grotesk-extrabold.otf");
+    src: url("/css/fonts/banana-grotesk/banana-grotesk-extrabold.otf");
     font-weight: 800;
 }
 
@@ -96,7 +97,7 @@ body {
     }
 
     #comiket div {
-        background-image: url(/public/images/category/bg/comiket-bg.png);
+        background-image: url(/images/category/bg/comiket-bg.png);
         --cat-color: rgba(0, 255, 166, 0.5);
     }
 
@@ -105,53 +106,53 @@ body {
         transition: opacity 0.2s;
     }
 
-    #comiket div:hover > span {
+    #comiket div:hover>span {
         opacity: 50;
     }
 
     #m3 div {
-        background-image: url(/public/images/category/bg/m3.jpg);
+        background-image: url(/images/category/bg/m3.jpg);
         --cat-color: rgba(255, 235, 124, 0.5);
     }
 
     #touhou div {
-        background-image: url(/public/images/category/bg/touhou.jpg);
+        background-image: url(/images/category/bg/touhou.jpg);
         --cat-color: rgba(255, 81, 81, 0.5);
     }
 
     #misc div {
-        background-image: url(/public/images/category/bg/misc.png);
+        background-image: url(/images/category/bg/misc.png);
         --cat-color: rgba(255, 81, 212, 0.5);
     }
 
-    .categories div > div {
+    .categories div>div {
         background-size: cover;
         background-position: center;
         transition: transform 0.2s;
     }
 
-    .categories div:hover > span {
+    .categories div:hover>span {
         opacity: 100;
         transition: opacity 0.2s;
     }
 
-    .categories div > span {
+    .categories div>span {
         bottom: 0;
         opacity: 0;
         background: linear-gradient(0deg, var(--cat-color) 0%, rgba(0, 0, 0, 0) 100%);
         transition: opacity 0.2s;
     }
 
-    .categories div > div:hover {
+    .categories div>div:hover {
         transform: scale(1.02);
         transition: transform 0.2s;
     }
 }
 
-.invalid{
+.invalid {
     @apply text-red-500;
 }
 
-.invalid-border{
+.invalid-border {
     @apply border-red-500;
 }
