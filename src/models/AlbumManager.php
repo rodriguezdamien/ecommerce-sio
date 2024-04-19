@@ -2,6 +2,7 @@
 
 require_once ('Album.php');
 require_once ('Manager.php');
+require_once ('Song.php');
 
 class AlbumManager extends Manager
 {
@@ -10,7 +11,7 @@ class AlbumManager extends Manager
     public static function getRandomAlbums(int $limit): array
     {
         self::$cnx = self::connect();
-        $req = 'select album.id,album.nom,prix,uriImage,label.nom as nomLabel, artiste.nom as nomArtiste from album'
+        $req = 'select album.id,album.nom,prix,uriImage,dateSortie,label.nom as nomLabel, artiste.nom as nomArtiste from album'
             . ' left join label on album.idLabel = label.id'
             . ' left join artiste on album.idArtiste = artiste.id'
             . ' order by rand() limit :limit';
@@ -19,7 +20,7 @@ class AlbumManager extends Manager
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
         while ($album = $result->fetch(PDO::FETCH_ASSOC)) {
-            $albums[] = new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], null, null, null);
+            $albums[] = new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], null, null, null, new DateTime($album['dateSortie']));
         }
         return $albums;
     }
@@ -27,7 +28,7 @@ class AlbumManager extends Manager
     public static function getPreoderAlbums(int $limit)
     {
         self::$cnx = self::connect();
-        $req = 'select album.id,album.nom,prix,uriImage,label.nom as nomLabel, artiste.nom as nomArtiste from album'
+        $req = 'select album.id,album.nom,prix,uriImage,dateSortie,label.nom as nomLabel, artiste.nom as nomArtiste from album'
             . ' left join label on album.idLabel = label.id'
             . ' left join artiste on album.idArtiste = artiste.id'
             . ' where album.dateSortie > now()'
@@ -37,7 +38,7 @@ class AlbumManager extends Manager
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
         while ($album = $result->fetch(PDO::FETCH_ASSOC)) {
-            $albums[] = new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], null, null, null);
+            $albums[] = new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], null, null, null, new DateTime($album['dateSortie']));
         }
         return $albums;
     }
@@ -46,7 +47,7 @@ class AlbumManager extends Manager
     {
         $albums = [];
         self::$cnx = self::connect();
-        $req = 'select album.id,album.nom,prix,uriImage,label.nom as nomLabel, artiste.nom as nomArtiste from album'
+        $req = 'select album.id,album.nom,prix,dateSortie,uriImage,label.nom as nomLabel, artiste.nom as nomArtiste from album'
             . ' left join label on album.idLabel = label.id'
             . ' left join artiste on album.idArtiste = artiste.id'
             . ' left join provenir on album.id = provenir.idAlbum'
@@ -61,6 +62,7 @@ class AlbumManager extends Manager
             if ($edition != null && $edition != 'all') {
                 $req .= ' and provenir.numEdition = :edition';
             }
+            $req .= ' limit 100';
         }
 
         $result = self::$cnx->prepare($req);
@@ -75,8 +77,43 @@ class AlbumManager extends Manager
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
         while ($album = $result->fetch(PDO::FETCH_ASSOC)) {
-            $albums[] = new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], null, null, null);
+            $albums[] = new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], null, null, null, new DateTime($album['dateSortie']));
         }
         return $albums;
+    }
+
+    public static function getAlbumInfo(int $id): Album
+    {
+        self::$cnx = self::connect();
+        $req = 'select album.id, album.nom, description, lienXFD, prix, uriImage, qte, dateSortie, label.nom as nomLabel, artiste.nom as nomArtiste from album'
+            . ' left join label on album.idLabel = label.id'
+            . ' left join artiste on album.idArtiste = artiste.id'
+            . ' where album.id = :id';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $album = $result->fetch(PDO::FETCH_ASSOC);
+        return new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], $album['description'], $album['lienXFD'], $album['qte'], new DateTime($album['dateSortie']));
+    }
+
+    public static function getAlbumSongs(int $id): array
+    {
+        $songs = [];
+        self::$cnx = self::connect();
+        $req = 'select song.id, song.nom, artiste.nom as nomArtiste'
+            . ' from song'
+            . ' join contenir on song.id = contenir.idSong'
+            . ' join composer on song.id = composer.idSong'
+            . ' join artiste on composer.idArtiste = artiste.id'
+            . ' where contenir.idAlbum = :idAlbum';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':idAlbum', $id, PDO::PARAM_INT);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        while ($song = $result->fetch(PDO::FETCH_ASSOC)) {
+            $songs[] = new Song($song['id'], $song['nom'], $song['nomArtiste']);
+        }
+        return $songs;
     }
 }

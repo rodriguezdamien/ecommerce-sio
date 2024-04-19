@@ -614,9 +614,10 @@ video {
 
 .track-artist {
   font-weight: 600;
+  white-space: nowrap;
 }
 
-.track-artist::after {
+.track-separator::after {
   content: "/";
   margin: 0 0.5rem;
   font-weight: 100;
@@ -1113,6 +1114,14 @@ video {
   width: 100%;
 }
 
+.w-3 {
+  width: 0.75rem;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
 .max-w-\[800px\] {
   max-width: 800px;
 }
@@ -1598,6 +1607,22 @@ video {
   font-weight: 600;
 }
 
+.leading-3 {
+  line-height: .75rem;
+}
+
+.leading-4 {
+  line-height: 1rem;
+}
+
+.leading-5 {
+  line-height: 1.25rem;
+}
+
+.leading-6 {
+  line-height: 1.5rem;
+}
+
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
@@ -1718,6 +1743,10 @@ body {
 .invalid-border {
   --tw-border-opacity: 1;
   border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+
+.last\:w-\[85vw\]:last-child {
+  width: 85vw;
 }
 
 .focus-visible\:outline-transparent:focus-visible {
@@ -1858,6 +1887,10 @@ body {
     width: 80vw;
   }
 
+  .md\:min-w-\[340px\] {
+    min-width: 340px;
+  }
+
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1918,6 +1951,10 @@ body {
 
   .lg\:max-h-\[60rem\] {
     max-height: 60rem;
+  }
+
+  .lg\:w-\[25rem\] {
+    width: 25rem;
   }
 
   .lg\:w-\[30rem\] {

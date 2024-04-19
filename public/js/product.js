@@ -7,8 +7,11 @@ plus.addEventListener(
     "click",
     //add 1 to stockDisplay and stockCount
     () => {
-        stockCount++;
-        stockDisplay.innerHTML = stockCount;
+        console.log(stockDisplay.getAttribute("data-quantity"));
+        if (stockCount < stockDisplay.getAttribute("data-quantity")) {
+            stockCount++;
+            stockDisplay.innerHTML = stockCount;
+        }
     }
 );
 minus.addEventListener(

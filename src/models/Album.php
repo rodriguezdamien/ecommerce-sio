@@ -10,8 +10,9 @@ class Album
     private float $prix;
     private ?int $qte;
     private string $uriImage;
+    private DateTime $dateSortie;
 
-    function __construct(string $id, string $nom, string $uriImage, float $prix, ?string $Label, ?string $Artiste, ?string $description, ?string $lienXFD, ?int $qte)
+    function __construct(string $id, string $nom, string $uriImage, float $prix, ?string $Label, ?string $Artiste, ?string $description, ?string $lienXFD, ?int $qte, ?DateTime $dateSortie)
     {
         $this->id = $id;
         $this->nom = $nom;
@@ -22,6 +23,7 @@ class Album
         $this->prix = $prix;
         $this->qte = $qte;
         $this->uriImage = $uriImage;
+        $this->dateSortie = $dateSortie;
     }
 
     // region Accesseurs
@@ -55,9 +57,21 @@ class Album
         return $this->Artiste;
     }
 
-    public function GetPrix(): float
+    /*
+     * Retourne le prix de l'album en float
+     */
+    public function GetPrixValue(): float
     {
         return $this->prix;
+    }
+
+    /*
+     * Retourne le prix de l'album en string formaté
+     * @return string Prix de l'album formaté
+     */
+    public function GetPrix()
+    {
+        return sprintf('%.2f', $this->prix);
     }
 
     public function GetQte(): ?int
@@ -68,46 +82,6 @@ class Album
     public function GetUriImage(): string
     {
         return $this->uriImage;
-    }
-
-    public function SetNom(string $nom)
-    {
-        $this->nom = $nom;
-    }
-
-    public function SetDescription(?string $description)
-    {
-        $this->description = $description;
-    }
-
-    public function SetLienXFD(?string $lienXFD)
-    {
-        $this->lienXFD = $lienXFD;
-    }
-
-    public function SetLabel(?string $Label)
-    {
-        $this->Label = $Label;
-    }
-
-    public function SetArtiste(?string $Artiste)
-    {
-        $this->Artiste = $Artiste;
-    }
-
-    public function SetPrix(float $prix)
-    {
-        $this->prix = $prix;
-    }
-
-    public function SetQte(?int $qte)
-    {
-        $this->qte = $qte;
-    }
-
-    public function SetUriImage(string $uriImage)
-    {
-        $this->uriImage = $uriImage;
     }
 
     // endregion

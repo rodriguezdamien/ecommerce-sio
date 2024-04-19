@@ -231,10 +231,10 @@
                         </div>
                     </div>
                     </a>
-                    <a class="rounded-lg lg:col-span-3" href="/results?event=MISC">
+                    <a class=" lg:col-span-3" href="/results?event=ZZISC">
                     <div
                         id="misc"
-                        class="border border-white/30 h-60 lg:h-40 relative overflow-hidden cursor-pointer"
+                        class="border rounded-lg border-white/30 h-60 lg:h-40 relative overflow-hidden cursor-pointer"
                     >
                         <div class="w-full h-full flex justify-center items-center">
                             <h2 class="font-bold text-2xl">Divers</h2>
