@@ -5,6 +5,7 @@ ErrorDocument 404 /index.php?error=404
 #Front Pages
 RewriteRule ^results(/?)$ index.php?controller=Results&action=renderView [nc,qsa,L]
 RewriteRule ^product/([0-9]+)(/?)$ index.php?controller=Product&action=renderView&id=$1 [nc,qsa,L]
+RewriteRule ^cart(/?)$ index.php?controller=Cart&action=renderView [nc,qsa,L]
 
 #User Pages
 RewriteCond %{REQUEST_METHOD} ^GET$
@@ -26,3 +27,10 @@ RewriteRule ^account(/?)$ index.php?controller=AccountSettings&action=renderView
 RewriteRule ^account/logout(/?)$ index.php?controller=AccountSettings&action=disconnect [NC,L]
 
 #Back Pages
+
+
+#API-Like Route
+RewriteRule ^cart/content(/?)$ index.php?controller=Cart&action=getCartContent [nc,qsa,L]
+RewriteRule ^cart/add(/?)$ index.php?controller=Cart&action=addItemToCart [nc,qsa,L]
+RewriteRule ^cart/update(/?)$ index.php?controller=Cart&action=updateItemInCart [nc,qsa,L]
+RewriteRule ^cart/remove(/?)$ index.php?controller=Cart&action=removeItemFromCart [nc,qsa,L]

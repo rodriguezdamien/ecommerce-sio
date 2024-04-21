@@ -23,6 +23,7 @@ create table if not exists `User` (
         `phone` varchar(10) null,
         `dateNaissance` DateTime null,
         PRIMARY KEY (`id`),
+        UNIQUE KEY `mail` (`mail`),
         FOREIGN KEY (`idRole`) REFERENCES `Role` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -136,15 +137,22 @@ create table if not exists `Contenir`(
 
 -- Côté gestion e-commerce (Commande, produit...)
 
-create table if not exists `Panier` (
-        `idAlbum` int not null,
-        `idFormat` int not null,
+create table if not exists `Cart` (
+        `id` int not null auto_increment,
         `idUser` int not null,
-        `qte` tinyint not null,
-        primary key (`idAlbum`,`idFormat`,`idUser`),
-        FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`),
-        FOREIGN KEY(`idUser`) REFERENCES `User`(`id`)
+        primary key (`id`),
+        FOREIGN KEY (`idUser`) REFERENCES `User`(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
+
+create table if not exists `CartItem` (
+        `idCart` int not null,
+        `idAlbum` int not null,
+        `qte` tinyint not null,
+        primary key (`idCart`,`idAlbum`),
+        FOREIGN KEY(`idCart`) REFERENCES `Cart`(`id`),
+        FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;	
+
 
 create table if not exists `Commande` (
         `prenomDestinataire` varchar(50) not null default '???',
@@ -196,6 +204,32 @@ INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('M3',44,2019),('ZZIS
 
 -- TRIGGER d'ajout de commandes
 DELIMITER //
+
+drop trigger if exists before_insert_cartitem;
+CREATE TRIGGER before_insert_cartitem BEFORE INSERT
+ON CartItem FOR EACH ROW
+BEGIN
+        DECLARE qteActuelProduit int;
+        SELECT qte INTO qteActuelProduit FROM Album WHERE id = NEW.idAlbum;
+        IF (qteActuelProduit < NEW.qte) THEN
+                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La quantité ajouté au panier est supérieur au stock disponible de l''album';
+        END IF;
+
+END//
+
+drop trigger if exists before_update_cartitem;
+CREATE TRIGGER before_update_cartitem BEFORE INSERT
+ON CartItem FOR EACH ROW
+BEGIN
+        DECLARE qteActuelProduit int;
+        SELECT qte INTO qteActuelProduit FROM Album WHERE id = NEW.idAlbum;
+        IF (qteActuelProduit < NEW.qte) THEN
+                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La quantité ajouté au panier est supérieur au stock disponible de l''album';
+        END IF;
+
+END//
+
+
 CREATE TRIGGER before_insert_commander BEFORE INSERT
 ON Commander FOR EACH ROW
 BEGIN
@@ -241,7 +275,47 @@ BEGIN
         RETURN nbPresent;
 END //
 
--- Problème ici
+CREATE FUNCTION IF NOT EXISTS Cart(idUser INT)
+RETURNS INT
+BEGIN
+        DECLARE idCart INT;
+        SELECT id INTO idCart FROM Cart WHERE idUser = idUser;
+        IF (idCart IS NULL) THEN
+                INSERT INTO Cart(idUser) VALUES(idUser);
+                SELECT LAST_INSERT_ID() INTO idCart;
+        END IF;
+        RETURN idCart;
+END //
+grant execute on function gakudb.Cart to 'gaku_admin'@'%';
+
+drop function if exists CartPrice//
+Create function if not exists CartPrice(idCart INT)
+RETURNS FLOAT
+BEGIN
+        DECLARE prixTotal FLOAT;
+        SELECT SUM(CartItem.qte*album.prix) INTO prixTotal 
+        FROM CartItem
+                JOIN Album ON idAlbum = Album.id
+        WHERE idCart = idCart;
+        RETURN prixTotal;
+END //
+select CartPrice(1);
+grant execute on function gakudb.CartPrice to 'gaku_admin'@'%';
+
+drop procedure if exists addItemToCart//
+CREATE PROCEDURE IF NOT EXISTS addItemToCart(idUser INT, idItem INT, qteItem INT)
+BEGIN
+        DECLARE idCart INT;
+        SELECT Cart(idUser) INTO idCart;
+        IF(EXISTS (SELECT * FROM CartItem WHERE idCart = idCart AND idAlbum = idItem)) THEN
+                UPDATE CartItem SET qte = qteItem WHERE idCart = idCart AND idAlbum = idItem;
+        ELSE
+                INSERT INTO CartItem(idCart,idAlbum,qte) VALUES(idCart,idItem,qteItem);
+        END IF;
+END //
+grant execute on procedure gakudb.addItemToCart to 'gaku_admin'@'%'//
+
+
 drop procedure if exists addAlbum//
 CREATE PROCEDURE if not exists addAlbum(nomAlbum varchar(70), nomArtisteOuLabel varchar(70), estArtiste bit, event varchar(5),edition int,qteAlbum int,prixAlbum float, uriImageAlbum varchar(70), descriptionAlbum varchar(500), lienXFDAlbum varchar(100), dateSortieAlbum date) 
 BEGIN
@@ -768,6 +842,9 @@ update Statut set idSuivant = 4, idPrecedent = 2 where id = 3;
 update Statut set idSuivant = 5, idPrecedent = 3 where id = 4;
 update Statut set idPrecedent = 4 where id = 5;
 
+
+
 update Commande set idResponsable = 1 where exists(select * from Avancer where idStatut = 3);
 
 insert into employe(nom,prenom) values ('Gerard','Menvussat'),('Eva','Cuhassion'),('John','Doe');
+

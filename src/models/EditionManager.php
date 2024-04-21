@@ -16,9 +16,10 @@ class EditionManager extends Manager
         $editions = [];
         self::$cnx = self::connect();
         $req = 'select idEvent,numEdition,annee from edition_event order by numEdition desc';
-        $result = self::$cnx->query($req);
+        $result = self::$cnx->prepare($req);
+        $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
-        while ($edition = $result->fetch(PDO::FETCH_ASSOC)) {
+        while ($edition = $result->fetch()) {
             $editions[] = new Edition($edition['idEvent'], $edition['numEdition'], $edition['annee']);
         }
         return $editions;

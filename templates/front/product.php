@@ -3,7 +3,7 @@
                 class="relative z-20 flex justify-center items-center sm:mx-10 md:mx-52 text-white gap-10 md:flex-row flex-col py-10"
             >
                 <img src="<?= CDN_URL . '/images/album/' . htmlspecialchars($params['product']->GetUriImage()) ?>" alt="" class="md:min-w-[340px] last:w-[85vw] md:w-96 lg:w-[25rem]" />
-                <div>
+                <div id="product-info" data-id="<?= htmlspecialchars($params['product']->GetId()) ?>">
                     <p class="font-bold text-4xl md:text-5xl"><?= $params['product']->getNom() ?></p>
                     <p class="font-extralight text-xl my-2"><?= !empty($params['product']->GetArtiste()) ? $params['product']->GetArtiste() : $params['product']->GetLabel() ?></p>
                     <p class="font-bold text-3xl md:text-4xl my-2"><?= $params['product']->GetPrix() ?> €</p>
@@ -32,10 +32,18 @@
                             </div>
                         </div>
                     </div>
-                    <!-- TODO fixer la largeur du bouton -->
-                    <button id="add-to-cart" class="bg-white text-black py-5 w-[80vw] md:w-96 rounded-md mt-7">
-                        Ajouter au panier
-                    </button>
+                            <div id="action-container" class="relative flex items-center gap-1">
+                                <button id="action-loading" class="bg-white text-black h-16 w-[80vw] md:w-96 rounded-md mt-7 animate-button" data-id="<?= htmlspecialchars($params['product']->GetId()) ?>">
+                                    <span id="loading"></span>
+                                </button>
+                                <div id="cart-info" class="absolute flex invisible w-full flex-col items-center opacity-1 -bottom-16" style="transform:translateY(-10px)">
+                                    <div class="w-3 h-3 bg-white rotate-45 translate-y-[50%]"></div>
+                                    <div class="bg-white rounded-md px-3 py-2">
+                                        <span id="loading" class="whitespace-nowrap"></span>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
                 </div>
             </div>
         </section>

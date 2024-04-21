@@ -30,8 +30,12 @@ class RegisterController extends Controller
                     $params['error'] = 'Erreur lors de la création du compte. Veuillez réessayer.';
                     self::renderView($params);
                 };
-            } catch (Exception $ex) {
-                $params['error'] = $ex->getMessage();
+            } catch (PDOException $ex) {
+                if ($ex->getCode() == 23000) {
+                    $params['error'] = "L'adresse mail est déjà utilisée.";
+                } else {
+                    $params['error'] = $ex->getMessage();
+                }
                 self::renderView($params);
             }
         }

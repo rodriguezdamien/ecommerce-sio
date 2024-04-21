@@ -1,4 +1,7 @@
 <?php
+require_once 'src/models/CartManager.php';
+require_once 'src/models/Cart.php';
+
 class User
 {
     private string $id;
@@ -7,6 +10,7 @@ class User
     private string $mail;
     private ?string $phone;
     private ?DateTime $dateNaissance;
+    private Cart $cart;
 
     function __construct(int $id, string $prenom, string $nom, string $mail, ?DateTime $dateNaissance, ?string $phone)
     {
@@ -16,6 +20,7 @@ class User
         $this->mail = $mail;
         $this->dateNaissance = $dateNaissance;
         $this->phone = $phone;
+        $this->cart = CartManager::GetCart($id);
     }
 
     // region Accesseurs
@@ -49,29 +54,9 @@ class User
         return $this->dateNaissance;
     }
 
-    public function SetPrenom(string $prenom)
+    public function GetCart(): Cart
     {
-        $this->prenom = $prenom;
-    }
-
-    public function SetNom(string $nom)
-    {
-        $this->nom = $nom;
-    }
-
-    public function SetMail(string $mail)
-    {
-        $this->mail = $mail;
-    }
-
-    public function SetPhone(string $phone)
-    {
-        $this->phone = $phone;
-    }
-
-    public function SetDateNaissance(DateTime $dateNaissance)
-    {
-        $this->dateNaissance = $dateNaissance;
+        return $this->cart;
     }
 
     // endregion

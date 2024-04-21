@@ -31,9 +31,10 @@ class UserManager extends Manager
                 . 'values (:mail,:password,:prenom,:nom)';
             $result = self::$cnx->prepare($req);
             $result->bindParam(':mail', $_POST['mail'], PDO::PARAM_STR);
-            $result->bindParam(':password', password_hash($_POST['password'], PASSWORD_DEFAULT), PDO::PARAM_STR);
-            $result->bindParam(':prenom', htmlspecialchars($_POST['prenom']), PDO::PARAM_STR);
-            $result->bindParam(':nom', htmlspecialchars($_POST['nom']), PDO::PARAM_STR);
+            $passwdHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $result->bindParam(':password', $passwdHash, PDO::PARAM_STR);
+            $result->bindParam(':prenom', $_POST['prenom'], PDO::PARAM_STR);
+            $result->bindParam(':nom', $_POST['nom'], PDO::PARAM_STR);
             // Si la création du compte (ajout dans la base de donnée) s'est bien effectué
             if ($result->execute()) {
                 $hasRegistered = true;

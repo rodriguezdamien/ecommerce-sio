@@ -27,6 +27,13 @@ class LoginController extends Controller
             $_SESSION['mail'] = $user->GetMail();
             $_SESSION['phone'] = $user->GetPhone();
             $_SESSION['dateNaissance'] = $user->GetDateNaissance();
+            if (isset($_SESSION['cart'])) {
+                foreach ($_SESSION['cart'] as $item) {
+                    CartManager::AddCartItem($user->GetCart()->GetId(), $item['idAlbum'], $item['qte']);
+                }
+            } else {
+                $_SESSION['cart'] = CartManager::GetCartItems($user->GetCart()->GetId());
+            }
             header('Location: /');
         } catch (Exception $ex) {
             $params['error'] = $ex->getMessage();

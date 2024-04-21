@@ -93,7 +93,7 @@ class AlbumManager extends Manager
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
-        $album = $result->fetch(PDO::FETCH_ASSOC);
+        $album = $result->fetch();
         return new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], $album['description'], $album['lienXFD'], $album['qte'], new DateTime($album['dateSortie']));
     }
 
@@ -111,7 +111,7 @@ class AlbumManager extends Manager
         $result->bindParam(':idAlbum', $id, PDO::PARAM_INT);
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
-        while ($song = $result->fetch(PDO::FETCH_ASSOC)) {
+        while ($song = $result->fetch()) {
             $songs[] = new Song($song['id'], $song['nom'], $song['nomArtiste']);
         }
         return $songs;

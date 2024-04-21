@@ -16,9 +16,10 @@ class EventManager extends Manager
         $events = [];
         self::$cnx = self::connect();
         $req = 'select * from event';
-        $result = self::$cnx->query($req);
+        $result = self::$cnx->prepare($req);
+        $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
-        while ($event = $result->fetch(PDO::FETCH_ASSOC)) {
+        while ($event = $result->fetch()) {
             $events[] = new Event($event['id'], $event['nom'], $event['description']);
         }
         return $events;

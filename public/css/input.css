@@ -156,3 +156,37 @@ body {
 .invalid-border {
     @apply border-red-500;
 }
+
+.animate-button {
+    filter: none;
+    transform: translateY(0px);
+    transition: 0.1s;
+}
+
+.animate-button:hover {
+    filter: drop-shadow(0 5px 5px #00000065);
+    transform: translateY(-3px);
+}
+
+#loading {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 5px solid rgb(228, 228, 228);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
