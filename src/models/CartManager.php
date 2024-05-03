@@ -30,10 +30,11 @@ class CartManager extends Manager
             if (isset($_SESSION['cart'])) {
                 if (self::TryUpdateCartItem(-1, $idAlbum, $qte)) {
                     throw new Exception("L'album est déjà dans le panier, mais la quantité a été mise à jour.");
-                };
-            } else {
-                $_SESSION['cart'] = [];
+                }
             }
+            else
+                $_SESSION['cart'] = [];
+            $_SESSION['cart'][] = ['idAlbum' => $idAlbum, 'qte' => $qte];
         } else {
             self::$cnx = self::connect();
             $req = 'call AddItemToCart(:idCart, :idAlbum, :qte)';
