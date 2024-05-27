@@ -7,11 +7,12 @@ const productInfo = document.getElementById("product-info");
 const productId = productInfo.getAttribute("data-id");
 const actionContainer = document.getElementById("action-container");
 const cartInfo = document.getElementById("cart-info");
+var timeOutInfo = null;
 plus.addEventListener(
     "click",
     //add 1 to stockDisplay and stockCount
     () => {
-        if (stockCount < stockDisplay.getAttribute("data-quantity")) {
+        if (stockCount < stockDisplay.dataset.quantity) {
             stockCount++;
             stockDisplay.innerHTML = stockCount;
         }
@@ -29,25 +30,28 @@ minus.addEventListener(
 );
 
 document.addEventListener("DOMContentLoaded", async () => {
-    let isInCart = false;
-    let response = await fetch("/cart/content", {
-        method: "GET",
-    });
-    if (response.ok) {
-        let data = await response.json();
-        //Check if current product is in the cart
-        data.forEach((product) => {
-            if (product.idAlbum == productId) {
-                isInCart = true;
-            }
+    if (stockDisplay.dataset.quantity != 0) {
+        let isInCart = false;
+        let response = await fetch("/cart/content", {
+            method: "GET",
         });
-    }
-    document.getElementById("action-loading").remove();
-    if (isInCart) {
-        setUpdateCartButton();
-    }
-    else {
-        setAddToCartButton();
+        if (response.ok) {
+            let data = await response.json();
+            //Check if current product is in the cart
+            data.forEach((product) => {
+                if (product.idAlbum == productId) {
+                    isInCart = true;
+                }
+            });
+        }
+        document.getElementById("action-loading").remove();
+        if (isInCart) {
+            setUpdateCartButton();
+        } else {
+            setAddToCartButton();
+        }
+    } else {
+        setOutOfStockButton();
     }
 });
 
@@ -69,29 +73,59 @@ async function addToCart(event) {
         }),
     });
     if (response.ok) {
-        if (document.getElementById("cart-count") == null) {
-            let cartCount = document.createElement("div");
-            cartCount.classList.add("absolute", "font-bold", "flex", "items-center", "justify-center", "right-[-10px]", "top-[-3px]", "h-5", "w-5", "text-sm", "rounded-full", "text-center", "text-white", "bg-red-500");
-            cartCount.setAttribute("id", "cart-count");
-            cartCount.textContent = "1";
+        if (document.getElementsByClassName("cart-count").length == 0) {
+            let cartBtns = Array.from(document.getElementsByClassName("cart"));
+            cartBtns.forEach((element) => {
+                let cartCount = document.createElement("div");
+                cartCount.classList.add(
+                    "cart-count",
+                    "absolute",
+                    "font-bold",
+                    "flex",
+                    "items-center",
+                    "justify-center",
+                    "right-[-10px]",
+                    "top-[-3px]",
+                    "h-5",
+                    "w-5",
+                    "text-sm",
+                    "rounded-full",
+                    "text-center",
+                    "text-white",
+                    "bg-red-500"
+                );
+                cartCount.setAttribute("id", "cart-count");
+                cartCount.textContent = "1";
+                console.log(element);
+                element.appendChild(cartCount);
+            });
+        } else {
+            let cartCounts = Array.from(
+                document.getElementsByClassName("cart-count")
+            );
+            cartCounts.forEach((element) => {
+                element.textContent = parseInt(element.textContent) + 1;
+            });
         }
-        else {
-            let cartCount = document.getElementById("cart-count");
-            cartCount.textContent = parseInt(cartCount.textContent) + 1;
-        }
-        let cartInfoContent = document.getElementById("loading");
-        cartInfoContent.removeAttribute("id");
+        let cartInfoContent = document.getElementById("info-text");
+        cartInfoContent.classList.remove("loading");
         cartInfoContent.classList.add("text-black");
         cartInfoContent.textContent = "Le produit a été ajouté au panier. ";
         cartInfo.style.transform = "translateY(-12px)";
         let GotoCart = document.createElement("a");
         GotoCart.setAttribute("href", "/cart");
         GotoCart.textContent = "Voir le panier";
-        GotoCart.classList.add("cursor-pointer", "text-blue-500", "hover:text-blue-700", "underline");
+        GotoCart.classList.add(
+            "cursor-pointer",
+            "text-blue-500",
+            "hover:text-blue-700",
+            "underline"
+        );
         cartInfoContent.appendChild(GotoCart);
         document.getElementById("add-to-cart").remove();
         setUpdateCartButton();
-        setTimeout(() => {
+        if (timeOutInfo != null) clearTimeout(timeOutInfo);
+        timeOutInfo = setTimeout(() => {
             cartInfo.style.transform = "translateY(-10px)";
             cartInfo.classList.add("opacity-0");
             cartInfo.classList.add("invisible");
@@ -101,18 +135,18 @@ async function addToCart(event) {
             setTimeout(() => {
                 cartInfoContent.textContent = "";
                 GotoCart.remove();
-                cartInfoContent.setAttribute("id", "loading");
-            }, 300);
+                cartInfoContent.classList.add("loading");
+            }, 20);
         }, 3000);
-
     } else if (response.status == 400) {
-        let cartInfoContent = document.getElementById("loading");
-        cartInfoContent.removeAttribute("id");
+        let cartInfoContent = document.getElementById("info-text");
+        cartInfoContent.classList.remove("loading");
         cartInfoContent.classList.add("text-black");
         let data = await response.json();
         cartInfoContent.textContent = await data.error;
         event.currentTarget.removeAttribute("disabled");
-        setTimeout(() => {
+        if (timeOutInfo != null) clearTimeout(timeOutInfo);
+        timeOutInfo = setTimeout(() => {
             cartInfo.style.transform = "translateY(-10px)";
             cartInfo.classList.add("opacity-0");
             cartInfo.classList.add("invisible");
@@ -120,8 +154,8 @@ async function addToCart(event) {
             cartInfo.classList.remove("opacity-1");
             setTimeout(() => {
                 cartInfoContent.textContent = "";
-                cartInfoContent.setAttribute("id", "loading");
-            }, 300);
+                cartInfoContent.classList.add("loading");
+            }, 500);
         }, 3000);
     }
 }
@@ -144,18 +178,24 @@ async function updateCart(event) {
         }),
     });
     if (response.ok) {
-        let cartInfoContent = document.getElementById("loading");
-        cartInfoContent.removeAttribute("id");
+        let cartInfoContent = document.getElementById("info-text");
+        cartInfoContent.classList.remove("loading");
         cartInfoContent.classList.add("text-black");
         cartInfoContent.textContent = "Le panier a été mis à jour. ";
         cartInfo.style.transform = "translateY(-12px)";
         let GotoCart = document.createElement("a");
         GotoCart.setAttribute("href", "/cart");
         GotoCart.textContent = "Voir le panier";
-        GotoCart.classList.add("cursor-pointer", "text-blue-500", "hover:text-blue-700", "underline");
+        GotoCart.classList.add(
+            "cursor-pointer",
+            "text-blue-500",
+            "hover:text-blue-700",
+            "underline"
+        );
         cartInfoContent.appendChild(GotoCart);
         event.target.removeAttribute("disabled");
-        setTimeout(() => {
+        if (timeOutInfo != null) clearTimeout(timeOutInfo);
+        timeOutInfo = setTimeout(() => {
             cartInfo.style.transform = "translateY(-10px)";
             cartInfo.classList.add("opacity-0");
             cartInfo.classList.add("invisible");
@@ -165,18 +205,18 @@ async function updateCart(event) {
             setTimeout(() => {
                 cartInfoContent.textContent = "";
                 GotoCart.remove();
-                cartInfoContent.setAttribute("id", "loading");
+                cartInfoContent.classList.add("loading");
             }, 300);
         }, 3000);
-
     } else if (response.status == 400) {
-        let cartInfoContent = document.getElementById("loading");
-        cartInfoContent.removeAttribute("id");
+        let cartInfoContent = document.getElementById("info-text");
+        cartInfoContent.classList.remove("loading");
         cartInfoContent.classList.add("text-black");
         let data = await response.json();
         cartInfoContent.textContent = await data.error;
         cartInfo.style.transform = "translateY(-12px)";
-        setTimeout(() => {
+        if (timeOutInfo != null) clearTimeout(timeOutInfo);
+        timeOutInfo = setTimeout(() => {
             cartInfo.style.transform = "translateY(-10px)";
             cartInfo.classList.add("opacity-0");
             cartInfo.classList.add("invisible");
@@ -185,11 +225,10 @@ async function updateCart(event) {
 
             setTimeout(() => {
                 cartInfoContent.textContent = "";
-                cartInfoContent.setAttribute("id", "loading");
-            }, 300);
+                cartInfoContent.classList.add("loading");
+            }, 500);
         }, 3000);
     }
-
 }
 
 async function removeFromCart(event) {
@@ -209,20 +248,37 @@ async function removeFromCart(event) {
         }),
     });
     if (response.ok) {
-        let cartInfoContent = document.getElementById("loading");
-        cartInfoContent.removeAttribute("id");
+        if (document.getElementsByClassName("cart-count").length != 0) {
+            let cartCounts = Array.from(
+                document.getElementsByClassName("cart-count")
+            );
+            cartCounts.forEach((element) => {
+                element.textContent = parseInt(element.textContent) - 1;
+                if (parseInt(element.textContent) == 0) {
+                    element.remove();
+                }
+            });
+        }
+        let cartInfoContent = document.getElementById("info-text");
+        cartInfoContent.classList.remove("loading");
         cartInfoContent.classList.add("text-black");
         cartInfoContent.textContent = "Le produit a été retiré du panier. ";
         cartInfo.style.transform = "translateY(-12px)";
         let GotoCart = document.createElement("a");
         GotoCart.setAttribute("href", "/cart");
         GotoCart.textContent = "Voir le panier";
-        GotoCart.classList.add("cursor-pointer", "text-blue-500", "hover:text-blue-700", "underline");
+        GotoCart.classList.add(
+            "cursor-pointer",
+            "text-blue-500",
+            "hover:text-blue-700",
+            "underline"
+        );
         document.getElementById("update-cart").remove();
         document.getElementById("remove-from-cart").remove();
         setAddToCartButton();
         cartInfoContent.appendChild(GotoCart);
-        setTimeout(() => {
+        if (timeOutInfo != null) clearTimeout(timeOutInfo);
+        timeOutInfo = setTimeout(() => {
             cartInfo.style.transform = "translateY(-10px)";
             cartInfo.classList.add("opacity-0");
             cartInfo.classList.add("invisible");
@@ -232,23 +288,43 @@ async function removeFromCart(event) {
             setTimeout(() => {
                 cartInfoContent.textContent = "";
                 GotoCart.remove();
-                cartInfoContent.setAttribute("id", "loading");
+                cartInfoContent.classList.add("loading");
             }, 300);
         }, 3000);
     }
-
 }
 
 function setUpdateCartButton() {
     let updateCartButton = document.createElement("button");
     updateCartButton.setAttribute("id", "update-cart");
-    updateCartButton.classList.add("bg-white", "text-black", "py-5", "w-[70vw]", "md:w-80", "rounded-md", "mt-7", "animate-button");
+    updateCartButton.classList.add(
+        "bg-white",
+        "text-black",
+        "py-5",
+        "w-[70vw]",
+        "md:w-80",
+        "rounded-md",
+        "mt-7",
+        "animate-button"
+    );
     updateCartButton.textContent = "Mettre à jour le panier";
     updateCartButton.addEventListener("click", updateCart);
     actionContainer.appendChild(updateCartButton);
     let removeFromCartButton = document.createElement("button");
     removeFromCartButton.setAttribute("id", "remove-from-cart");
-    removeFromCartButton.classList.add("flex", "bg-white", "text-black", "py-5", "rounded-md", "h-16", "w-16", "justify-center", "items-center", "mt-7", "animate-button");
+    removeFromCartButton.classList.add(
+        "flex",
+        "bg-white",
+        "text-black",
+        "py-5",
+        "rounded-md",
+        "h-16",
+        "w-16",
+        "justify-center",
+        "items-center",
+        "mt-7",
+        "animate-button"
+    );
     let icon = document.createElement("i");
     icon.classList.add("ri-delete-bin-line");
     removeFromCartButton.appendChild(icon);
@@ -259,12 +335,39 @@ function setUpdateCartButton() {
 function setAddToCartButton() {
     let addToCartButton = document.createElement("button");
     addToCartButton.setAttribute("id", "add-to-cart");
-    addToCartButton.classList.add("bg-white", "text-black", "py-5", "w-[80vw]", "md:w-96", "rounded-md", "mt-7", "animate-button");
+    addToCartButton.classList.add(
+        "bg-white",
+        "text-black",
+        "py-5",
+        "w-[80vw]",
+        "md:w-96",
+        "rounded-md",
+        "mt-7",
+        "animate-button"
+    );
     addToCartButton.textContent = "Ajouter au panier";
     addToCartButton.addEventListener("click", addToCart);
     actionContainer.appendChild(addToCartButton);
 }
 
+function setOutOfStockButton() {
+    document.getElementById("action-loading").remove();
+    let addToCartButton = document.createElement("button");
+    addToCartButton.setAttribute("id", "add-to-cart");
+    addToCartButton.classList.add(
+        "bg-white",
+        "text-black",
+        "py-5",
+        "w-[80vw]",
+        "md:w-96",
+        "rounded-md",
+        "mt-7",
+        "opacity-50"
+    );
+    addToCartButton.textContent = "Rupture de stock...";
+    addToCartButton.setAttribute("disabled", "true");
+    actionContainer.appendChild(addToCartButton);
+}
 
 var carouselRecommend = new Splide("#recommend", {
     perPage: 7,
