@@ -63,10 +63,10 @@
                         
                         <div id="user-pc" class="items-center hidden md:flex gap-6">
                         <a href="/cart/">
-                            <div class="relative">
+                            <div class="cart relative">
                                 <i class="ri-shopping-basket-line text-3xl"></i>
                                 <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
-                                    <div id="cart-count" class="absolute font-bold flex items-center justify-center right-[-10px] top-[-3px] h-5 w-5 text-sm rounded-full text-center text-white bg-red-500">
+                                    <div class="cart-count absolute font-bold flex items-center justify-center right-[-10px] top-[-3px] h-5 w-5 text-sm rounded-full text-center text-white bg-red-500">
                                         <?= count($_SESSION['cart']) ?>
                                     </div>
                                 <?php endif; ?>
@@ -98,10 +98,10 @@
                                 <i id="search-submit-2" class="ri-search-line absolute top-[7px] right-[14px] text-xl cursor-pointer"></i>
                             </form>
                             <a href="/cart/">
-                            <div class="relative">
+                            <div class="cart relative">
                                 <i class="ri-shopping-basket-line text-3xl"></i>
                                 <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
-                                    <div class="absolute font-bold flex items-center justify-center right-[-10px] top-[-3px] h-5 w-5 text-sm rounded-full text-center text-white bg-red-500">
+                                    <div class="cart-count absolute font-bold flex items-center justify-center right-[-10px] top-[-3px] h-5 w-5 text-sm rounded-full text-center text-white bg-red-500">
                                         <?= count($_SESSION['cart']) ?>
                                     </div>
                                 <?php endif; ?>
