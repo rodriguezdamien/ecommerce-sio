@@ -4,9 +4,11 @@
                     <div class="text-center text-white">
                         <h2 class="font-extrabold text-4xl">Media Music Market 53</h2>
                         <p class="font-extralight text-1xl">Les albums de l'évènements sont arrivés.</p>
+                        <a href="/results?query=&event=M3&edition=53">
                         <button class="rounded-full bg-white text-black font-semibold py-2 px-8 m-4">
                             Découvrir >>
                         </button>
+                        </a>
                     </div>
                     <div>
                         <img src="<?= CDN_URL ?>/images/album 3d.png" class="w-auto h-96 object-contain" />
