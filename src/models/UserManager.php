@@ -138,31 +138,6 @@ class UserManager extends Manager
         }
         return $user;
     }
-
-    static function tryAutoConnect()
-    {
-        // Si ce n'est pas le cas, on vérifie si un token est présent dans les cookies
-        if (isset($_COOKIE['ut']) && isset($_COOKIE['ui'])) {
-            require_once ('src/models/TokenManager.php');
-            // Si le token présent n'est pas valide, on le détruit
-            if (!TokenManager::checkTokenValidity($_COOKIE['ui'], $_COOKIE['ut'])) {
-                TokenManager::destroyToken($_COOKIE['ui']);
-                setcookie('ui', '', -1, '/', null, false, true);
-                setcookie('ut', '', -1, '/', null, false, true);
-            } else {
-                require_once ('src/models/UserManager.php');
-                $user = UserManager::getUserByToken($_COOKIE['ui'], $_COOKIE['ut']);
-                if ($user != null) {
-                    $_SESSION['id'] = $user->GetId();
-                    $_SESSION['prenom'] = $user->GetPrenom();
-                    $_SESSION['nom'] = $user->GetNom();
-                    $_SESSION['mail'] = $user->GetMail();
-                    $_SESSION['phone'] = $user->GetPhone();
-                    $_SESSION['dateNaissance'] = $user->GetDateNaissance();
-                }
-            }
-        }
-    }
 }
 
 ?>

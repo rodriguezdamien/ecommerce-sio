@@ -3,8 +3,8 @@ session_start();
 // Connexion automatique de l'utilisateur si un token valide est présent dans les cookies
 // On commence en vérifiant si un id utilisateur est présent dans les informations de session
 if (!isset($_SESSION['id'])) {
-    require_once ('src/models/UserManager.php');
-    UserManager::tryAutoConnect();
+    require_once ('src/controllers/LoginController.php');
+    LoginController::tryAutoConnect();
 }
 
 define('ROOT', __DIR__);
