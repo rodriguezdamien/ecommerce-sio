@@ -681,15 +681,33 @@ video {
   transition: 0.17s ease-out;
 }
 
+.\!product button {
+  bottom: 15px !important;
+  opacity: 0 !important;
+  transform: translateY(20px) !important;
+  transition: 0.17s ease-out !important;
+}
+
 .product:hover button {
   opacity: 100;
   transform: translateY(0);
   transition: 0.1s;
 }
 
+.\!product:hover button {
+  opacity: 100 !important;
+  transform: translateY(0) !important;
+  transition: 0.1s !important;
+}
+
 .product button:hover {
   filter: drop-shadow(0 3px 0px #00000050);
   transform: translateY(-2px);
+}
+
+.\!product button:hover {
+  filter: drop-shadow(0 3px 0px #00000050) !important;
+  transform: translateY(-2px) !important;
 }
 
 #search-input:focus-visible {
@@ -792,8 +810,8 @@ video {
   position: sticky;
 }
 
-.bottom-0 {
-  bottom: 0px;
+.-bottom-16 {
+  bottom: -4rem;
 }
 
 .left-3 {
@@ -824,6 +842,10 @@ video {
   top: 33.333333%;
 }
 
+.top-20 {
+  top: 5rem;
+}
+
 .top-\[-3px\] {
   top: -3px;
 }
@@ -838,10 +860,6 @@ video {
 
 .top-\[7px\] {
   top: 7px;
-}
-
-.-bottom-16 {
-  bottom: -4rem;
 }
 
 .z-20 {
@@ -1243,6 +1261,10 @@ video {
   align-items: center;
 }
 
+.items-stretch {
+  align-items: stretch;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -1303,6 +1325,10 @@ video {
 
 .break-keep {
   word-break: keep-all;
+}
+
+.rounded {
+  border-radius: 0.25rem;
 }
 
 .rounded-full {
@@ -1385,6 +1411,10 @@ video {
   border-left-color: rgb(203 213 225 / var(--tw-border-opacity));
 }
 
+.bg-\[\#00000091\] {
+  background-color: #00000091;
+}
+
 .bg-\[\#222227\] {
   --tw-bg-opacity: 1;
   background-color: rgb(34 34 39 / var(--tw-bg-opacity));
@@ -1462,6 +1492,27 @@ video {
 .bg-yellow-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(250 204 21 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#000000E1\] {
+  background-color: #000000E1;
+}
+
+.bg-\[\#000000e8\] {
+  background-color: #000000e8;
+}
+
+.bg-\[\#000000d5\] {
+  background-color: #000000d5;
+}
+
+.bg-\[\#000000c0\] {
+  background-color: #000000c0;
+}
+
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-sunset {
@@ -1676,6 +1727,10 @@ video {
   font-weight: 300;
 }
 
+.font-medium {
+  font-weight: 500;
+}
+
 .font-normal {
   font-weight: 400;
 }
@@ -1728,6 +1783,10 @@ video {
 
 .opacity-90 {
   opacity: 0.9;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .shadow-sm {
@@ -1842,7 +1901,7 @@ body {
   transform: translateY(-3px);
 }
 
-#loading {
+.loading {
   display: inline-block;
   width: 30px;
   height: 30px;
