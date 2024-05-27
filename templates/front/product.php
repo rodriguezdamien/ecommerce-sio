@@ -34,12 +34,12 @@
                     </div>
                             <div id="action-container" class="relative flex items-center gap-1">
                                 <button id="action-loading" class="bg-white text-black h-16 w-[80vw] md:w-96 rounded-md mt-7 animate-button" data-id="<?= htmlspecialchars($params['product']->GetId()) ?>">
-                                    <span id="loading"></span>
+                                    <span class="loading"></span>
                                 </button>
                                 <div id="cart-info" class="absolute flex invisible w-full flex-col items-center opacity-1 -bottom-16" style="transform:translateY(-10px)">
                                     <div class="w-3 h-3 bg-white rotate-45 translate-y-[50%]"></div>
                                     <div class="bg-white rounded-md px-3 py-2">
-                                        <span id="loading" class="whitespace-nowrap"></span>
+                                        <span id="info-text" class="loading whitespace-nowrap"></span>
                                     </div>
                                 </div>
                             </div>
