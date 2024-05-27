@@ -73,10 +73,13 @@ class UserManager extends Manager
                     $req = 'insert into token (tokenId,tokenHash,idUser,dateExpiration)'
                         . 'values (:tokenId,:tokenHash,:idUser,:dateExpiration)';
                     $result = self::$cnx->prepare($req);
+                    $tokenHash = password_hash($newToken, PASSWORD_DEFAULT);
+                    $idUser = $user->getId();
+                    $dateExpiration = date('Y-m-d H:i:s', $expirationDateUnix);
                     $result->bindParam(':tokenId', $newTokenId, PDO::PARAM_STR);
-                    $result->bindParam(':tokenHash', password_hash($newToken, PASSWORD_DEFAULT), PDO::PARAM_STR);
-                    $result->bindParam(':idUser', $user->getId(), PDO::PARAM_INT);
-                    $result->bindParam(':dateExpiration', date('Y-m-d H:i:s', $expirationDateUnix), PDO::PARAM_STR);
+                    $result->bindParam(':tokenHash', $tokenHash, PDO::PARAM_STR);
+                    $result->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+                    $result->bindParam(':dateExpiration', $dateExpiration, PDO::PARAM_STR);
                     if ($result->execute()) {
                         setcookie('ut', $newToken, $expirationDateUnix, '/', null, false, true);
                         setcookie('ui', $newTokenId, $expirationDateUnix, '/', null, false, true);
