@@ -1,9 +1,9 @@
 <?php
-
 require_once 'src/models/UserManager.php';
 require_once 'Controller.php';
 require_once 'src/models/Album.php';
 require_once 'src/models/AlbumManager.php';
+require_once 'src/models/CartManager.php';
 
 class CartController extends Controller
 {
@@ -12,10 +12,14 @@ class CartController extends Controller
         $params['cart'] = [];
         if (isset($_SESSION['cart'])) {
             foreach ($_SESSION['cart'] as $item) {
-                $params['cart'][] = AlbumManager::getAlbumInfo($item['idAlbum']);
+                $params['cart'][] = array(
+                    'album' => AlbumManager::getAlbumInfo($item['idAlbum']),
+                    'qte' => $item['qte']
+                );
             }
         }
-        $scripts = [];
+        $params['total'] = CartManager::GetCartTotal();
+        $scripts = ['cart.js'];
         self::render('templates/front/cart.php', $params, $scripts);
     }
 
@@ -23,9 +27,9 @@ class CartController extends Controller
     {
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
-        $cart = isset($_SESSION['id']) ? CartManager::GetCart($_SESSION['id']) : new Cart(-1, -1);
+        $idUser = isset($_SESSION['id']) ? $_SESSION['id'] : -1;
         try {
-            CartManager::AddCartItem($cart->GetId(), $data['id'], $data['qte']);
+            CartManager::AddCartItem($idUser, $data['id'], $data['qte']);
             http_response_code(200);
         } catch (Exception $e) {
             http_response_code(400);
@@ -35,9 +39,9 @@ class CartController extends Controller
 
     public static function getCartContent()
     {
-        $cart = isset($_SESSION['id']) ? CartManager::GetCart($_SESSION['id']) : new Cart(-1, -1);
+        $idUser = isset($_SESSION['id']) ? $_SESSION['id'] : -1;
         try {
-            $cartItems = CartManager::GetCartItems($cart->GetId());
+            $cartItems = CartManager::GetCartItems($idUser);
             http_response_code(200);
             print (json_encode($cartItems));
         } catch (Exception $e) {
@@ -50,10 +54,10 @@ class CartController extends Controller
     {
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
-        $cart = isset($_SESSION['id']) ? CartManager::GetCart($_SESSION['id']) : new Cart(-1, -1);
+        $idUser = isset($_SESSION['id']) ? $_SESSION['id'] : -1;
         try {
             if (
-                CartManager::TryUpdateCartItem($cart->GetId(), $data['id'], $data['qte'], true)
+                CartManager::TryUpdateCartItem($idUser, $data['id'], $data['qte'])
             ) {
                 http_response_code(200);
             } else {
@@ -69,15 +73,29 @@ class CartController extends Controller
     {
         $json_data = file_get_contents('php://input');
         $data = json_decode($json_data, true);
-        $cart = isset($_SESSION['id']) ? CartManager::GetCart($_SESSION['id']) : new Cart(-1, -1);
+        $idUser = isset($_SESSION['id']) ? $_SESSION['id'] : -1;
         try {
             if (
-                CartManager::RemoveCartItem($cart->GetId(), $data['id'])
+                CartManager::RemoveCartItem($idUser, $data['id'])
             ) {
                 http_response_code(200);
             } else {
                 throw new Exception("L'album n'est pas dans le panier.");
             }
+        } catch (Exception $e) {
+            http_response_code(400);
+            print (json_encode(['error' => $e->getMessage()]));
+        }
+    }
+
+    public static function updateCart()
+    {
+        $json_data = file_get_contents('php://input');
+        $data = json_decode($json_data, true);
+        $idUser = isset($_SESSION['id']) ? $_SESSION['id'] : -1;
+        try {
+            CartManager::replaceCart($idUser, $data);
+            http_response_code(200);
         } catch (Exception $e) {
             http_response_code(400);
             print (json_encode(['error' => $e->getMessage()]));

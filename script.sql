@@ -138,20 +138,13 @@ create table if not exists `Contenir`(
 -- Côté gestion e-commerce (Commande, produit...)
 
 create table if not exists `Cart` (
-        `id` int not null auto_increment,
         `idUser` int not null,
-        primary key (`id`),
-        FOREIGN KEY (`idUser`) REFERENCES `User`(`id`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
-
-create table if not exists `CartItem` (
-        `idCart` int not null,
         `idAlbum` int not null,
         `qte` tinyint not null,
-        primary key (`idCart`,`idAlbum`),
-        FOREIGN KEY(`idCart`) REFERENCES `Cart`(`id`),
+        primary key (`idUser`,`idAlbum`),
+        FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
         FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;	
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 create table if not exists `Commande` (
@@ -205,9 +198,9 @@ INSERT INTO Edition_Event(idEvent,numEdition,annee) values ('M3',44,2019),('ZZIS
 -- TRIGGER d'ajout de commandes
 DELIMITER //
 
-drop trigger if exists before_insert_cartitem;
-CREATE TRIGGER before_insert_cartitem BEFORE INSERT
-ON CartItem FOR EACH ROW
+drop trigger if exists before_insert_cart//
+CREATE TRIGGER before_insert_cart BEFORE INSERT
+ON Cart FOR EACH ROW
 BEGIN
         DECLARE qteActuelProduit int;
         SELECT qte INTO qteActuelProduit FROM Album WHERE id = NEW.idAlbum;
@@ -217,9 +210,9 @@ BEGIN
 
 END//
 
-drop trigger if exists before_update_cartitem;
-CREATE TRIGGER before_update_cartitem BEFORE INSERT
-ON CartItem FOR EACH ROW
+drop trigger if exists before_update_cart//
+CREATE TRIGGER before_update_cart BEFORE UPDATE
+ON Cart FOR EACH ROW
 BEGIN
         DECLARE qteActuelProduit int;
         SELECT qte INTO qteActuelProduit FROM Album WHERE id = NEW.idAlbum;
@@ -275,42 +268,27 @@ BEGIN
         RETURN nbPresent;
 END //
 
-CREATE FUNCTION IF NOT EXISTS Cart(idUser INT)
-RETURNS INT
-BEGIN
-        DECLARE idCart INT;
-        SELECT id INTO idCart FROM Cart WHERE idUser = idUser;
-        IF (idCart IS NULL) THEN
-                INSERT INTO Cart(idUser) VALUES(idUser);
-                SELECT LAST_INSERT_ID() INTO idCart;
-        END IF;
-        RETURN idCart;
-END //
-grant execute on function gakudb.Cart to 'gaku_admin'@'%';
-
 drop function if exists CartPrice//
-Create function if not exists CartPrice(idCart INT)
+Create function if not exists CartPrice(idUser INT)
 RETURNS FLOAT
 BEGIN
         DECLARE prixTotal FLOAT;
-        SELECT SUM(CartItem.qte*album.prix) INTO prixTotal 
-        FROM CartItem
+        SELECT SUM(Cart.qte*album.prix) INTO prixTotal 
+        FROM Cart
                 JOIN Album ON idAlbum = Album.id
-        WHERE idCart = idCart;
+        WHERE idUser = idUser;
         RETURN prixTotal;
 END //
-select CartPrice(1);
-grant execute on function gakudb.CartPrice to 'gaku_admin'@'%';
+grant execute on function gakudb.CartPrice to 'gaku_admin'@'%'//
 
 drop procedure if exists addItemToCart//
-CREATE PROCEDURE IF NOT EXISTS addItemToCart(idUser INT, idItem INT, qteItem INT)
+CREATE PROCEDURE IF NOT EXISTS addItemToCart(idUserCart INT, idItem INT, qteItem INT)
 BEGIN
-        DECLARE idCart INT;
-        SELECT Cart(idUser) INTO idCart;
-        IF(EXISTS (SELECT * FROM CartItem WHERE idCart = idCart AND idAlbum = idItem)) THEN
-                UPDATE CartItem SET qte = qteItem WHERE idCart = idCart AND idAlbum = idItem;
+        DECLARE idUser INT;
+        IF(EXISTS (SELECT * FROM Cart WHERE idUser = idUserCart AND idAlbum = idItem)) THEN
+                UPDATE Cart SET qte = qteItem WHERE idUser = idUserCart AND idAlbum = idItem;
         ELSE
-                INSERT INTO CartItem(idCart,idAlbum,qte) VALUES(idCart,idItem,qteItem);
+                INSERT INTO Cart(idUser,idAlbum,qte) VALUES(idUserCart,idItem,qteItem);
         END IF;
 END //
 grant execute on procedure gakudb.addItemToCart to 'gaku_admin'@'%'//
