@@ -58,7 +58,7 @@ async function addToCart(event) {
     cartInfo.classList.remove("invisible");
     cartInfo.classList.remove("opacity-0");
     cartInfo.style.transform = "translateY(-10px)";
-    let response = await fetch("/cart/add", {
+    let response = await fetch("/cart/add-item", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -133,7 +133,7 @@ async function updateCart(event) {
     cartInfo.classList.remove("invisible");
     cartInfo.classList.remove("opacity-0");
     cartInfo.style.transform = "translateY(0px)";
-    let response = await fetch("/cart/update", {
+    let response = await fetch("/cart/update-item", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -199,7 +199,7 @@ async function removeFromCart(event) {
     cartInfo.classList.remove("invisible");
     cartInfo.classList.remove("opacity-0");
     cartInfo.style.transform = "translateY(0px)";
-    let response = await fetch("/cart/remove", {
+    let response = await fetch("/cart/remove-item", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
