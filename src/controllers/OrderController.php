@@ -17,7 +17,6 @@ class OrderController extends Controller
                 exit();
             } else {
                 $orderItems = $params['order']->GetOrderItems();
-                $params['total'] = OrderManager::GetOrderPrice($params['order']->GetId());
                 foreach ($orderItems as $item) {
                     $params['items'][] = [
                         'album' => AlbumManager::getAlbumInfo($item['idAlbum']),
