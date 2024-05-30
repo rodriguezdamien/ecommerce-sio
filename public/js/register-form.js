@@ -3,7 +3,8 @@ const prenom = document.getElementById("prenom");
 const nom = document.getElementById("nom");
 const mail = document.getElementById("mail");
 const password = document.getElementById("password");
-const mailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
+const mailRegex =
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
 
 const requirements = document.getElementById("requirements");
 const maj = document.getElementById("maj");
@@ -25,21 +26,29 @@ document.addEventListener("submit", (event) => {
     if (prenom.value.length == 0) {
         isValid = false;
         prenom.classList.add("invalid-border");
-        prenom.parentNode.appendChild(createAlertElement("Vous n'avez pas saisi de prénom."));
+        prenom.parentNode.appendChild(
+            createAlertElement("Vous n'avez pas saisi de prénom.")
+        );
     }
     if (nom.value.length == 0) {
         isValid = false;
         nom.classList.add("invalid-border");
-        nom.parentNode.appendChild(createAlertElement("Vous n'avez pas saisi de nom."));
+        nom.parentNode.appendChild(
+            createAlertElement("Vous n'avez pas saisi de nom.")
+        );
     }
     if (mail.value.length == 0) {
         isValid = false;
         mail.classList.add("invalid-border");
-        mail.parentNode.appendChild(createAlertElement("Vous n'avez pas saisi de mail."));
+        mail.parentNode.appendChild(
+            createAlertElement("Vous n'avez pas saisi de mail.")
+        );
     } else if (!mailRegex.test(mail.value)) {
         isValid = false;
         mail.classList.add("invalid-border");
-        mail.parentNode.appendChild(createAlertElement("L'adresse mail saisie n'est pas valide."));
+        mail.parentNode.appendChild(
+            createAlertElement("L'adresse mail saisie n'est pas valide.")
+        );
     }
     if (!checkPassword()) {
         password.classList.add("invalid-border");
@@ -60,7 +69,6 @@ function createAlertElement(text) {
     return alert;
 }
 
-//Code écrit par ChatGPT, Explication écrit par Damien (Pour être sûr de comprendre)
 function checkPassword() {
     //On fait les vérifications des paramètres
     let isValidLength = password.value.length >= 8;
