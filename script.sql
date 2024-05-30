@@ -307,16 +307,15 @@ BEGIN
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET fini = TRUE;
         OPEN cursCart;
         -- la doc qui documente https://dev.mysql.com/doc/refman/8.0/en/cursors.html parce que le while ça fait un petit tour en plus !!!
-        update_loop: LOOP
+        check_loop: LOOP
                 FETCH cursCart INTO idAlbumCommandee, qteCommandee;
                 IF fini THEN
-                        LEAVE update_loop;
+                        LEAVE check_loop;
                 END IF;
-                IF(qteCommandee > (SELECT qte FROM Album WHERE id = idAlbumCommandee)) THEN
-                        SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = 'La quantité commandée est supérieure au stock disponible';
+                IF(qteCommandee > (SELECT GetAlbumStock(idAlbumCommandee))) THEN
+                        SIGNAL SQLSTATE '45003' SET MESSAGE_TEXT = 'La quantité commandée est supérieure au stock disponible';
                 END IF;
-                UPDATE Album SET qte = (qte - qteCommandee) WHERE id = idAlbumCommandee;
-        END LOOP update_loop;
+        END LOOP check_loop;
         CLOSE cursCart;
         INSERT INTO Commande(prenomDestinataire,nomDestinataire,adresseLivraison,complementAdresse,cpLivraison,villeLivraison,numeroTel,mailContact,idUser) VALUES (prenomDest,nomDest,adresseLivr,complementAdresseLivr,cpLivr,villeLivr,numTel,mailContactDest,idUserCommande);
         INSERT INTO Commander(idCommande,idAlbum,qte) SELECT (select LAST_INSERT_ID()),idAlbum,qte FROM Cart WHERE idUser = idUserCommande;
