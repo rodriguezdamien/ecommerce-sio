@@ -69,7 +69,7 @@ create table if not exists `Album` (
 create table if not exists `Noter` (
         `idAlbum` int not null,
         `idUser` int not null,
-        `note` tinyint not null,
+        `note` int not null,
         primary key (`idAlbum`,`idUser`),
         FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`),
         FOREIGN KEY(`idUser`) REFERENCES `User`(`id`)
@@ -140,7 +140,7 @@ create table if not exists `Contenir`(
 create table if not exists `Cart` (
         `idUser` int not null,
         `idAlbum` int not null,
-        `qte` tinyint not null,
+        `qte` int not null,
         primary key (`idUser`,`idAlbum`),
         FOREIGN KEY (`idUser`) REFERENCES `User`(`id`),
         FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`)
@@ -175,7 +175,7 @@ create table if not exists `Statut` (
 create table if not exists `Commander` (
         `idCommande` int not null,
         `idAlbum` int not null,
-        `qte` tinyint not null,
+        `qte` int not null,
         primary key (`idCommande`,`idAlbum`),
         foreign key (`idCommande`) REFERENCES `Commande`(`id`),
         foreign key (`idAlbum`) REFERENCES `Album`(`id`)
