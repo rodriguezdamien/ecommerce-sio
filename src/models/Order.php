@@ -59,7 +59,7 @@ class Order
 
     public function GetComplementAdresse(): string
     {
-        return $this->complementAdresse;
+        return $this->complementAdresse ?? '';
     }
 
     public function GetCp(): string
