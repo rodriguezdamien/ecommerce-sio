@@ -7,11 +7,18 @@ class LoginController extends Controller
 {
     public static function renderView($params)
     {
+        if (isset($_SESSION['id']))
+            header('Location: /?connected=true');
         $scripts = [];
+        if (isset($params['changed']) && $params['changed'] == 200)
+            $params['success'] = 'Votre mot de passe a bien été modifié.<br> Pour votre sécurité, nous vous avons déconnecté de tout vos périphériques. Connectez-vous à nouveau pour continuer.';
         if (isset($params['err'])) {
             switch ($params['err']) {
                 case 405:
                     $params['error'] = 'Une erreur est survenue.';
+                    break;
+                case 403:
+                    $params['error'] = 'Vous devez être connecté pour continuer.';
                     break;
             }
         }
@@ -26,8 +33,7 @@ class LoginController extends Controller
             $_SESSION['prenom'] = $user->GetPrenom();
             $_SESSION['nom'] = $user->GetNom();
             $_SESSION['mail'] = $user->GetMail();
-            $_SESSION['phone'] = $user->GetPhone();
-            $_SESSION['dateNaissance'] = $user->GetDateNaissance();
+            $_SESSION['idRole'] = $user->GetIdRole();
             if (isset($_SESSION['cart']))
                 CartManager::TransferGuestToUserCart($_SESSION['id']);
             $_SESSION['cart'] = CartManager::GetCartItems($_SESSION['id']);
@@ -56,8 +62,6 @@ class LoginController extends Controller
                     $_SESSION['prenom'] = $user->GetPrenom();
                     $_SESSION['nom'] = $user->GetNom();
                     $_SESSION['mail'] = $user->GetMail();
-                    $_SESSION['phone'] = $user->GetPhone();
-                    $_SESSION['dateNaissance'] = $user->GetDateNaissance();
                     $_SESSION['cart'] = CartManager::GetCartItems($_SESSION['id']);
                 }
             }

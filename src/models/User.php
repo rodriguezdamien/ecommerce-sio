@@ -40,14 +40,19 @@ class User
         return $this->mail;
     }
 
-    public function GetPhone(): ?string
+    public function GetIdRole(): int
     {
-        return $this->phone;
+        return $this->idRole;
     }
 
-    public function GetDateNaissance(): ?DateTime
+    public function GetDateInscription(): DateTime
     {
-        return $this->dateNaissance;
+        return $this->dateInscription;
+    }
+
+    public function SetDateInscription(DateTime $dateInscription)
+    {
+        $this->dateInscription = $dateInscription;
     }
 
     // endregion
