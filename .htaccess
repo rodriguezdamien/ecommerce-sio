@@ -28,9 +28,21 @@ RewriteCond %{REQUEST_METHOD} ^POST$
 RewriteRule ^register(/?)$ index.php?controller=Register&action=sendForm [NC,L]
 
 #Pages de gestion de compte
-RewriteRule ^account(/?)$ index.php?controller=AccountSettings&action=renderView [NC,L]
+RewriteRule ^account(/?)$ index.php?controller=AccountSettings&action=renderView [NC,L,qsa]
+RewriteRule ^account/orders(/?)$ index.php?controller=AccountSettings&action=renderView&tab=orders [NC,L,qsa]
 RewriteRule ^account/logout(/?)$ index.php?controller=AccountSettings&action=disconnect [NC,L]
 
+RewriteCond %{REQUEST_METHOD} ^GET$
+RewriteRule ^account/change-password(/?)$ index.php?controller=AccountSettings&action=renderView&tab=change-password [NC,L,qsa]
+
+RewriteCond %{REQUEST_METHOD} ^POST$
+RewriteRule ^account/change-password(/?)$ index.php?controller=AccountSettings&action=changePassword [NC,L]
+
+RewriteCond %{REQUEST_METHOD} ^GET$
+RewriteRule ^account/info(/?)$ index.php?controller=AccountSettings&action=renderView&tab=info [NC,L,qsa]
+
+RewriteCond %{REQUEST_METHOD} ^POST$
+RewriteRule ^account/info(/?)$ index.php?controller=AccountSettings&action=updateInfo [NC,L,qsa]
 
 #Route "API" pour les requêtes AJAX
 RewriteRule ^cart/content(/?)$ index.php?controller=Cart&action=getCartContent [nc,qsa,L]

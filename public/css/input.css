@@ -3,6 +3,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "./cart.css";
+@import "./account.css";
+@import "./back-office.css";
 
 @font-face {
     font-family: "banana-grotesk";
