@@ -148,14 +148,16 @@ create table if not exists `Cart` (
 
 
 create table if not exists `Commande` (
+        `id` int not null auto_increment,
         `prenomDestinataire` varchar(50) not null default '???',
         `nomDestinataire`varchar(50) not null default '???',
-        `id` int not null auto_increment,
         `dateHeure` datetime not null default NOW(),
         `adresseLivraison` varchar(50) not null,
+        `complementAdresse` varchar(50) null,
         `cpLivraison` varchar(6) not null,
         `villeLivraison` varchar(50) not null,
-        `numeroTel` varchar(13) not null,
+        `numeroTel` varchar(15) not null,
+        `mailContact` varchar(50) not null default '???',
         `idUser` int not null,
         `note` varchar(300) not null default 'Aucune',
         primary key(`id`),
