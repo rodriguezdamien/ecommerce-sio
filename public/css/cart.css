@@ -8,3 +8,14 @@
 #cart-elements > .separator {
     width: 90%;
 }
+
+.cb-logo{
+    background-image: url('/images/cb-logo.png');
+    background-size: contain;
+    background-repeat:no-repeat;
+    width:38px;
+    height:28px;
+    display:inline-block;
+    border:solid rgb(55 65 81) 1px;
+    border-radius: 3px;
+}
