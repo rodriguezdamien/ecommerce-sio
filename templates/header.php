@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="<?= CDN_URL ?>/css/style.css" />
         <link rel="stylesheet" href="<?= CDN_URL ?>/css/splide-core.min.css" />
         <link rel="stylesheet" href="<?= CDN_URL ?>/css/remixicon.css" />
+        <link rel="icon" type="image/x-icon" href="<?= CDN_URL ?>/images/test">
         <title>gaku!</title>
     </head>
     <body class="bg-black">
