@@ -98,8 +98,11 @@
                 <p id="update-error-message" class="text-white"></p>
             </div>
             <?php else: ?>
-                <div class="bg-white w-full flex justify-center">
+                <div class="bg-white w-full flex flex-col justify-center items-center gap-3 py-10 rounded-md">
                     <p>Votre panier est vide.</p>
+                    <a href="/">
+                        <button class="bg-black text-white py-3 px-5 rounded-full">Retourner à l'accueil</button>
+                    </a>
                 </div>
             <?php endif; ?>
             
