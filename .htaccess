@@ -53,3 +53,11 @@ RewriteRule ^cart/update(/?)$ index.php?controller=Cart&action=updateCart [nc,qs
 
 #Route pour confirmer l'achat
 RewriteRule ^checkout/confirm(/?)$ index.php?controller=Checkout&action=confirmPurchase [nc,qsa,L]
+
+
+
+#Back-office (hyper secret)
+RewriteRule ^back-office/hyper-secret(/?)$ index.php?controller=BackOffice&action=renderView [nc,qsa,L]
+RewriteRule ^back-office/hyper-secret/orders(/?)$ index.php?controller=BackOffice&action=renderView&tab=orders [nc,qsa,L]
+RewriteRule ^back-office/hyper-secret/products(/?)$ index.php?controller=BackOffice&action=renderView&tab=products [nc,qsa,L]
+RewriteRule ^back-office/hyper-secret/users(/?)$ index.php?controller=BackOffice&action=renderView&tab=users [nc,qsa,L]

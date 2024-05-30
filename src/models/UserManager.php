@@ -1,11 +1,45 @@
 <?php
 require_once ('User.php');
 require_once ('Manager.php');
+require_once ('OrderManager.php');
 require_once ('TokenManager.php');
 
 class UserManager extends Manager
 {
     private static ?\PDO $cnx = null;
+
+    static function GetAllUsers(int $limit, int $page): array
+    {
+        $users = [];
+        self::$cnx = self::connect();
+        $req = 'select id,prenom,nom,mail,idRole,dateInscription from user limit :limit';
+        if ($page > 1) {
+            $req .= ' offset :offset';
+        }
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':limit', $limit, PDO::PARAM_INT);
+        if ($page > 1) {
+            $offset = ($page - 1) * $limit;
+            $result->bindParam(':offset', $offset, PDO::PARAM_INT);
+        }
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        while ($userInfo = $result->fetch()) {
+            $users[] = new User($userInfo['id'], $userInfo['prenom'], $userInfo['nom'], $userInfo['mail'], $userInfo['idRole'], new DateTime($userInfo['dateInscription']));
+        }
+
+        return $users;
+    }
+
+    static function GetUsersCount(): int
+    {
+        $req = 'select count(id) as count from user';
+        $result = self::$cnx->prepare($req);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $total = $result->fetch();
+        return $total['count'];
+    }
 
     /*
      * Enregistre un nouvel utilisateur

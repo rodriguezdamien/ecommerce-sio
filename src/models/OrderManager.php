@@ -35,6 +35,44 @@ class OrderManager extends Manager
         return $order;
     }
 
+    public static function GetOrders(int $limit, int $page)
+    {
+        self::$cnx = self::connect();
+        $req = 'select id,prenomDestinataire,nomDestinataire,dateHeure,adresseLivraison,complementAdresse,cpLivraison,villeLivraison,numeroTel,mailContact,idUser,prixCommande(id) as total '
+            . 'from Commande '
+            . 'limit :limit ';
+        if ($page > 1) {
+            $req .= 'offset :offset';
+        }
+        $result = self::$cnx->prepare($req);
+
+        $result->bindParam(':limit', $limit, PDO::PARAM_INT);
+        if ($page > 1) {
+            $offset = ($page - 1) * $limit;
+            $result->bindParam(':offset', $offset, PDO::PARAM_INT);
+        }
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $orders = [];
+        while ($orderInfo = $result->fetch()) {
+            $order = new Order($orderInfo['id'], $orderInfo['prenomDestinataire'], $orderInfo['nomDestinataire'], new DateTime($orderInfo['dateHeure']), $orderInfo['adresseLivraison'], null, $orderInfo['cpLivraison'], $orderInfo['villeLivraison'], $orderInfo['numeroTel'], $orderInfo['mailContact'], $orderInfo['idUser'], $orderInfo['total']);
+            $order->SetOrderItems(OrderManager::GetOrderItems($order->GetId()));
+            $orders[] = $order;
+        }
+        return $orders;
+    }
+
+    public static function GetOrdersCount(): int
+    {
+        self::$cnx = self::connect();
+        $req = 'select count(id) as count from Commande';
+        $result = self::$cnx->prepare($req);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $total = $result->fetch();
+        return $total['count'];
+    }
+
     public static function GetOrderInfo(int $idOrder): Order
     {
         self::$cnx = self::connect();

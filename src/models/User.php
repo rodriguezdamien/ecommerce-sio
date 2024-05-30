@@ -6,17 +6,17 @@ class User
     private string $prenom;
     private string $nom;
     private string $mail;
-    private ?string $phone;
-    private ?DateTime $dateNaissance;
+    private int $idRole;
+    private DateTime $dateInscription;
 
-    function __construct(int $id, string $prenom, string $nom, string $mail, ?DateTime $dateNaissance, ?string $phone)
+    function __construct(int $id, string $prenom, string $nom, string $mail, int $idRole, DateTime $dateInscription = new DateTime())
     {
         $this->id = $id;
         $this->prenom = $prenom;
         $this->nom = $nom;
         $this->mail = $mail;
-        $this->dateNaissance = $dateNaissance;
-        $this->phone = $phone;
+        $this->idRole = $idRole;
+        $this->dateInscription = $dateInscription;
     }
 
     // region Accesseurs

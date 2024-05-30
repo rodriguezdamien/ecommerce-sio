@@ -8,6 +8,67 @@ class AlbumManager extends Manager
 {
     private static ?\PDO $cnx = null;
 
+    /*
+     * FONCTION POUR BACK-OFFICE
+     * Récupère la liste des albums de la base de données (système de pagination pour limiter le nombre d'albums affichés par page)
+     * @param int $limit
+     * @param int $page
+     * @return Album[]
+     */
+    public static function GetAlbums(int $limit, int $page)
+    {
+        $albums = [];
+        self::$cnx = self::connect();
+        $req = 'select album.id,album.nom,prix,uriImage,dateSortie,GetAlbumStock(album.id) as qte,label.nom as nomLabel, artiste.nom as nomArtiste from album'
+            . ' left join label on album.idLabel = label.id'
+            . ' left join artiste on album.idArtiste = artiste.id'
+            . ' limit :limit';
+        if ($page > 1) {
+            $req .= ' offset :offset';
+        }
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':limit', $limit, PDO::PARAM_INT);
+        if ($page > 1) {
+            $offset = ($page - 1) * $limit;
+            $result->bindParam(':offset', $offset, PDO::PARAM_INT);
+        }
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        while ($album = $result->fetch(PDO::FETCH_ASSOC)) {
+            $albums[] = new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], null, null, $album['qte'], new DateTime($album['dateSortie']));
+        }
+        return $albums;
+    }
+
+    /*
+     * FONCTION POUR BACK-OFFICE
+     * Récupère le nombre total d'albums dans la base de données
+     * @return int
+     */
+    public static function GetAlbumsCount()
+    {
+        self::$cnx = self::connect();
+        $req = 'select count(id) as count from album';
+        $result = self::$cnx->prepare($req);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $total = $result->fetch();
+        return $total['count'];
+    }
+
+    public static function GetQteInCart($idAlbum)
+    {
+        self::$cnx = self::connect();
+        $req = 'select sum(qte) as qte from cart where idAlbum = :idAlbum';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':idAlbum', $idAlbum, PDO::PARAM_INT);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $qte = $result->fetch();
+        echo $qte['qte'];
+        return $qte['qte'];
+    }
+
     public static function getRandomAlbums(int $limit): array
     {
         self::$cnx = self::connect();
