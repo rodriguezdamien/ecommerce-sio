@@ -140,13 +140,13 @@ class UserManager extends Manager
         if (!$mail = filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             throw new Exception("L'email n'est pas valide : " . $_POST['mail']);
         }
-        $req = 'select id,prenom,nom,mail,idRole,phone,dateNaissance from user where mail = :mail';
+        $req = 'select id,prenom,nom,mail,idRole,dateInscription from user where mail = :mail';
         $result = self::$cnx->prepare($req);
         $result->bindParam(':mail', $mail);
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
         if ($userInfo = $result->fetch()) {
-            $user = new User($userInfo['id'], $userInfo['prenom'], $userInfo['nom'], $userInfo['mail'], $userInfo['dateNaissance'], $userInfo['phone']);
+            $user = new User($userInfo['id'], $userInfo['prenom'], $userInfo['nom'], $userInfo['mail'], $userInfo['idRole'], new DateTime($userInfo['dateInscription']));
         }
         return $user;
     }
@@ -160,7 +160,7 @@ class UserManager extends Manager
     {
         $user = null;
         self::$cnx = self::connect();
-        $req = 'select id,prenom,nom,mail,idRole,phone,dateNaissance,token.tokenId,token.tokenHash '
+        $req = 'select id,prenom,nom,mail,idRole,dateInscription,token.tokenId,token.tokenHash '
             . 'from user '
             . 'join token on user.id = token.idUser '
             . 'where token.tokenId = :tokenId ';
@@ -170,10 +170,90 @@ class UserManager extends Manager
         $result->setFetchMode(PDO::FETCH_ASSOC);
         if ($userInfo = $result->fetch()) {
             if (password_verify($token, $userInfo['tokenHash'])) {
-                $user = new User($userInfo['id'], $userInfo['prenom'], $userInfo['nom'], $userInfo['mail'], $userInfo['dateNaissance'], $userInfo['phone']);
+                $user = new User($userInfo['id'], $userInfo['prenom'], $userInfo['nom'], $userInfo['mail'], $userInfo['idRole'], new DateTime($userInfo['dateInscription']));
             }
         }
         return $user;
+    }
+
+    /*
+     * Récupère les commandes d'un utilisateur
+     */
+    public static function getUserOrders(int $idUser): array
+    {
+        $orders = [];
+        self::$cnx = self::connect();
+        $req = 'select id,prenomDestinataire,nomDestinataire,dateHeure,adresseLivraison,cpLivraison,villeLivraison,numeroTel,mailContact,idUser,prixCommande(id) as total';
+        $req .= ' from `commande` where idUser = :idUser';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        while ($orderInfo = $result->fetch(PDO::FETCH_ASSOC)) {
+            $order = new Order($orderInfo['id'], $orderInfo['prenomDestinataire'], $orderInfo['nomDestinataire'], new DateTime($orderInfo['dateHeure']), $orderInfo['adresseLivraison'], null, $orderInfo['cpLivraison'], $orderInfo['villeLivraison'], $orderInfo['numeroTel'], $orderInfo['mailContact'], $orderInfo['idUser'], $orderInfo['total']);
+            $order->SetOrderItems(OrderManager::GetOrderItems($order->GetId()));
+            $orders[] = $order;
+        }
+        return $orders;
+    }
+
+    public static function updateInfo(int $idUser, string $prenom, string $nom, string $mail)
+    {
+        self::$cnx = self::connect();
+        $req = 'update user set prenom = :prenom, nom = :nom, mail = :mail where id = :idUser';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $result->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+        $result->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $result->bindParam(':mail', $mail, PDO::PARAM_STR);
+        if ($result->execute()) {
+            $_SESSION['prenom'] = $prenom;
+            $_SESSION['nom'] = $nom;
+            $_SESSION['mail'] = $mail;
+        } else {
+            throw new Exception('Impossible de mettre à jour les informations');
+        }
+    }
+
+    public static function checkPassword(int $idUser, string $password): bool
+    {
+        self::$cnx = self::connect();
+        $req = 'select passwdHash from user where id = :idUser';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $userInfo = $result->fetch();
+        return password_verify($password, $userInfo['passwdHash']);
+    }
+
+    public static function changePassword(int $idUser, string $password)
+    {
+        self::$cnx = self::connect();
+        $req = 'update user set passwdHash = :password where id = :idUser';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $passwdHash = password_hash($password, PASSWORD_DEFAULT);
+        $result->bindParam(':password', $passwdHash, PDO::PARAM_STR);
+        if (!$result->execute()) {
+            throw new Exception('Impossible de mettre à jour le mot de passe');
+        } else {
+            if (!TokenManager::destroyUsersToken($idUser)) {
+                throw new Exception("Impossible de déconnecter l'utilisateur de tout ses périphériques.");
+            }
+        }
+    }
+
+    public static function CheckAdmin(int $idUser): bool
+    {
+        self::$cnx = self::connect();
+        $req = 'select idRole from user where id = :idUser';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $userInfo = $result->fetch();
+        return $userInfo['idRole'] == 999;
     }
 }
 
