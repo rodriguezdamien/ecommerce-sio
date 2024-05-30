@@ -1,33 +1,37 @@
 <footer class="bg-black text-white">
             <!-- Footer d'une page e-commerce qui ne soit pas trop large et contenant les informations essentielles-->
             <div class="mx-14 lg:max-w-6xl lg:mx-auto py-12">
-                <div class="grid grid-flow-row md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="grid grid-flow-row md:grid-cols-2 lg:grid-cols-3 gap-32">
                     <div>
                         <div class="flex flex-row gap-2">
                             <img src="<?= CDN_URL ?>/svg/kanji_white.svg" alt="" width="50px" />
                             <img src="<?= CDN_URL ?>/svg/gaku_white.svg" width="90px" alt="" />
                         </div>
                         <p class="font-extralight">
-                            gaku! est une plateforme de vente de disques d'artistes indépendants japonais. Nous
-                            importons pour vous les dernières sorties.
+                        Gaku! est une plateforme dédiée à la musique indépendante japonaise (doujin). Nous importons nous-mêmes les albums pour faire découvrir cette culture amateur en France.
                         </p>
+                        <div class="flex items-center my-2">
+                                <a href="#"><i class="ri-facebook-line text-3xl"></i></a>
+                                <a href="#"><i class="ri-twitter-line text-3xl"></i></a>
+                                <a href="#"><i class="ri-instagram-line text-3xl"></i></a>
+                                </div>
                     </div>
                     <div>
                         <h3 class="font-bold text-2xl">Liens</h3>
                         <ul class="font-extralight">
-                            <li>Accueil</li>
-                            <li>Précommandes</li>
-                            <li>Labels</li>
-                            <li>À propos</li>
+                            <a href="/"><li>Accueil</li>
+                            <a href="/results"><li>Produits</li>
+                            <a href="/register"><li>Inscription</li></a>
                         </ul>
                     </div>
                     <div>
-                        <h3 class="font-bold text-2xl">Contact</h3>
+                        <h3 class="font-bold text-2xl">Nos locaux</h3>
                         <p class="font-extralight">
-                            123 rue de la rue
+                            39 Avenue des Voix Turquoises
                             <br />
-                            75000 Paris
+                            75012 Paris
                             <br />
+                            France
                         </p>
                     </div>
                 </div>
