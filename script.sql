@@ -207,7 +207,7 @@ BEGIN
         DECLARE qteActuelProduit int;
         SELECT qte INTO qteActuelProduit FROM Album WHERE id = NEW.idAlbum;
         IF (qteActuelProduit < NEW.qte) THEN
-                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La quantité ajouté au panier est supérieur au stock disponible de l''album';
+                SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = 'La quantité ajouté au panier est supérieur au stock disponible de l''album';
         END IF;
 
 END//
@@ -219,7 +219,7 @@ BEGIN
         DECLARE qteActuelProduit int;
         SELECT qte INTO qteActuelProduit FROM Album WHERE id = NEW.idAlbum;
         IF (qteActuelProduit < NEW.qte) THEN
-                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La quantité ajouté au panier est supérieur au stock disponible de l''album';
+                SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = 'La quantité ajouté au panier est supérieur au stock disponible de l''album';
         END IF;
 
 END//
@@ -252,7 +252,7 @@ BEGIN
         IF (DernierStatut < 6) THEN
                 SET NEW.idStatut = (Select id from statut where id = DernierStatut); 
         ELSE
-                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le dernier statut a déjà été attribué, il n''est pas possible d''en ajouter.';
+                SIGNAL SQLSTATE '45002' SET MESSAGE_TEXT = 'Le dernier statut a déjà été attribué, il n''est pas possible d''en ajouter.';
                 END IF;
 END//
 -- Fonctions d'ajout d'albums
