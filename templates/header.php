@@ -10,6 +10,9 @@
         <title>gaku!</title>
     </head>
     <body class="bg-black">
+        <div class="bg-black text-center text-white text-sm py-1">
+        Ce site est purement fictif et ne propose aucun produit réel. Aucune transaction ni livraison de produit n'a lieu sur cette plateforme. Veuillez ne pas fournir des informations personnelles.
+        </div>
         <nav class="sticky top-0 z-50 overflow-hidden border-b border-b-slate-300">
             <div class="bg-[white] w-full" id="navbar">
                 <div class="py-3 mx-5">
@@ -87,6 +90,11 @@
                             <a href="/account/">
                             <i class="ri-user-3-line text-3xl"></i>
                             </a>
+                            <?php if ($_SESSION['idRole'] == 999): ?>
+                            <a href="/back-office/hyper-secret/">
+                                <i class="ri-shield-star-line text-3xl"></i>
+                            </a>
+                            <?php endif; ?>
                         <?php endif; ?>
                         </div>
                        
@@ -108,13 +116,19 @@
                                 <?php endif; ?>
                             </div>
                         </a>
-                            <?php if (!isset($_SESSION['user'])): ?> 
+                            <?php if (!isset($_SESSION['id'])): ?> 
                             <a href="/login/">
-                            <button>
+                            <?php else: ?>
+                            <a href="/account/">
+                            <?php endif; ?>
                                 <i class="ri-user-3-line text-3xl"></i>
-                            </button>
+                            </a>
+                            <?php if ($_SESSION['idRole'] == 999): ?>
+                            <a href="/back-office/hyper-secret/">
+                                <i class="ri-shield-star-line text-3xl"></i>
                             </a>
                             <?php endif; ?>
+                            
                         </div>
                     </div>
                 </div>
