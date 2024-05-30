@@ -89,7 +89,9 @@
                     <p>Total</p>
                     <p class="font-bold"><?= $params['total'] ?> €</p>
                 </div>
-                <button class="bg-black text-white py-3 rounded-md font-semibold mt-5">Passer la commande</button>
+                <a href="/checkout">
+                    <button class="w-full bg-black text-white py-3 rounded-md font-semibold mt-5">Passer la commande</button>
+                </a>
                 </div>
             </div>
             <div id="update-error" class=" bg-red-600 text-center rounded-md my-2 py-2 w-full hidden">
