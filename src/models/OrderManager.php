@@ -7,27 +7,6 @@ class OrderManager extends Manager
 {
     private static ?\PDO $cnx = null;
 
-    //     create table if not exists `Commande` (
-    //         `id` int not null auto_increment,
-    //         `prenomDestinataire` varchar(50) not null default '???',
-    //         `nomDestinataire`varchar(50) not null default '???',
-    //         `dateHeure` datetime not null default NOW(),
-    //         `adresseLivraison` varchar(50) not null,
-    //         `complementAdresse` varchar(50) null,
-    //         `cpLivraison` varchar(6) not null,
-    //         `villeLivraison` varchar(50) not null,
-    //         `numeroTel` varchar(13) not null,
-    //         `idUser` int not null,
-    //         `note` varchar(300) not null default 'Aucune',
-    //         primary key(`id`),
-    //         foreign key(`idUser`) REFERENCES `User`(`id`)
-    // ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
-
-    /*
-     * Récupère la liste des événements
-     * @return array tableau d'objets Event
-     */
-
     public static function GetOrder(int $idOrder): Order
     {
         $order = self::GetOrderInfo($idOrder);
@@ -115,17 +94,5 @@ class OrderManager extends Manager
             $items[] = $item;
         }
         return $items;
-    }
-
-    public static function GetOrderPrice(int $idOrder): float
-    {
-        self::$cnx = self::connect();
-        $req = 'call prixCommande(:idCommande)';
-        $stmt = self::$cnx->prepare($req);
-        $stmt->bindValue(':idCommande', $idOrder, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $prixTotal = $result['prixTotal'];
-        return $prixTotal;
     }
 }
