@@ -123,6 +123,9 @@ class CartManager extends Manager
             foreach ($items as $item) {
                 self::AddCartItem($idUser, $item['idAlbum'], $item['qte']);
             }
+            if ($idUser != -1) {
+                self::$cnx->commit();
+            }
         } catch (Exception $ex) {
             self::$cnx->rollBack();
             throw new Exception($ex->getMessage());
