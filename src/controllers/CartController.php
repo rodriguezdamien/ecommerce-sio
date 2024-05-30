@@ -19,7 +19,11 @@ class CartController extends Controller
             }
             $params['total'] = CartManager::GetCartTotal();
         }
-        $scripts = ['cart.js'];
+        // Si le panier n'est pas vide, on charge le script cart.js (Pas besoin du script si il n'y a rien dans le panier)
+        if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0)
+            $scripts = ['cart.js'];
+        else
+            $scripts = [];
         self::render('templates/front/cart.php', $params, $scripts);
     }
 
