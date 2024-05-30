@@ -286,7 +286,6 @@ grant execute on function gakudb.CartPrice to 'gaku_admin'@'%'//
 drop procedure if exists addItemToCart//
 CREATE PROCEDURE IF NOT EXISTS addItemToCart(idUserCart INT, idItem INT, qteItem INT)
 BEGIN
-        DECLARE idUser INT;
         IF(EXISTS (SELECT * FROM Cart WHERE idUser = idUserCart AND idAlbum = idItem)) THEN
                 UPDATE Cart SET qte = qteItem WHERE idUser = idUserCart AND idAlbum = idItem;
         ELSE
