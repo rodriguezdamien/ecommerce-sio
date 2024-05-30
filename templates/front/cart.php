@@ -35,12 +35,12 @@
                                     </a>
                                         <p class="text-sm sm:text-lg"><?= !empty($item['album']->GetArtiste()) ? $item['album']->GetArtiste() : $item['album']->GetLabel() ?></p>
                                     <div class="flex mt-10 mb-2 items-center gap-3">
-                                        <div class="quantity-picker h-8 sm:h-12 border border-black flex items-center rounded-full" data-quantity=<?= htmlspecialchars($item['album']->GetQte()) ?>>
+                                        <div class="quantity-picker h-8 sm:h-12 border border-gray-400 flex items-center rounded-full" data-quantity=<?= htmlspecialchars($item['album']->GetQte()) ?>>
                                             <div class="h-full w-8 sm:w-12 justify-center flex items-center cursor-pointer minus">
                                                 <i class="ri-subtract-fill"></i>
                                             </div>
                                             <div
-                                                class="w-10 sm:w-16 border-black border-r border-l h-full justify-center flex items-center qte"
+                                                class="w-10 sm:w-16 border-gray-400 border-r border-l h-full justify-center flex items-center qte"
                                          >
                                                 <?= $item['qte'] ?>
                                             </div>
@@ -66,8 +66,8 @@
                 
                 <?php endforeach; ?>
             </div>
-            <div class="relative">
-            <div class="bg-white w-full xl:w-[25vw] sticky top-20">
+            <div class="relative w-full xl:w-[25vw]">
+            <div class="bg-white  sticky top-20">
                 <div id="need-update" class="absolute w-full h-full justify-center items-center bg-[#000000c0] hidden">
                     <div class="flex flex-col p-5 text-center">
                         <p class="text-white my-4">Vous devez confirmer les modifications de votre panier avant de pouvoir continuer.</p>
