@@ -7,8 +7,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="output.css" />
-        <link rel="stylesheet" href="./css/splide-core.min.css" />
-        <link rel="stylesheet" href="./css/remixicon.css" />
+        <link rel="stylesheet" href="/public/css/style.css" />
+        <link rel="stylesheet" href="/css/remixicon.css" />
         <title>gaku!</title>
     </head>
     <body class="bg-black">
@@ -82,13 +82,9 @@
                 </div>
             </div>
         </nav>
-        <section id="payment" class="bg-gradient-sunset flex flex-col lg:grid lg:grid-cols-2">
+        <section id="payment" class="bg-gradient-sunset flex flex-col-reverse lg:grid lg:grid-cols-2">
             <div class="flex flex-col items-center lg:items-end px-[5vw] gap-5 lg:max-h-[60rem] overflow-scroll py-10">
                 <div class="relative w-full lg:w-[500px]">
-                    <button class="bg-white py-3 px-5 rounded-full my-4 flex items-center gap-2">
-                        <i class="ri-arrow-left-line text-xl"></i>
-                        <p>Retourner au panier</p>
-                    </button>
                     <div class="flex flex-col gap-3 bg-white rounded-md p-3">
                         <h2 class="font-bold text-[21px]">Récapitulatif de la commande</h2>
                         <div class="flex flex-col gap-3 py-2">
@@ -177,113 +173,40 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white border-l border-l-slate-300 flex xl:pl-10 pt-5 pb-16">
-                <form action="" class="text-sm flex flex-col gap-1 top-[100px] w-full xl:w-auto px-4">
-                    <h2 class="text-xl font-bold">Contact</h2>
-                    <div>
-                        <label for="mail"><p class="mb-1">Adresse e-mail</p></label>
-                        <input
-                            name="mail"
-                            id="mail"
-                            type="mail"
-                            placeholder="exemple@gaku.fr"
-                            class="border px-5 py-2 rounded-md w-full mb-3"
-                        />
+            <div class="bg-white border-l border-l-slate-300 xl:pl-10 pt-5 pb-16 items-center">
+                <div class="lg:w-[600px] px-3 py-10 max-w-[700px] mx-auto w-full lg:mx-0">
+                    <h2 class="text-xl font-semibold">Commande #1505</h2>
+                    <p class="text-sm">Merci pour votre commande !</p>
+                    <div class="border border-slate-300 rounded-md p-5 my-3">
+                        <h3 class="text-md font-semibold">Suivi de la commande</h3>
+                        <p class="text-sm">Votre commande est en cours de préparation. Nous vous tiendrons au courant ici de son avancement.</p>
                     </div>
-                    <h2 class="text-xl font-bold">Adresse de livraison</h2>
-                    <div>
-                        <label for="adress"><p class="mb-1">Adresse</p></label>
-                        <input
-                            name="adress"
-                            id="adress"
-                            type="text"
-                            placeholder="10 Avenue Miku"
-                            class="border px-5 py-2 rounded-md w-full mb-3"
-                        />
-                    </div>
-                    <div>
-                        <label for="adress-2"><p class="mb-1">Complément d'adresse</p></label>
-                        <input
-                            name="adress-2"
-                            id="adress-2"
-                            type="address-2"
-                            placeholder="Appartement N°39"
-                            class="border px-5 py-2 rounded-md w-full mb-3"
-                        />
-                    </div>
-                    <div class="flex gap-3 w-full">
-                        <div class="w-full">
-                            <label for="postal"><p class="mb-1">Code postal</p></label>
-                            <input
-                                name="postal"
-                                id="postal"
-                                type="text"
-                                placeholder="75000"
-                                class="border px-5 py-2 rounded-md w-full mb-3"
-                            />
-                        </div>
-                        <div class="w-full">
-                            <label for="mail"><p class="mb-1">Ville</p></label>
-                            <input
-                                name="city"
-                                id="city"
-                                type="text"
-                                placeholder="Paris"
-                                class="border px-5 py-2 rounded-md w-full mb-3"
-                            />
+                    <div class="border border-slate-300 rounded-md p-5 my-3">
+                        <h3 class="text-md font-semibold">Détails de la commande</h3>
+                        <div class="flex py-2 gap-7">
+                            <div>
+                                <div class="mb-2">
+                                    <h3 class="text-md mb-1">Adresse de livraison</h3>
+                                    <p class="text-sm text-gray-700">Yee Yaeh</p>
+                                    <p class="text-sm text-gray-700">123 rue de la rue</p>
+                                    <p class="text-sm text-gray-700">Appartement 199</p>
+                                    <p class="text-sm text-gray-700">75000 Paris</p>
+                                </div>
+                                <div class="mb-2">
+                                    <h3 class="text-md mb-1">Adresse e-mail de contact</h3>
+                                    <p class="text-sm text-gray-700">dickandballs@balls.com</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="mb-2">
+                                    <h3 class="text-md mb-1">Moyen de paiement</h3>
+                                    <p class="flex gap-1 text-sm text-gray-700"><span class="cb-logo"></span> Carte bleu</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold">Paiement</h2>
-                    <div>
-                        <label for="adress"><p class="mb-1">Numéro de carte</p></label>
-                        <input
-                            name="adress"
-                            id="adress"
-                            type="text"
-                            placeholder="0000 0000 0000 0000"
-                            class="border px-5 py-2 rounded-md w-full mb-3"
-                        />
-                    </div>
-
-                    <div class="flex gap-3">
-                        <div class="w-full">
-                            <label for="postal"><p class="mb-1">Date d'expiration</p></label>
-                            <input
-                                name="postal"
-                                id="postal"
-                                type="text"
-                                placeholder="75000"
-                                class="border px-5 py-2 rounded-md w-full mb-3"
-                            />
-                        </div>
-                        <div class="w-full">
-                            <label for="mail"><p class="mb-1">Code de sécurité</p></label>
-                            <input
-                                name="city"
-                                id="city"
-                                type="text"
-                                placeholder="Paris"
-                                class="border px-5 py-2 rounded-md w-full mb-3"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label for="adress-2"><p class="mb-1">Nom sur la carte</p></label>
-                        <input
-                            name="adress-2"
-                            id="adress-2"
-                            type="address-2"
-                            placeholder="Miku Hatsune"
-                            class="border px-5 py-2 rounded-md w-full mb-3"
-                        />
-                    </div>
-                    <input
-                        type="submit"
-                        value="Passer la commande"
-                        class="cursor-pointer bg-black rounded-md text-white h-16"
-                    />
-                </form>
-            </div>
+                    <button class="bg-black text-white px-10 py-4 rounded-md my-5">Retourner sur la boutique</button>
+        </div>
         </section>
         <footer class="bg-black text-white">
             <!-- Footer d'une page e-commerce qui ne soit pas trop large et contenant les informations essentielles-->
