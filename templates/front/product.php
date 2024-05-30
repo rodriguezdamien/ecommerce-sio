@@ -7,6 +7,13 @@
                     <p class="font-bold text-4xl md:text-5xl"><?= $params['product']->getNom() ?></p>
                     <p class="font-extralight text-xl my-2"><?= !empty($params['product']->GetArtiste()) ? $params['product']->GetArtiste() : $params['product']->GetLabel() ?></p>
                     <p class="font-bold text-3xl md:text-4xl my-2"><?= $params['product']->GetPrix() ?> €</p>
+                    <div class="rounded-md shadow-inner w-full lg:w-52">
+                    <?php if ($params['product']->GetDateSortie() > new DateTime()): ?>
+                    <p class="bg-white text-black text-center text-2xl font-semibold leading-normal rounded-t-md">Précommande !</p>
+                    <p class="text-sm font-normal bg-[#ED2262] py-1 text-white  text-center rounded-b-md">Date de livraison : <?= $params['product']->GetDateSortie()->format('d/m/Y') ?></p>
+                    <?php endif; ?>
+                    </div>
+                    <p></p>
                     <div class="mt-12 flex justify-center md:block">
                         <div
                             id="quantity-select"
