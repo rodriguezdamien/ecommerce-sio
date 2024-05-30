@@ -224,21 +224,6 @@ BEGIN
 
 END//
 
-
-CREATE TRIGGER before_insert_commander BEFORE INSERT
-ON Commander FOR EACH ROW
-BEGIN
-        DECLARE qteActuelProduit int;
-        SELECT qte INTO qteActuelProduit FROM Album WHERE id = NEW.idAlbum;
-        IF (qteActuelProduit > NEW.qte) THEN
-                UPDATE Album
-                SET qte = qte - new.qte
-                WHERE id = new.idAlbum;
-        ELSE 
-                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La quantité commandé est supérieur au stock disponible de l''album';
-        END IF;
-END//
-
 CREATE TRIGGER after_insert_commande AFTER INSERT
 ON COMMANDE FOR EACH ROW
 BEGIN
@@ -885,4 +870,3 @@ update Statut set idPrecedent = 4 where id = 5;
 update Commande set idResponsable = 1 where exists(select * from Avancer where idStatut = 3);
 
 insert into employe(nom,prenom) values ('Gerard','Menvussat'),('Eva','Cuhassion'),('John','Doe');
-
