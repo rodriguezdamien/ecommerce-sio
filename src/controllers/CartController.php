@@ -17,8 +17,8 @@ class CartController extends Controller
                     'qte' => $item['qte']
                 );
             }
+            $params['total'] = CartManager::GetCartTotal();
         }
-        $params['total'] = CartManager::GetCartTotal();
         $scripts = ['cart.js'];
         self::render('templates/front/cart.php', $params, $scripts);
     }
