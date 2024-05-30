@@ -80,13 +80,15 @@ confirmUpdate.addEventListener("click", function (event) {
             "Content-Type": "application/json",
         },
         body: newCartJson,
-    }).then((data) => {
-        if (data.ok) {
+    }).then(async (response) => {
+        if (response.ok) {
             window.location.reload();
         } else {
+            let data = await response.json();
             document.getElementById("update-error").classList.remove("hidden");
+            console.log(data);
             document.getElementById("update-error-message").textContent =
-                data.error.message;
+                data.error;
         }
     });
 });
