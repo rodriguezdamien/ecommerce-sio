@@ -294,6 +294,14 @@ BEGIN
 END //
 grant execute on procedure gakudb.addItemToCart to 'gaku_admin'@'%'//
 
+-- UNIQUEMENT POUR LE DEVELOPPEMENT, NE PAS GARDER EN PRODUCTION
+drop procedure if exists grantAdminRole//
+CREATE PROCEDURE IF NOT EXISTS grantAdminRole(idUserAdmin INT)
+BEGIN
+        UPDATE User SET idRole = 999 WHERE id = idUserAdmin;
+END //
+grant execute on procedure gakudb.grantAdminRole to 'gaku_admin'@'%'//
+
 delimiter //
 use gakudb //
 drop procedure if exists CartToCommande//
