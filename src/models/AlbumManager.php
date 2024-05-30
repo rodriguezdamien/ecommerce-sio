@@ -146,7 +146,7 @@ class AlbumManager extends Manager
     public static function getAlbumInfo(int $id): Album
     {
         self::$cnx = self::connect();
-        $req = 'select album.id, album.nom, description, lienXFD, prix, uriImage, qte, dateSortie, label.nom as nomLabel, artiste.nom as nomArtiste from album'
+        $req = 'select album.id, album.nom, description, lienXFD, prix, uriImage, (Select GetAlbumStock(album.id)) as qte, dateSortie, label.nom as nomLabel, artiste.nom as nomArtiste from album'
             . ' left join label on album.idLabel = label.id'
             . ' left join artiste on album.idArtiste = artiste.id'
             . ' where album.id = :id';
@@ -176,5 +176,17 @@ class AlbumManager extends Manager
             $songs[] = new Song($song['id'], $song['nom'], $song['nomArtiste']);
         }
         return $songs;
+    }
+
+    public static function GetCurrentStock(int $id): int
+    {
+        self::$cnx = self::connect();
+        $req = 'select GetAlbumStock(:id) as qte';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $stock = $result->fetch();
+        return $stock['qte'];
     }
 }

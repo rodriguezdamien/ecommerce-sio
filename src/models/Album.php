@@ -79,9 +79,19 @@ class Album
         return $this->qte;
     }
 
+    public function SetQte(int $qte): void
+    {
+        $this->qte = $qte;
+    }
+
     public function GetUriImage(): string
     {
         return $this->uriImage;
+    }
+
+    public function GetDateSortie(): DateTime
+    {
+        return $this->dateSortie;
     }
 
     // endregion
