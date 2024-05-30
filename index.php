@@ -21,6 +21,10 @@ foreach ($_GET as $key => $value) {
 
 if (isset($_GET) && !empty($_GET)) {
     extract($_GET);
+    if ($controller != 'Checkout') {
+        // Si l'utilisateur quitte la page de confirmation de commande, on supprime les informations de commande et l'état de confirmation
+        unset($_SESSION['checkout-confirming'], $_SESSION['order-info']);
+    }
     $controller .= 'Controller';
     $filename = ROOT . '/src/controllers/' . $controller . '.php';
     if (file_exists($filename)) {
@@ -38,6 +42,7 @@ if (isset($_GET) && !empty($_GET)) {
         print_r("Le fichier n'existe pas");
     }
 } else {
+    unset($_SESSION['checkout-confirming'], $_SESSION['order-info']);
     require_once ('src/controllers/homeController.php');
     homeController::renderView($params);
 }
