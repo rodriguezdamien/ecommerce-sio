@@ -3,9 +3,12 @@ RewriteEngine on
 ErrorDocument 404 /index.php?error=404
 
 #Front Pages
+RewriteRule ^/?$ index.php?controller=Home&action=renderView [nc,qsa,L]
 RewriteRule ^results(/?)$ index.php?controller=Results&action=renderView [nc,qsa,L]
 RewriteRule ^product/([0-9]+)(/?)$ index.php?controller=Product&action=renderView&id=$1 [nc,qsa,L]
 RewriteRule ^cart(/?)$ index.php?controller=Cart&action=renderView [nc,qsa,L]
+RewriteRule ^checkout(/?)$ index.php?controller=Checkout&action=renderView [nc,qsa,L]
+
 
 #Pages utilisateurs
 RewriteCond %{REQUEST_METHOD} ^GET$
@@ -13,6 +16,8 @@ RewriteRule ^login(/?)$ index.php?controller=Login&action=renderView [nc,qsa]
 
 RewriteCond %{REQUEST_METHOD} ^POST$
 RewriteRule ^login(/?)$ index.php?controller=Login&action=login [nc]
+
+RewriteRule ^order/([0-9]+)(/?)$ index.php?controller=Order&action=renderView&idOrder=$1 [nc,qsa,L]
 
 #Conditions de réécriture : Si la requête est en POST, alors on part du principe que le formulaire a été rempli : on essaye de l'ajouter à la BDD.
 #Pour les autres types de requêtes, renvoie simplement sur le formulaire à remplir.
@@ -33,3 +38,6 @@ RewriteRule ^cart/add-item(/?)$ index.php?controller=Cart&action=addItemToCart [
 RewriteRule ^cart/update-item(/?)$ index.php?controller=Cart&action=updateItemInCart [nc,qsa,L]
 RewriteRule ^cart/remove-item(/?)$ index.php?controller=Cart&action=removeItemFromCart [nc,qsa,L]
 RewriteRule ^cart/update(/?)$ index.php?controller=Cart&action=updateCart [nc,qsa,L]
+
+#Route pour confirmer l'achat
+RewriteRule ^checkout/confirm(/?)$ index.php?controller=Checkout&action=confirmPurchase [nc,qsa,L]
