@@ -10,6 +10,13 @@ class CheckoutController extends Controller
 {
     public static function renderView($params)
     {
+        // L'utilisateur doit se connecter pour commander.
+        if (!isset($_SESSION['id'])) {
+            // 511 peut-être plus approprié ? jsp
+            http_response_code(403);
+            header('Location: /login?err=403');
+            exit();
+        }
         $params['cart'] = [];
         if (isset($_SESSION['cart'])) {
             foreach ($_SESSION['cart'] as $item) {
@@ -17,6 +24,9 @@ class CheckoutController extends Controller
                     'album' => AlbumManager::getAlbumInfo($item['idAlbum']),
                     'qte' => $item['qte']
                 );
+            }
+            if (isset($params['err']) && $params['err'] == '404') {
+                $params['error'] = 'Une erreur est survenue lors de la validation de votre commande. Veuillez réessayer.';
             }
             $params['total'] = CartManager::GetCartTotal();
             if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
@@ -50,12 +60,14 @@ class CheckoutController extends Controller
                 $_SESSION['order-info']['card-name'] = $_POST['card-name'];
             } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $params['error'] = 'Veuillez remplir correctement tous les champs.';
+                unset($_SESSION['checkout-confirming'], $_SESSION['order-info']);
+            } else {
+                unset($_SESSION['checkout-confirming'], $_SESSION['order-info']);
             }
             $scripts = [];
             if (!isset($_SESSION['checkout-confirming'])) {
                 $scripts = ['checkout.js'];
             }
-            var_dump($_SESSION);
             self::render('templates/front/checkout.php', $params, $scripts);
         } else {
             header('Location: /cart');
@@ -67,12 +79,12 @@ class CheckoutController extends Controller
     {
         if (isset($_SESSION['checkout-confirming'])) {
             $order = CheckoutManager::createOrder($_SESSION['order-info'], $_SESSION['id']);
-            echo ('supprimé!');
             unset($_SESSION['cart'], $_SESSION['checkout-confirming'], $_SESSION['order-info']);
             header('Location: /order/' . $order);
             exit();
         } else {
-            var_dump($_SESSION);
+            header('Location: /checkout?err=404');
+            exit();
         }
     }
 }
