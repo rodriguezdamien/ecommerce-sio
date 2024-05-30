@@ -324,15 +324,28 @@ BEGIN
         SELECT LAST_INSERT_ID() as 'idCommande';
 END //
 grant execute on procedure gakudb.CartToCommande to 'gaku_admin'@'%'//
-drop procedure if exists prixCommande//
-create procedure prixCommande(idCommande INT)
+
+CREATE FUNCTION GetAlbumStock(idAlbumStock INT)
+RETURNS INT
 BEGIN
-        SELECT SUM(Album.prix*Commander.qte) AS prixTotal
+        DECLARE Stock INT;
+        SELECT qte - ifnull((SELECT sum(qte) from Commander where idAlbum = idAlbumStock),0) INTO Stock FROM Album WHERE id = idAlbumStock;
+        RETURN Stock;
+END //
+grant execute on function gakudb.GetAlbumStock to 'gaku_admin'@'%'//
+
+drop function if exists prixCommande//
+create function prixCommande(idCommande INT)
+RETURNS FLOAT
+BEGIN
+        DECLARE prix FLOAT;
+        SELECT SUM(Album.prix*Commander.qte) INTO prix
         FROM Commander
                 JOIN Album ON Commander.idAlbum = Album.id
         WHERE Commander.idCommande = idCommande;
+        RETURN prix;
 END //
-grant execute on procedure gakudb.prixCommande to 'gaku_admin'@'%'//
+grant execute on function gakudb.prixCommande to 'gaku_admin'@'%'//
 
 drop procedure if exists addAlbum//
 CREATE PROCEDURE if not exists addAlbum(nomAlbum varchar(70), nomArtisteOuLabel varchar(70), estArtiste bit, event varchar(5),edition int,qteAlbum int,prixAlbum float, uriImageAlbum varchar(70), descriptionAlbum varchar(500), lienXFDAlbum varchar(100), dateSortieAlbum date) 
