@@ -21,7 +21,7 @@ create table if not exists `User` (
         `passwdHash` varchar(255) not null,
         `idRole` int not null default 1,
         `phone` varchar(10) null,
-        `dateNaissance` DateTime null,
+        `dateInscription` DateTime not null default NOW(),
         PRIMARY KEY (`id`),
         UNIQUE KEY `mail` (`mail`),
         FOREIGN KEY (`idRole`) REFERENCES `Role` (`id`)
