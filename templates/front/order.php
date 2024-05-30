@@ -1,10 +1,10 @@
 <section id="payment" class="bg-gradient-sunset flex flex-col lg:grid lg:grid-cols-2">
             <div class="flex flex-col items-center lg:items-end px-[5vw] gap-5 lg:max-h-[60rem] overflow-scroll py-10">
                 <div class="relative w-full lg:w-[500px]">
-                    <a href="/cart">    
+                    <a href="/account/orders">    
                         <button class="bg-white py-3 px-5 rounded-full my-4 flex items-center gap-2">
                            <i class="ri-arrow-left-line text-xl"></i>
-                            <p>Retourner au panier</p>
+                            <p>Retourner à la liste de vos commandes</p>
                         </button>
                     </a>
                     <div class="flex flex-col gap-3 bg-white rounded-md p-3">
@@ -37,7 +37,7 @@
                             <div>
                                 <div class="flex justify-between items-center">
                                     <p>Sous-total</p>
-                                    <p class="font-bold"><?= round($params['total'], 2) ?> €</p>
+                                    <p class="font-bold"><?= round($params['order']->GetTotal(), 2) ?> €</p>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>Livraison</p>
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p class="text-2xl">Total</p>
-                                    <p class="text-2xl font-bold"><?= round($params['total'], 2) ?> €</p>
+                                    <p class="text-2xl font-bold"><?= round($params['order']->GetTotal(), 2) ?> €</p>
                                 </div>
                             </div>
                         </div>
@@ -54,8 +54,8 @@
             </div>
             <div class="bg-white border-l border-l-slate-300 flex xl:pl-10 pt-5 pb-16">
             <div class="lg:w-[550px] px-3 py-10 max-w-[700px] w-full mx-auto lg:mx-0">
-            <h2 class="text-xl font-semibold">Commande #1505</h2>
-                    <p class="text-sm">Merci pour votre commande !</p>
+            <h2 class="text-xl font-semibold">Commande #<?= $params['order']->GetId() ?></h2>
+                    <p class="text-sm">Merci pour votre commande, <?= $params['order']->GetPrenomDest() ?> !</p>
                     <div class="border border-slate-300 rounded-md p-5 my-3">
                         <h3 class="text-md font-semibold">Suivi de la commande</h3>
                         <p class="text-sm">Votre commande est en cours de préparation. Nous vous tiendrons au courant ici de son avancement.</p>
@@ -89,7 +89,7 @@
                         </div>
                         <div class="mb-2">
                             <h3 class="text-md mb-1">Coût total de la commande</h3>
-                            <p class="flex gap-1 text-sm text-gray-700"><?= round($params['total'], 2) ?> €</p>
+                            <p class="flex gap-1 text-sm text-gray-700"><?= round($params['order']->GetTotal(), 2) ?> €</p>
                         </div>
                     </div>
                 </div>
