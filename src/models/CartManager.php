@@ -108,8 +108,9 @@ class CartManager extends Manager
 
     public static function replaceCart(int $idUser, array $items)
     {
+        $cartBackup = $_SESSION['cart'];
+        $_SESSION['cart'] = [];
         try {
-            $_SESSION['cart'] = [];
             if ($idUser != -1) {
                 self::$cnx = self::connect();
                 self::$cnx->beginTransaction();
@@ -126,8 +127,15 @@ class CartManager extends Manager
             if ($idUser != -1) {
                 self::$cnx->commit();
             }
-        } catch (Exception $ex) {
+        } catch (PDOException $ex) {
+            $_SESSION['cart'] = $cartBackup;
             self::$cnx->rollBack();
+            if ($ex->getCode() == 45001)
+                throw new Exception('La quantité ajouté au panier est supérieur au stock disponible.');
+            else
+                throw new Exception($ex->getMessage());
+        } catch (Exception $ex) {
+            $_SESSION['cart'] = $cartBackup;
             throw new Exception($ex->getMessage());
         }
     }
