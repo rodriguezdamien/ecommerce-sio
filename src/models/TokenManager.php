@@ -76,5 +76,13 @@ class TokenManager extends Manager
         return $isValid;
     }
 
-    static function getTokenByUserId($userId) {}
+    public static function destroyUsersToken($userId): bool
+    {
+        self::$cnx = self::connect();
+        $req = 'delete from token where idUser = :idUser';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':idUser', $userId);
+        if ($result->execute())
+            return true;
+    }
 }
