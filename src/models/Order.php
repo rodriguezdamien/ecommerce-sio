@@ -13,9 +13,10 @@ class Order
     private string $mailContact;
     private int $idUser;
     private string $note;
+    private float $total;
     private array $orderItems;
 
-    public function __construct(int $id, string $prenomDest, string $nomDest, DateTime $dateHeure, string $adresse, string $complementAdresse = null, string $cp, string $ville, string $numTel, string $mailContact, int $idUser, string $note)
+    public function __construct(int $id, string $prenomDest, string $nomDest, DateTime $dateHeure, string $adresse, string $complementAdresse = null, string $cp, string $ville, string $numTel, string $mailContact, int $idUser, float $total)
     {
         $this->id = $id;
         $this->prenomDest = $prenomDest;
@@ -28,7 +29,7 @@ class Order
         $this->numTel = $numTel;
         $this->mailContact = $mailContact;
         $this->idUser = $idUser;
-        $this->note = $note;
+        $this->total = $total;
     }
 
     public function GetId(): int
@@ -99,5 +100,15 @@ class Order
     public function SetOrderItems(array $orderItems): void
     {
         $this->orderItems = $orderItems;
+    }
+
+    public function GetTotal(): float
+    {
+        return $this->total;
+    }
+
+    public function SetTotal(float $total): void
+    {
+        $this->total = $total;
     }
 }

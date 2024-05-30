@@ -76,14 +76,27 @@ class OrderManager extends Manager
     public static function GetOrderInfo(int $idOrder): Order
     {
         self::$cnx = self::connect();
-        $req = 'select prenomDestinataire,nomDestinataire,dateHeure,adresseLivraison,complementAdresse,cpLivraison,villeLivraison,numeroTel,mailContact,idUser,note from Commande where id = :id';
+        $req = 'select prenomDestinataire,nomDestinataire,dateHeure,adresseLivraison,complementAdresse,cpLivraison,villeLivraison,numeroTel,mailContact,idUser,prixCommande(id) as total from Commande where id = :id';
         $result = self::$cnx->prepare($req);
         $result->bindParam(':id', $idOrder);
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $orderInfo = $result->fetch();
         if ($orderInfo) {
-            $order = new Order($idOrder, $orderInfo['prenomDestinataire'], $orderInfo['nomDestinataire'], new DateTime($orderInfo['dateHeure']), $orderInfo['adresseLivraison'], $orderInfo['complementAdresse'], $orderInfo['cpLivraison'], $orderInfo['villeLivraison'], $orderInfo['numeroTel'], $orderInfo['mailContact'], $orderInfo['idUser'], $orderInfo['note']);
+            $order = new Order(
+                $idOrder,
+                $orderInfo['prenomDestinataire'],
+                $orderInfo['nomDestinataire'],
+                new DateTime($orderInfo['dateHeure']),
+                $orderInfo['adresseLivraison'],
+                $orderInfo['complementAdresse'],
+                $orderInfo['cpLivraison'],
+                $orderInfo['villeLivraison'],
+                $orderInfo['numeroTel'],
+                $orderInfo['mailContact'],
+                $orderInfo['idUser'],
+                $orderInfo['total'],
+            );
         } else {
             throw new Exception('Commande introuvable');
         }
