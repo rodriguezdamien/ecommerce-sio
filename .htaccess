@@ -1,6 +1,6 @@
 RewriteEngine on
 
-ErrorDocument 404 /index.php?error=404
+ErrorDocument 404 /?err=404
 
 #Front Pages
 RewriteRule ^/?$ index.php?controller=Home&action=renderView [nc,qsa,L]
@@ -61,3 +61,13 @@ RewriteRule ^back-office/hyper-secret(/?)$ index.php?controller=BackOffice&actio
 RewriteRule ^back-office/hyper-secret/orders(/?)$ index.php?controller=BackOffice&action=renderView&tab=orders [nc,qsa,L]
 RewriteRule ^back-office/hyper-secret/products(/?)$ index.php?controller=BackOffice&action=renderView&tab=products [nc,qsa,L]
 RewriteRule ^back-office/hyper-secret/users(/?)$ index.php?controller=BackOffice&action=renderView&tab=users [nc,qsa,L]
+
+RewriteCond %{REQUEST_METHOD} ^GET$
+RewriteRule ^back-office/hyper-secret/product-form/([0-9]+)(/?)$ index.php?controller=BackOffice&action=renderView&tab=product-form&id=$1 [nc,qsa,L]
+RewriteCond %{REQUEST_METHOD} ^POST$
+RewriteRule ^back-office/hyper-secret/product-form/([0-9]+)(/?)$ index.php?controller=BackOffice&action=updateAlbum&id=$1 [nc,qsa,L]
+
+#Back-office API
+RewriteCond %{REQUEST_METHOD} ^POST$
+RewriteRule ^back-office/api/add-song(/?)$ index.php?controller=BackOffice&action=addSongToAlbum [nc,qsa,L]
+
