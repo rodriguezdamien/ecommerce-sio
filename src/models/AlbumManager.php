@@ -143,7 +143,7 @@ class AlbumManager extends Manager
         return $albums;
     }
 
-    public static function getAlbumInfo(int $id): Album
+    public static function GetAlbumInfo(int $id): Album
     {
         self::$cnx = self::connect();
         $req = 'select album.id, album.nom, description, lienXFD, prix, uriImage, (Select GetAlbumStock(album.id)) as qte, dateSortie, label.nom as nomLabel, artiste.nom as nomArtiste from album'

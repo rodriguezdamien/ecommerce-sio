@@ -9,7 +9,7 @@ class CartManager extends Manager
     public static function AddCartItem(int $idUser, int $idAlbum, int $qte): bool
     {
         $isAdded = false;
-        if ($idUser == -1 && AlbumManager::getAlbumInfo($idAlbum)->GetQte() >= $qte) {
+        if ($idUser == -1 && AlbumManager::GetAlbumInfo($idAlbum)->GetQte() >= $qte) {
             if (isset($_SESSION['cart'])) {
                 if (self::TryUpdateCartItem(-1, $idAlbum, $qte)) {
                     throw new Exception("L'album est déjà dans le panier, mais la quantité a été mise à jour.");

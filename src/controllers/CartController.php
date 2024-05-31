@@ -13,7 +13,7 @@ class CartController extends Controller
         if (isset($_SESSION['cart'])) {
             foreach ($_SESSION['cart'] as $item) {
                 $params['cart'][] = array(
-                    'album' => AlbumManager::getAlbumInfo($item['idAlbum']),
+                    'album' => AlbumManager::GetAlbumInfo($item['idAlbum']),
                     'qte' => $item['qte']
                 );
             }

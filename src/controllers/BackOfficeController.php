@@ -30,7 +30,7 @@ class BackOfficeController extends Controller
                     $orderItems = $order->GetOrderItems();
                     $i = 0;
                     while ($i < 3 && $i < count($orderItems)) {
-                        $params['ordersItems'][$order->GetId()][] = AlbumManager::getAlbumInfo($orderItems[$i]['idAlbum']);
+                        $params['ordersItems'][$order->GetId()][] = AlbumManager::GetAlbumInfo($orderItems[$i]['idAlbum']);
                         $i++;
                     }
                 }

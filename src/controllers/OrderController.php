@@ -19,7 +19,7 @@ class OrderController extends Controller
                 $orderItems = $params['order']->GetOrderItems();
                 foreach ($orderItems as $item) {
                     $params['items'][] = [
-                        'album' => AlbumManager::getAlbumInfo($item['idAlbum']),
+                        'album' => AlbumManager::GetAlbumInfo($item['idAlbum']),
                         'qte' => $item['qte']
                     ];
                 };

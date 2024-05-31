@@ -8,7 +8,7 @@ class ProductController extends Controller
     {
         $params['view'] = 'product';
         $scripts = ['splide.min.js', 'product.js'];
-        $params['product'] = AlbumManager::getAlbumInfo($params['id']);
+        $params['product'] = AlbumManager::GetAlbumInfo($params['id']);
         $params['albums'] = AlbumManager::getRandomAlbums(10);
         $params['songs'] = AlbumManager::getAlbumSongs($params['id']);
         self::render('templates/front/product.php', $params, $scripts);
