@@ -110,7 +110,6 @@ class AlbumManager extends Manager
         $req = 'select album.id,album.nom,prix,dateSortie,uriImage,label.nom as nomLabel, artiste.nom as nomArtiste from album'
             . ' left join label on album.idLabel = label.id'
             . ' left join artiste on album.idArtiste = artiste.id'
-            . ' left join provenir on album.id = provenir.idAlbum'
             . ' where'
             . ' (album.nom like :query'
             . ' or label.nom like :query'
@@ -187,5 +186,41 @@ class AlbumManager extends Manager
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $stock = $result->fetch();
         return $stock['qte'];
+    }
+
+    public static function AddSongToAlbum(int $id, string $titre, string $artiste)
+    {
+        self::$cnx = self::connect();
+        $req = 'call AddSongInAlbumById(:id,:titre,:artiste)';
+        $result = self::$cnx->prepare($req);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':titre', $titre, PDO::PARAM_STR);
+        $result->bindParam(':artiste', $artiste, PDO::PARAM_STR);
+        if ($result->execute()) {
+            $result->setFetchMode(PDO::FETCH_ASSOC);
+            return $result->fetch()['idSong'];
+        } else {
+            throw new Exception("Erreur lors de l'ajout de la chanson.");
+        }
+    }
+
+    public static function UpdateAlbum(int $id, string $nom, float $prix, DateTime $dateSortie, string $nomLabelArtiste, bool $estArtiste, string $description, string $lienXFD, string $eventId, string $eventEdition)
+    {
+        self::$cnx = self::connect();
+        $req = 'call UpdateAlbum(:id, :nom, :prix, :dateSortie, :nomLabelArtiste, :estArtiste, :description, :lienXFD, :eventId, :eventEdition)';
+        $result = self::$cnx->prepare($req);
+        $formatedDate = $dateSortie->format('Y-m-d');
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $result->bindParam(':prix', $prix, PDO::PARAM_STR);
+        $result->bindParam(':dateSortie', $formatedDate, PDO::PARAM_STR);
+        $result->bindParam(':nomLabelArtiste', $nomLabelArtiste, PDO::PARAM_STR);
+        $result->bindParam(':estArtiste', $estArtiste, PDO::PARAM_STR);
+        $result->bindParam(':description', $description, PDO::PARAM_STR);
+        $result->bindParam(':lienXFD', $lienXFD, PDO::PARAM_STR);
+        $result->bindParam(':eventId', $eventId, PDO::PARAM_STR);
+        $result->bindParam(':eventEdition', $eventEdition, PDO::PARAM_STR);
+        if (!$result->execute())
+            throw new Exception("Erreur lors de la mise à jour de l'album.");
     }
 }
