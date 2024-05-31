@@ -23,6 +23,7 @@ class BackOfficeController extends Controller
                 foreach ($params['products'] as $product) {
                     $params['qteInCart'][$product->GetId()] = AlbumManager::GetQteInCart($product->GetId());
                 }
+                $params['nbPages'] = ceil($params['total'] / ($params['limit'] ?? 10));
                 break;
             case 'orders':
                 $params['orders'] = OrderManager::GetOrders($params['limit'] ?? 10, $params['page'] ?? 1);
@@ -35,6 +36,7 @@ class BackOfficeController extends Controller
                     }
                 }
                 $params['total'] = OrderManager::GetOrdersCount();
+                $params['nbPages'] = ceil($params['total'] / ($params['limit'] ?? 10));
                 break;
             case 'users':
                 $params['users'] = UserManager::GetAllUsers($params['limit'] ?? 10, $params['page'] ?? 1);
@@ -55,7 +57,6 @@ class BackOfficeController extends Controller
                     header('Location: /back-office/hyper-secret/products');
                 break;
         }
-        $params['nbPages'] = ceil($params['total'] / ($params['limit'] ?? 10));
         $params['view'] = 'BackOffice';
         $scripts = ['back-office.js'];
         self::render('templates/admin/back-office.php', $params, $scripts);
