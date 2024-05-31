@@ -10,7 +10,7 @@ class BackOfficeController extends Controller
     public static function renderView($params)
     {
         if (!UserManager::CheckAdmin($_SESSION['id']))
-            header('Location: /404');
+            header('Location: /');
         if (!isset($params['tab']))
             $params['tab'] = 'products';
         if (!isset($params['page']))
