@@ -115,12 +115,12 @@ class AlbumManager extends Manager
             . ' (album.nom like :query'
             . ' or label.nom like :query'
             . ' or artiste.nom like :query'
-            . ' or provenir.idEvent like :query'
-            . ' or provenir.numEdition like :query)';
+            . ' or album.idEvent like :query'
+            . ' or album.numEdition like :query)';
         if ($event != null && $event != 'all') {
-            $req .= ' and provenir.idEvent = :event';
+            $req .= ' and album.idEvent = :event';
             if ($edition != null && $edition != 'all') {
-                $req .= ' and provenir.numEdition = :edition';
+                $req .= ' and album.numEdition = :edition';
             }
             $req .= ' limit 100';
         }
@@ -145,7 +145,7 @@ class AlbumManager extends Manager
     public static function GetAlbumInfo(int $id): Album
     {
         self::$cnx = self::connect();
-        $req = 'select album.id, album.nom, description, lienXFD, prix, uriImage, (Select GetAlbumStock(album.id)) as qte, dateSortie, label.nom as nomLabel, artiste.nom as nomArtiste from album'
+        $req = 'select album.id, album.nom, description, lienXFD, prix, uriImage, (Select GetAlbumStock(album.id)) as qte, dateSortie, label.nom as nomLabel, artiste.nom as nomArtiste, idEvent, numEdition from album'
             . ' left join label on album.idLabel = label.id'
             . ' left join artiste on album.idArtiste = artiste.id'
             . ' where album.id = :id';
@@ -154,7 +154,7 @@ class AlbumManager extends Manager
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $album = $result->fetch();
-        return new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], $album['description'], $album['lienXFD'], $album['qte'], new DateTime($album['dateSortie']));
+        return new Album($album['id'], $album['nom'], $album['uriImage'], $album['prix'], $album['nomLabel'], $album['nomArtiste'], $album['description'], $album['lienXFD'], $album['qte'], new DateTime($album['dateSortie']), $album['idEvent'], $album['numEdition']);
     }
 
     public static function getAlbumSongs(int $id): array
