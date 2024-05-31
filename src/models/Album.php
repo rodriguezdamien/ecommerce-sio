@@ -11,8 +11,10 @@ class Album
     private ?int $qte;
     private string $uriImage;
     private DateTime $dateSortie;
+    private string $eventId;
+    private string $eventEdition;
 
-    function __construct(string $id, string $nom, string $uriImage, float $prix, ?string $Label, ?string $Artiste, ?string $description, ?string $lienXFD, ?int $qte, ?DateTime $dateSortie)
+    function __construct(string $id, string $nom, string $uriImage, float $prix, ?string $Label, ?string $Artiste, ?string $description, ?string $lienXFD, ?int $qte, ?DateTime $dateSortie, string $eventId = '', string $eventEdition = '')
     {
         $this->id = $id;
         $this->nom = $nom;
@@ -24,6 +26,8 @@ class Album
         $this->qte = $qte;
         $this->uriImage = $uriImage;
         $this->dateSortie = $dateSortie;
+        $this->eventId = $eventId;
+        $this->eventEdition = $eventEdition;
     }
 
     // region Accesseurs
@@ -92,6 +96,16 @@ class Album
     public function GetDateSortie(): DateTime
     {
         return $this->dateSortie;
+    }
+
+    public function GetEventId(): string
+    {
+        return $this->eventId;
+    }
+
+    public function GetEventEdition(): string
+    {
+        return $this->eventEdition;
     }
 
     // endregion
