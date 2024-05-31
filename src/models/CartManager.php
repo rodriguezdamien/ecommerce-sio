@@ -171,7 +171,7 @@ class CartManager extends Manager
     {
         $total = 0;
         foreach ($_SESSION['cart'] as $item) {
-            $total += AlbumManager::getAlbumInfo($item['idAlbum'])->GetPrixValue() * $item['qte'];
+            $total += AlbumManager::GetAlbumInfo($item['idAlbum'])->GetPrixValue() * $item['qte'];
         }
         return $total;
     }
