@@ -49,6 +49,23 @@ create table if not exists `Artiste` (
         PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
+create table if not exists `Event` (
+        `id` varchar(5) not null,
+        `nom` varchar(40) not null,
+        `description` varchar(500) not null default 'C''est vide...',
+        `lienLogo` varchar(100) not null default '??',
+        PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
+
+create table if not exists `Edition_Event`(
+        `idEvent` varchar(5) not null,
+        `numEdition` int not null,
+        `annee` int not null,
+        primary key(`idEvent`,`numEdition`),
+        FOREIGN KEY (`idEvent`) REFERENCES `Event`(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 create table if not exists `Album` (
         `id` int  not null auto_increment,
         `nom` varchar(70) not null,
@@ -61,9 +78,12 @@ create table if not exists `Album` (
         `uriImage` varchar(70) not null default 'no_image.jpg',
         `alerteSeuil` int not null default 5,
         `dateSortie` date not null default NOW(),
+        `idEvent` varchar(5) not null,
+        `numEdition` int not null,
         PRIMARY KEY (`id`),
         FOREIGN KEY (`idLabel`) REFERENCES `Label` (`id`),
-        FOREIGN KEY (`idArtiste`) REFERENCES `Artiste` (`id`)
+        FOREIGN KEY (`idArtiste`) REFERENCES `Artiste` (`id`),
+        FOREIGN KEY (`idEvent`,`numEdition`) REFERENCES `Edition_Event`(`idEvent`,`numEdition`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 create table if not exists `Noter` (
@@ -82,32 +102,6 @@ create table if not exists `Aimer` (
         primary key (`idAlbum`,`idUser`),
         FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`),
         FOREIGN KEY(`idUser`) REFERENCES `User`(`id`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
-
-create table if not exists `Event` (
-        `id` varchar(5) not null,
-        `nom` varchar(40) not null,
-        `description` varchar(500) not null default 'C''est vide...',
-        `lienLogo` varchar(100) not null default '??',
-        PRIMARY KEY (`id`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
-
-create table if not exists `Edition_Event`(
-        `idEvent` varchar(5) not null,
-        `numEdition` int not null,
-        `annee` int not null,
-        primary key(`idEvent`,`numEdition`),
-        FOREIGN KEY (`idEvent`) REFERENCES `Event`(`id`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-create table if not exists `Provenir`(
-        `idAlbum` int not null,
-        `idEvent` varchar(5) not null,
-        `numEdition` int not null,
-        primary key (`idAlbum`,`idEvent`,`numEdition`),
-        FOREIGN KEY (`idAlbum`) REFERENCES `Album`(`id`),
-        FOREIGN KEY (`idEvent`,`numEdition`) REFERENCES `Edition_Event`(`idEvent`,`numEdition`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
 create table if not exists `Song` (
@@ -222,6 +216,15 @@ BEGIN
                 SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = 'La quantité ajouté au panier est supérieur au stock disponible de l''album';
         END IF;
 
+END//
+
+drop trigger if exists before_update_album//
+CREATE TRIGGER before_update_album BEFORE UPDATE
+ON album FOR EACH ROW
+BEGIN
+        IF(not exists(select numEdition from edition_event where idEvent = NEW.idEvent and numEdition = NEW.numEdition)) THEN
+                INSERT INTO Edition_Event(idEvent,numEdition,annee) values (NEW.idEvent,NEW.numEdition,year(NEW.dateSortie));
+        END IF;
 END//
 
 CREATE TRIGGER after_insert_commande AFTER INSERT
@@ -348,14 +351,13 @@ BEGIN
                 IF (estPresent = 0) THEN
                         INSERT INTO Label(nom) values (nomArtisteOuLabel);
                 END IF;
-                INSERT INTO Album(nom,idLabel,qte,prix,uriImage,description,lienXFD,dateSortie) values (nomAlbum,(select id from Label where nom = nomArtisteOuLabel),qteAlbum,prixAlbum,uriImageAlbum,descriptionAlbum,lienXFDAlbum,dateSortieAlbum);
+                INSERT INTO Album(nom,idLabel,qte,prix,uriImage,description,lienXFD,dateSortie,idEvent,numEdition) values (nomAlbum,(select id from Label where nom = nomArtisteOuLabel),qteAlbum,prixAlbum,uriImageAlbum,descriptionAlbum,lienXFDAlbum,dateSortieAlbum,event,edition);
         ELSE
                 IF (estPresent = 0) THEN
                         INSERT INTO Artiste(nom) values (nomArtisteOuLabel);
                 END IF;
-                INSERT INTO Album(nom,idArtiste,qte,prix,uriImage,description,lienXFD,dateSortie) values (nomAlbum,(select id from Artiste where nom = nomArtisteOuLabel),qteAlbum,prixAlbum,uriImageAlbum,descriptionAlbum,lienXFDAlbum,dateSortieAlbum);
+                INSERT INTO Album(nom,idArtiste,qte,prix,uriImage,description,lienXFD,dateSortie,idEvent,numEdition) values (nomAlbum,(select id from Artiste where nom = nomArtisteOuLabel),qteAlbum,prixAlbum,uriImageAlbum,descriptionAlbum,lienXFDAlbum,dateSortieAlbum,event,edition);
         END IF;
-        INSERT INTO Provenir(idAlbum,idEvent,numEdition) values ((select LAST_INSERT_ID()),event,edition);
 END //
 
 drop procedure if exists addSongInAlbum//
@@ -809,7 +811,7 @@ INSERT INTO Composer(idSong,idArtiste) values
 ((select id from Song where nom = 'Far from Here'),(select id from Artiste where nom = 'Lawy')),
 ((select id from Song where nom = 'Neon Breeze'),(select id from Artiste where nom = 'くるぶっこちゃん'));
 
-INSERT INTO Album(nom,idLabel,qte,prix,uriImage,lienXFD) values ('RUNABOUT',(select id from Label where nom = 'Diverse System'),100,9.99,'RUNABOUT.jpg','https://soundcloud.com/diversesystem/dvsp-0229-xfd');
+INSERT INTO Album(nom,idLabel,qte,prix,uriImage,lienXFD,idEvent,numEdition) values ('RUNABOUT',(select id from Label where nom = 'Diverse System'),100,9.99,'RUNABOUT.jpg','https://soundcloud.com/diversesystem/dvsp-0229-xfd','C',97);
 
 INSERT INTO Contenir (idAlbum,idSong,positionOrdreAlbum) values
 ((select id from Album where nom = 'RUNABOUT'),(select id from Song where nom = 'Storm Spirit'),1),
@@ -825,8 +827,6 @@ INSERT INTO Contenir (idAlbum,idSong,positionOrdreAlbum) values
 ((select id from Album where nom = 'RUNABOUT'),(select id from Song where nom = 'TECHNODRIVE'),11),
 ((select id from Album where nom = 'RUNABOUT'),(select id from Song where nom = 'Far from Here'),12),
 ((select id from Album where nom = 'RUNABOUT'),(select id from Song where nom = 'Neon Breeze'),13);
-
-INSERT INTO PROVENIR(idAlbum,idEvent,numEdition) values ((select id from Album where nom = 'RUNABOUT'),'M3',44);
 
 -- Insertion des commandes + test trigger
 
