@@ -86,16 +86,6 @@ create table if not exists `Album` (
         FOREIGN KEY (`idEvent`,`numEdition`) REFERENCES `Edition_Event`(`idEvent`,`numEdition`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
 
-create table if not exists `Noter` (
-        `idAlbum` int not null,
-        `idUser` int not null,
-        `note` int not null,
-        primary key (`idAlbum`,`idUser`),
-        FOREIGN KEY(`idAlbum`) REFERENCES `Album`(`id`),
-        FOREIGN KEY(`idUser`) REFERENCES `User`(`id`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;
-
-
 create table if not exists `Aimer` (
         `idAlbum` int not null,
         `idUser` int not null,
