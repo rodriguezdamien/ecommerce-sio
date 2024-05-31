@@ -65,7 +65,6 @@ class AlbumManager extends Manager
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $qte = $result->fetch();
-        echo $qte['qte'];
         return $qte['qte'];
     }
 
