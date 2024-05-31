@@ -364,6 +364,43 @@ INSERT INTO Composer(idSong,idArtiste) values(idSongAjout,(select id from Artist
 INSERT INTO Contenir(idAlbum,idSong,positionOrdreAlbum) values (idAlbumAjout,idSongAjout,(select ifnull((select max(positionOrdreAlbum) from (select  positionOrdreAlbum,idAlbum from Contenir where idAlbum = idAlbumAjout)as maxPositionAlbum),0))+1);
 END //
 
+drop procedure if exists AddSongInAlbumById//
+CREATE PROCEDURE if not exists AddSongInAlbumById(idAlbumAjout int, nomSong varchar(100), nomArtiste varchar(70))
+BEGIN
+DECLARE idSongAjout int;
+IF (not exists(select * from Artiste where nom = nomArtiste)) THEN
+        INSERT INTO ARTISTE(nom) VALUES(nomArtiste);
+END IF;
+INSERT INTO Song(nom) Values (nomSong);
+SELECT LAST_INSERT_ID() INTO idSongAjout;
+INSERT INTO Composer(idSong,idArtiste) values(idSongAjout,(select id from Artiste where nom = nomArtiste));
+INSERT INTO Contenir(idAlbum,idSong,positionOrdreAlbum) values (idAlbumAjout,idSongAjout,(select ifnull((select max(positionOrdreAlbum) from (select  positionOrdreAlbum,idAlbum from Contenir where idAlbum = idAlbumAjout)as maxPositionAlbum),0))+1);
+SELECT idSongAjout as 'idSong';
+END //
+
+delimiter //
+use gakudb//
+grant execute on procedure AddSongInAlbumById to 'gaku_admin'@'%'//
+
+drop procedure if exists updateAlbum//
+CREATE PROCEDURE if not exists updateAlbum(idAlbumModif int, nomAlbum varchar(70), prixAlbum float, dateSortieAlbum dateTime, nomArtisteOuLabel varchar(70), estArtiste bit, descriptionAlbum varchar(500), lienXFDAlbum varchar(100), idEventAlbum varchar(5), eventEdition int)
+BEGIN
+        DECLARE estPresent int;
+        SELECT estDejaPresent(nomArtisteOuLabel,estArtiste) INTO estPresent;
+        IF (estArtiste = 0) THEN
+                IF (estPresent = 0) THEN
+                        INSERT INTO Label(nom) values (nomArtisteOuLabel);
+                END IF;
+                UPDATE Album SET nom = nomAlbum, idLabel = (select id from Label where nom = nomArtisteOuLabel), prix = prixAlbum, description = descriptionAlbum, lienXFD = lienXFDAlbum, dateSortie = dateSortieAlbum, idEvent = idEventAlbum, numEdition = eventEdition WHERE id = idAlbumModif;
+        ELSE
+                IF (estPresent = 0) THEN
+                        INSERT INTO Artiste(nom) values (nomArtisteOuLabel);
+                END IF;
+                UPDATE Album SET nom = nomAlbum, idArtiste = (select id from Artiste where nom = nomArtisteOuLabel), prix = prixAlbum, description = descriptionAlbum, lienXFD = lienXFDAlbum, dateSortie = dateSortieAlbum, idEvent = idEventAlbum, numEdition = eventEdition WHERE id = idAlbumModif;
+        END IF;
+END //
+grant execute on procedure updateAlbum to 'gaku_admin'@'%'//
+
 DELIMITER ;
 
 call addAlbum('Dreams','Gabor Szabo',1,'ZZISC',0,50,15.99,'DREAMS.jpg','Dreams is an album by Hungarian guitarist Gábor Szabó featuring performances recorded in 1968 and released on the Skye label.','https://www.youtube.com/watch?v=gr0XWmEbiMQ','1968-01-01');
