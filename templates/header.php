@@ -90,7 +90,7 @@
                             <a href="/account/">
                             <i class="ri-user-3-line text-3xl"></i>
                             </a>
-                            <?php if ($_SESSION['idRole'] == 999): ?>
+                            <?php if (isset($_SESSION['idRole']) && $_SESSION['idRole'] == 999): ?>
                             <a href="/back-office/hyper-secret/">
                                 <i class="ri-shield-star-line text-3xl"></i>
                             </a>
@@ -123,7 +123,7 @@
                             <?php endif; ?>
                                 <i class="ri-user-3-line text-3xl"></i>
                             </a>
-                            <?php if ($_SESSION['idRole'] == 999): ?>
+                            <?php if (isset($_SESSION['idRole']) && $_SESSION['idRole'] == 999): ?>
                             <a href="/back-office/hyper-secret/">
                                 <i class="ri-shield-star-line text-3xl"></i>
                             </a>

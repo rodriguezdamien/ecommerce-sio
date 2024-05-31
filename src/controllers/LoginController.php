@@ -62,6 +62,7 @@ class LoginController extends Controller
                     $_SESSION['prenom'] = $user->GetPrenom();
                     $_SESSION['nom'] = $user->GetNom();
                     $_SESSION['mail'] = $user->GetMail();
+                    $_SESSION['idRole'] = $user->GetIdRole();
                     $_SESSION['cart'] = CartManager::GetCartItems($_SESSION['id']);
                 }
             }
