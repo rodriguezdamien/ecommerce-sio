@@ -208,6 +208,194 @@
        
    </section>
 
+        <!-- Gestion des utilisateurs -->
+        <section
+        id="settings"
+        class="bg-slate-50 py-10 justify-center gap-6 flex flex-row items-start"
+    >
+        <div class="bg-white flex py-5 px-2">
+            <div id="side-menu" class="border-r border-r-gray-300">
+                <div class="w-[13rem] lg:w-[15rem]">
+                <div class="px-5 py-3">Gestion des produits</div>
+                <div class="px-5 py-3">Gestion des commandes</div>
+                <div class="px-5 py-3">Gestion des utilisateurs</div>
+                <div class="px-5 py-3">Se déconnecter</div>
+                </div>
+            </div>
+            <div id="menu" class="px-5 bg-white w-full lg:w-[800px]">
+                <div class="mb-3">
+                    <h2 class="text-2xl font-bold">Modification d'un produit</h2>
+                <form>
+                <div class="grid grid-cols-3 my-3 justify-center grow">
+                    <div class="flex gap-3 col-span-2">
+                        <img src="/public/images/album/ADPIANOVIVACE2.jpg" class=" w-52 h-52 border rounded-md border-gray-300">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-xl">Titre de l'album</p>
+                            <p>Artiste ou label</p>
+                            <p>ID : 5</p>
+                            <p>M3-52</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center items-end">
+                        <label for="album-cover" class="whitespace-nowrap bg-black hover:bg-gray-800 text-white py-2 px-4 rounded-full cursor-pointer">Modifier la couverture</label>
+                        <p class="text-xs my-1">Format .jpg, 400x400</p>
+                        <input name="album-cover" id="album-cover" type="file" class=" hidden">
+                    </div>
+                </div>
+                <div>
+
+                    <div class="mb-4">
+                        <label for="title">
+                            <p>Titre</p>
+                        </label>
+                        <input type="text" name="title" id="title" class="border px-5 py-2 rounded-md w-full" placeholder="Titre de l'album">
+                    </div>
+                    <div class="flex items-center mb-4 gap-5 ">
+                        <div class="w-full">
+                        <label for="creator">
+                            <p>Artiste</p>
+                        </label>
+                        <input type="text" name="creator" id="creator" class=" border px-5 py-2 rounded-md w-full" placeholder="Nom de l'artiste">
+                        </div>
+                        <div class="w-2/3">
+                            <label for="creator-type">
+                                <p>Type</p>
+                            <div class="flex items-center gap-8 py-2">
+                            <div>
+                                <input type="radio" name="creator-type" id="creator-type-1" value="1">
+                                <label for="creator-type-1">Artiste</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="creator-type" id="creator-type-2" value="2">
+                                <label for="creator-type-2">Label</label>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="description">
+                            <p class="mb-1">Description</p>
+                        </label>
+                        <textarea name="description" id="description" placeholder="Description de l'album" class="border px-5 py-2 rounded-md w-full"></textarea>
+                    </div>
+                    <div class="flex items-center mb-4 gap-5 ">
+                        <div class="w-full">
+                        <label for="event">
+                            <p>Evenement</p>
+                        </label>
+                        <select name="event" id="event" class="bg-white border px-5 py-2 rounded-md w-full">
+                            <option value="1">Media Music Market (M3)</option>
+                            <option value="2">Comiket (C)</option>
+                            <option value="3">Touhou</option>
+                            <option value="MISC">Divers</option>
+                        </select>
+                        </div>
+                        <div class="w-full">
+                            <label for="creator-type">
+                                <p>Edition</p>
+                                <input type="text" name="edition" id="edition" placeholder="Numéro de l'édition de l'événement" class="bg-white border px-5 py-2 rounded-md w-full">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="w-full mb-4">
+                        <label for="release-date">
+                        </label>
+                            <p>Date de sortie</p>
+                            <input type="date" name="release-date" id="release-date" class="bg-white border px-5 py-2 rounded-md w-full">
+
+                    </div>
+                    <div class="w-full mb-4">
+                            <p>Liste des chansons</p>
+                            <div class="bg-white border rounded-md w-full h-80 overflow-scroll">
+                                <div class="list-row flex justify-between border-b px-5 py-3 w-full">
+                                    <div class="flex gap-3 text-center">    
+                                    <p class="w-2 ">1</p>
+                                        <p class="w-1">-</p>
+                                        <p class="font-bold">Wonderful Horizon</p>
+                                        <p class="w-1">-</p>
+                                        <p>Niorsic feat. XAMBASE</p>
+                                    </div>
+                                        <p>05:30</p>
+                                </div>
+                                <div class="list-row flex justify-between border-b px-5 py-3 w-full">
+                                    <div class="flex gap-3 text-center">    
+                                    <p class="w-2 ">1</p>
+                                        <p class="w-1">-</p>
+                                        <p class="font-bold">Wonderful Horizon</p>
+                                        <p class="w-1">-</p>
+                                        <p>Niorsic feat. XAMBASE</p>
+                                    </div>
+                                        <p>05:30</p>
+                                </div>
+                                <div class="list-row flex justify-between border-b px-5 py-3 w-full">
+                                    <div class="flex gap-3 text-center">    
+                                    <p class="w-2 ">1</p>
+                                        <p class="w-1">-</p>
+                                        <p class="font-bold">Wonderful Horizon</p>
+                                        <p class="w-1">-</p>
+                                        <p>Niorsic feat. XAMBASE</p>
+                                    </div>
+                                        <p>05:30</p>
+                                </div>
+                                <div class="list-row flex justify-between border-b px-5 py-3 w-full">
+                                    <div class="flex gap-3 text-center">    
+                                    <p class="w-2 ">1</p>
+                                        <p class="w-1">-</p>
+                                        <p class="font-bold">Wonderful Horizon</p>
+                                        <p class="w-1">-</p>
+                                        <p>Niorsic feat. XAMBASE</p>
+                                    </div>
+                                        <p>05:30</p>
+                                </div>
+                                <div class="list-row flex justify-between border-b px-5 py-3 w-full">
+                                    <div class="flex gap-3 text-center">    
+                                    <p class="w-2 ">1</p>
+                                        <p class="w-1">-</p>
+                                        <p class="font-bold">Wonderful Horizon</p>
+                                        <p class="w-1">-</p>
+                                        <p>Niorsic feat. XAMBASE</p>
+                                    </div>
+                                        <p>05:30</p>
+                                </div>
+                                <div class="list-row flex justify-between border-b px-5 py-3 w-full">
+                                    <div class="flex gap-3 text-center">    
+                                    <p class="w-2 ">1</p>
+                                        <p class="w-1">-</p>
+                                        <p class="font-bold">Wonderful Horizon</p>
+                                        <p class="w-1">-</p>
+                                        <p>Niorsic feat. XAMBASE</p>
+                                    </div>
+                                        <p>05:30</p>
+                                </div>
+                                <form>
+                                <div class="list-row flex justify-between border-b px-5 py-3 w-full">
+                                        <div class="flex gap-3 text-center">    
+                                        <p class="w-2 ">2</p>
+                                            <p class="w-1">-</p>
+                                            <input type="text" placeholder="Titre de la chanson" class="border rounded-md px-2">
+                                            <p class="w-1">-</p>
+                                            <input type="text" placeholder="Artiste de la chanson" class="border rounded-md px-2">
+                                        </div>
+                                    <input type="text" placeholder="Durée" class="border rounded-md w-16 px-2 text-right">
+                                </div>
+                                <div class="flex justify-center pb-10">
+                                <input type="submit" class=" bg-black text-white py-1 px-4 rounded-full my-2 hover:bg-gray-800 cursor-pointer" value="Confirmer l'ajout">
+                                </div>
+                                </form>
+                                
+                            </div>
+                            <div class="flex gap-2 items-center py-2">
+                                <button class="bg-black text-white px-5 py-2 rounded-md hover:bg-gray-800"><i class="ri-add-fill"></i> Ajouter une chanson</button>
+                                <button class="bg-black text-white px-5 py-2 rounded-md hover:bg-gray-800"><i class="ri-subtract-fill"></i> Supprimer une chanson</button>
+                            </div>  
+                    </div>
+                </div>
+            </form>
+        </div>
+ 
+        
+    </section>
+
         <footer class="bg-black text-white">
             <!-- Footer d'une page e-commerce qui ne soit pas trop large et contenant les informations essentielles-->
             <div class="mx-14 lg:max-w-6xl lg:mx-auto py-12">
