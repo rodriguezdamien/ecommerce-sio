@@ -4,6 +4,7 @@ require_once ('src/models/AlbumManager.php');
 require_once ('src/models/OrderManager.php');
 require_once ('src/models/UserManager.php');
 require_once ('src/models/CartManager.php');
+require_once ('src/models/EventManager.php');
 
 class BackOfficeController extends Controller
 {
