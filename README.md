@@ -1,4 +1,5 @@
-# ecommerce-sio
+![gaku!](https://github.com/rodriguezdamien/ecommerce-sio/blob/448e990790f9af45fb144e343a330747621f0ba3/illustration.png)
+# gaku! - Site e-Commerce
 
 Site Web e-commerce réalisé dans le cadre du BTS SIO.
 
