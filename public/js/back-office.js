@@ -35,9 +35,7 @@ function setProductFormChecker() {
             newSong = {
                 title: titleNew.value,
                 artist: artistNew.value,
-                albumId: parseInt(
-                    document.getElementById("form-product").dataset.productId
-                ),
+                albumId: parseInt(document.getElementById("form-product").dataset.productId),
             };
         }
         fetch("/back-office/api/add-song/", {
@@ -50,15 +48,9 @@ function setProductFormChecker() {
             if (response.ok) {
                 let data = await response.json();
                 songContainer.appendChild(
-                    newSongRow(
-                        data.id,
-                        newSong.title,
-                        newSong.artist,
-                        parseInt(songList.dataset.songsCount) + 1
-                    )
+                    newSongRow(data.id, newSong.title, newSong.artist, parseInt(songList.dataset.songsCount) + 1)
                 );
-                songList.dataset.songsCount =
-                    parseInt(songList.dataset.songsCount) + 1;
+                songList.dataset.songsCount = parseInt(songList.dataset.songsCount) + 1;
                 titleNew.value = "";
                 artistNew.value = "";
                 newSongForm.classList.add("hidden");
@@ -70,16 +62,7 @@ function setProductFormChecker() {
 function newSongRow(idSong, title, artist, nb) {
     let newSongRow = document.createElement("div");
     newSongRow.dataset.songId = idSong;
-    newSongRow.classList.add(
-        "list-row",
-        "flex",
-        "justify-between",
-        "border-b",
-        "px-5",
-        "py-3",
-        "w-full",
-        "bg-white"
-    );
+    newSongRow.classList.add("list-row", "flex", "justify-between", "border-b", "px-5", "py-3", "w-full", "bg-white");
     let songInfo = document.createElement("div");
     songInfo.classList.add("flex", "gap-3", "text-center");
     let songNumber = document.createElement("p");
