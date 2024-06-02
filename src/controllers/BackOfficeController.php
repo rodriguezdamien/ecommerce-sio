@@ -90,4 +90,38 @@ class BackOfficeController extends Controller
         $idSong = AlbumManager::AddSongToAlbum($data['albumId'], $data['title'], $data['artist']);
         echo json_encode(['id' => $idSong]);
     }
+
+    public static function EditAlbumCover($params)
+    {
+        if (!UserManager::CheckAdmin($_SESSION['id'])) {
+            header('Location: /');
+            exit;
+        }
+        if (!isset($_POST['albumId']) || !isset($_FILES['cover'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'missing data']);
+            exit;
+        }
+        $finfo = new finfo();
+        $mimeType = $finfo->file($_FILES['cover']['tmp_name'], FILEINFO_MIME_TYPE);
+        if ($mimeType != 'image/jpeg') {
+            http_response_code(400);
+            echo json_encode(['error' => 'invalid file type']);
+            exit;
+        } else {
+            $album = AlbumManager::GetAlbumInfo($_POST['albumId']);
+            list($width, $height) = getimagesize($_FILES['cover']['tmp_name']);
+            if ($width != 400 || $height != 400) {
+                $newImg = imagecreatetruecolor(400, 400);
+                $source = imagecreatefromjpeg($_FILES['cover']['tmp_name']);
+                imagecopyresized($newImg, $source, 0, 0, 0, 0, 400, 400, $width, $height);
+                imagejpeg($newImg, 'public/images/album/' . $album->getUriImage(), 100);
+            } else {
+                unlink('public/images/album/' . $album->getUriImage());
+                rename($_FILES['cover']['tmp_name'], 'public/images/album/' . $album->getUriImage());
+                http_response_code(200);
+            }
+            echo json_encode(['success' => '200']);
+        }
+    }
 }

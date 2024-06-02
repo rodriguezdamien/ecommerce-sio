@@ -151,7 +151,7 @@
             <form id="form-product" action="" method="post" data-product-id="<?= $params['product']->GetId() ?>">
                 <div class="grid grid-cols-3 my-3 justify-center grow">
                     <div class="flex gap-3 col-span-2">
-                        <img src="<?= CDN_URL . '/images/album/' . htmlspecialchars($params['product']->GetUriImage()) ?>" class=" w-52 h-52 border rounded-md border-gray-300">
+                        <img src="<?= CDN_URL . '/images/album/' . htmlspecialchars($params['product']->GetUriImage()) ?>" class=" w-52 h-52 border rounded-md border-gray-300" id="cover-preview">
                         <div class="flex flex-col justify-center">
                             <p class="text-xl"><?= $params['product']->GetNom() ?></p>
                             <p><?= !empty($params['product']->GetArtiste()) ? $params['product']->GetArtiste() : $params['product']->GetLabel() ?></p>

@@ -71,3 +71,5 @@ RewriteRule ^back-office/hyper-secret/product-form/([0-9]+)(/?)$ index.php?contr
 RewriteCond %{REQUEST_METHOD} ^POST$
 RewriteRule ^back-office/api/add-song(/?)$ index.php?controller=BackOffice&action=addSongToAlbum [nc,qsa,L]
 
+RewriteRule %{REQUEST_METHOD} ^POST$
+RewriteRUle ^back-office/api/upload-cover(/?)$ index.php?controller=BackOffice&action=EditAlbumCover [nc,qsa,L]

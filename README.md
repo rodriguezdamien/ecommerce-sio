@@ -41,3 +41,16 @@ La thématique est celui du "doujin".
     ```
 
 -   Il ne vous reste plus qu'à lancer le script SQL "`script.sql`" dans votre système de gestion de base de données SQL.
+
+### Donner le rôle administrateur à un utilisateur
+
+Pour promouvoir un utilisateur au rang d'administrateur, éxecutez cette commande dans votre SGBD :
+
+```sql
+call grantAdminRole(`ID DE L'UTILISATEUR`)
+```
+
+### Comment fonctionne la modification de couverture dans le back-office ?
+
+La modification de couverture dans le back-office est restreint.
+Pour le moment, seulement les images au format JPEG sont autorisées. Et si vous uploadez une JPEG d'une autre taille que 400\*400, alors l'image sera modifié **à l'aide de la librairie GD, qui est à activer dans votre php.ini** (si vous êtes sur XAMPP (Windows), je vous invite à faire vos recherches si votre cas à différent.), **sinon la couverture ne sera pas modifié**.

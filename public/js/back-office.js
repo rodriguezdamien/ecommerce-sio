@@ -2,6 +2,7 @@ const menu = document.getElementById("menu");
 switch (menu.dataset.currentTab) {
     case "product-form":
         setProductFormChecker();
+        setCoverImageUploader();
         break;
 }
 
@@ -56,6 +57,29 @@ function setProductFormChecker() {
                 newSongForm.classList.add("hidden");
             }
         });
+    });
+}
+
+function setCoverImageUploader() {
+    document.getElementById("album-cover").addEventListener("change", function () {
+        const file = this.files[0];
+        if (file.type == "image/jpeg") {
+            newCover = new FormData();
+            newCover.append("cover", file);
+            newCover.append("albumId", document.getElementById("form-product").dataset.productId);
+            fetch("/back-office/api/upload-cover/", {
+                method: "POST",
+                body: newCover,
+            }).then(async (response) => {
+                if (response.ok) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById("cover-preview").src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
     });
 }
 
