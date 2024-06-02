@@ -1,4 +1,5 @@
-# ecommerce-sio
+![gaku!](https://github.com/rodriguezdamien/ecommerce-sio/blob/448e990790f9af45fb144e343a330747621f0ba3/illustration.png)
+# gaku! - Site e-Commerce
 
 Site Web e-commerce réalisé dans le cadre du BTS SIO.
 
@@ -18,6 +19,7 @@ La thématique est celui du "doujin".
 
 -   Si vous souhaitez avoir une URL pour les fichiers publiques :
     -   crééez-en un deuxième au nom que vous souhaitez (`cdn.gaku.local` dans la configuration par défaut) et faites-le pointer vers le dossier "public" du projet.
+    -   **Assurez-vous que le headers-module soit activité dans le fichier "httpd.conf" `(Dans le dossier apache -> /conf/httpd.conf)`**
     -   Ajoutez dans votre fichier de config des vhosts (`.../apache/conf/extra/httpd-vhosts.conf`) de Apache ceci :
     ```conf
     <VirtualHost *:80>
